@@ -1,0 +1,27 @@
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('https://horsebnb.com:8081/expand_more.13e5e9c5c1d5f277638b.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 7px) 50%;
+    background-size: 20px;
+}
+.mybadge {
+    font-size: 16px;
+    border: 1px solid #343a40;
+    border-radius: 40px;
+    color: #222;
+    white-space: nowrap;
+    max-height: 50px;
+}
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem + 2px);
+}
+
+
+.type-select {
+    border-radius: 20px;
+    color: #222!important;
+    min-width: 220px;
+}

@@ -1,0 +1,103 @@
+.host-exp .btn-black {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+}
+
+.host-hr {
+    width: 70px;
+    border-top: 3px solid #00a4b4;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+
+.btn-white-outline {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    min-height: 45px;
+    background-color: transparent;
+    color: #fff;
+    font-weight: 700;
+}
+.btn-white-outline:hover{
+background-color: #fff;
+color: #000;
+}
+.host-exp-bg {
+    background: url('https://horsebnb.com/banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary-outline-lg {
+    border: 2px solid #00a4b4;
+    border-radius: 6px;
+    min-height: 45px;
+    background-color: #fff;
+    color: #00a4b4;
+    font-weight: 700;
+}
+
+.host-exp-bg h3 {
+    color: #fff;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 70px;
+}
+.text-primary {
+    color: #00a4b4 !important;
+}
+.padd-y-host {
+    padding: 6rem 0;
+}
+.host-exp h1 {
+    font-size: 45px;
+    color: #000;
+    font-weight: 700;
+    line-height: 60px;
+}
+.btn-primary {
+    background-color: #00a4b4;
+    font-size: 14px;
+    color: #fff;
+    border-color: #00a4b4;
+    border: 1px solid #00a4b4;
+    font-weight: 700;
+    min-height: 39px;
+}
+.selectCard {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 5px 3px rgb(0 0 0 / 15%);
+    max-width: 300px;
+    margin: 20px auto;
+}
+.selectCard span {
+    font-size: 20px;
+    font-weight: 600;
+}
+.selectCard i {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 15px;
+    color: #00a4b4;
+}
+.heading-big {
+    font-size: 26px !important;
+    font-weight: 600 !important;
+}
