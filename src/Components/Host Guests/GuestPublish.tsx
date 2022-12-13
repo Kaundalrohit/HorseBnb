@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
+import stripeBtn from '../Images/connect_stripe_buttin.png'
+import checkCircleImg from '../Images/check-circle-primary.svg'
 
 const GuestPublish = () => {
 
-    const match = useMatch('/create-guest/publish-listing/:id')
+    const match = useMatch('/manage-listing/publish-listing/:id')
     HenceForthApi.setToken(localStorage.getItem('token'));
     const navigate = useNavigate()
 
@@ -31,7 +33,7 @@ const GuestPublish = () => {
                 id: match?.params.id,
             }))
             console.log(res.data);
-            // navigate(`/create-stall/sucessfull-hosting/${match?.params.id}`)
+            navigate(`/publishedData/${match?.params.id}`)
         }
         catch (error) {
             console.log(error);
@@ -52,7 +54,7 @@ const GuestPublish = () => {
                             <p >You are almost finished! If you are happy with your listing you can publish it now. If you want to edit any information you can also do that now.</p>
                             <div >
                                 <div className="d-flex border-bottom py-3">
-                                    <img alt="" src="https://horsebnb.com/assets/img/check-circle-primary.svg" className="pr-3 align-self-start" />
+                                    <img alt="" src={checkCircleImg} className="pr-3 align-self-start" />
                                     <div >
                                         <span className="font-medium-bold text-black d-block">Edit your listing?</span>
                                     </div>
@@ -62,7 +64,7 @@ const GuestPublish = () => {
                                     <div className="ng-star-inserted">
                                         <a href="!#">
                                             <div className="my-3 px-0 position-relative d-flex align-items-center justify-content-center">
-                                                <img alt="" src="https://horsebnb.com/assets/img/connect_stripe_buttin.png" />
+                                                <img alt="" src={stripeBtn} />
                                             </div>
                                         </a>
                                     </div>

@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import adventureExp from '../Images/experience.png'
+
 type props = {
     adSteps: any
 }
@@ -69,7 +71,7 @@ const Step1 = ({ adSteps }: props) => {
                         </div>
                         <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                             <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                                <img src="https://horsebnb.com/assets/img/experience.png" width="350px" />
+                                <img src={adventureExp} width="350px" />
                             </div>
                         </div>
                     </div>

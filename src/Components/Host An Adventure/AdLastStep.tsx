@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useMatch } from "react-router-dom";
 import CompletedSteps from "../Host Your Stalls/CompletedSteps";
 import HenceForthApi from "../Utils/HenceForthApi";
+import backArrow from '../Images/chevron-left-primary.svg'
+import finishListing from '../Images/chevron-left-primary.svg'
+
+
 type props = {
     adSteps: any
     setAdSteps: any;
@@ -108,7 +112,7 @@ const AdLastStep = (props: props) => {
                     <div className="col-md-7 text-center d-flex flex-column">
                         <div className="d-flex align-items-center flex-column justify-content-center flex-grow-1">
                             <div className="d-flex flex-column w-md-100">
-                                <img src="https://horsebnb.com/assets/img/create-stalls/finish_your_listing.svg" alt="" width="400px" className="d-none d-md-block" />
+                                <img src={finishListing} alt="" width="400px" className="d-none d-md-block" />
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
@@ -129,7 +133,7 @@ const AdLastStep = (props: props) => {
                                 <div className="">
                                     <Link to="">
                                         <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                            <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg"
+                                            <img src={backArrow}
                                                 alt=""
                                                 className="pr-1" /> Back
                                         </button>

@@ -1,7 +1,6 @@
 import "./App.css";
-import '../src/Components/Host An Adventure/HostAdventure.css'
-import Components from "./Components/Components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Components from "./Components/Components";
 import Listing from "./Components/Home_Page/Listing/Listing";
 import Hoststalls from "./Components/Host Your Stalls/HostStalls";
 import Stall1 from "./Components/Host Your Stalls/Stall1";
@@ -27,7 +26,6 @@ import Step8 from "./Components/Host An Adventure/Step8";
 import Step9 from "./Components/Host An Adventure/Step9";
 import AdLastStep from "./Components/Host An Adventure/AdLastStep";
 import AdPublish from "./Components/Host An Adventure/AdPublish";
-import { useState } from "react";
 import HostGuests from "./Components/Host Guests/HostGuests";
 import GuestStep1 from "./Components/Host Guests/GuestStep1";
 import GuestStep3 from "./Components/Host Guests/GuestStep3";
@@ -45,6 +43,8 @@ import GuestPublish from "./Components/Host Guests/GuestPublish";
 import ShowALlDetails from "./Components/ShowAllDetails/ShowAllDetails";
 import BookingDetails from "./Components/BookingDetails/BookingDetails";
 import AboutUs from "./Components/ImformationPages/AboutUs";
+import PublishedData from "./Components/PublistedData/PublishedData";
+import { useState } from "react";
 
 
 function App() {
@@ -77,7 +77,6 @@ function App() {
             <Route path="create-stall/step12/:id" element={<Stalls12 setSteps={setSteps} steps={steps} />} />
             <Route path="create-stall/step13/:id" element={<Stalls13 />} />
             <Route path="create-stall/last-step/:id" element={<LastStep />} />
-            <Route path="create-stall/publish-listing/:id" element={<Publish />} />
 
             {/* <.....................................> */}
 
@@ -95,7 +94,7 @@ function App() {
             <Route path="create-guest/step12/:id" element={<GuestStep12 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step13/:id" element={<GuestStep13 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/last-step/:id" element={<GuestsLastStep steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/publish-listing/:id" element={<GuestPublish />} />
+            {/* <Route path="create-guest/publish-listing/:id" element={<GuestPublish />} /> */}
 
 
             {/* <.....................................> */}
@@ -109,10 +108,15 @@ function App() {
             <Route path="add-experience/step8/:id" element={<Step8 adSteps={adSteps} setAdSteps={setAdSteps} />} />
             <Route path="add-experience/step9/:id" element={<Step9 adSteps={adSteps} setAdSteps={setAdSteps} />} />
             <Route path="add-experience/last-step/:id" element={<AdLastStep adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="manage-listing/publish-listing/:id" element={<AdPublish />} />
+            {/* <Route path="manage-listing/publish-listing/:id" element={<AdPublish />} /> */}
+
+
+            <Route path="manage-listing/publish-listing/:id" element={<Publish />} />
+
 
             <Route path="page/:type" element={<ShowALlDetails />} />
             <Route path="booking-details/:id" element={<BookingDetails />} />
+            <Route path="manage-listing" element={<PublishedData />} />
 
 
             {/* <...........................................> */}

@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom"
+import checkCircleImg from '../Images/check-circle-primary.svg'
+import errorImg from '../Images/error.png'
+
 
 const CompletedSteps = (props: any) => {
     const { stepName, url, stepsArray, stepNumber } = props
@@ -6,7 +9,7 @@ const CompletedSteps = (props: any) => {
         <>
             <div className="d-flex align-items-center justify-content-between ng-star-inserted">
                 <p className="font-medium-bold text-black text-underline d-flex align-items-center cursor-pointer my-2" tabIndex={0} >
-                    <img src={stepsArray.includes(stepNumber) ? ('https://horsebnb.com/assets/img/check-circle-primary.svg') : ("https://horsebnb.com/assets/img/error.png")} className="pr-2 ng-star-inserted pe-1" alt="" />
+                    <img src={stepsArray.includes(stepNumber) ? (checkCircleImg) : (errorImg)} className="pr-2 ng-star-inserted pe-1" alt="" />
                     <Link to={`/${url}`}>{stepName}</Link>
                 </p>
             </div>

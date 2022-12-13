@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import HenceForthApi from '../Utils/HenceForthApi'
 import './ShowAllDetails.css'
-const ShowALlDetails = () => {
+import mapImg from '../Images/map.svg'
+const ShowAllDetails = () => {
 
     const { type } = useParams() as any
     console.log(type);
+
 
     const [check, setCheck] = useState<boolean>(true)
 
@@ -53,7 +55,7 @@ const ShowALlDetails = () => {
                             <div className="d-flex flex-column">
                                 <div className="col-md-12 d-flex mt-2 mb-3 mt-md-0 align-items-center justify-content-md-end">
                                     <span className="pr-2 wsp-nowrap mx-2">
-                                        <img src="	https://horsebnb.com:8081/assets/img/map.svg" className="pr-2" alt='' />Show map </span>
+                                        <img src={mapImg} className="pr-2" alt='' />Show map </span>
 
                                     <div className="form-check form-switch">
                                         <input className='form-check-input' type="checkbox" checked={check} onChange={(e: any) => { handleRow(e) }} />
@@ -107,7 +109,9 @@ const ShowALlDetails = () => {
                                     </div>
                                 </div>
                                 <div className="font-medium flex-grow-1 d-flex align-items-end justify-content-end">
-                                    <button className="btn btn-primary mt-3">View Details</button>
+                                    <Link to={`/booking-details/${e?.id?.uuid}`}>
+                                        <button className="btn btn-primary mt-3">View Details</button>
+                                    </Link>
                                 </div>
                             </div>
                         )}
@@ -119,4 +123,4 @@ const ShowALlDetails = () => {
     )
 
 }
-export default ShowALlDetails
+export default ShowAllDetails

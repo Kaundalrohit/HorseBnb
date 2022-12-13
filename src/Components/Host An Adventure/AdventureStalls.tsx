@@ -1,4 +1,9 @@
 import { Link } from "react-router-dom";
+import jonathanImg from '../Images/jonathan.png'
+import horseIcon from '../Images/horse-icon.png'
+import designExp from '../Images/design_your_experience.png'
+import submitExp from '../Images/design_your_experience.png'
+import jeffrensonImg from '../Images/jefferson.png'
 
 const AdventureStalls = () => {
     return (
@@ -17,7 +22,7 @@ const AdventureStalls = () => {
                         </div>
                         <div className="col-md-6">
                             <div className="col-md-9 px-0 ml-auto">
-                                <img src="https://horsebnb.com/assets/img/host/jonathan.png" alt="" className="w-100" />
+                                <img src={jonathanImg} alt="" className="w-100" />
                             </div>
                         </div>
                     </div>
@@ -25,7 +30,7 @@ const AdventureStalls = () => {
                 <div className="bg-light py-3">
                     <div className="container">
                         <div className="text-center mb-5">
-                            <img src="https://horsebnb.com/assets/img/ms-icon-70x70.png" alt="" className="mb-3" style={{ height: "45px" }} />
+                            <img src={horseIcon} alt="" className="mb-3" style={{ height: "45px" }} />
                             <p className="font-medium col-md-6 mx-auto">HorseBnB Adventures are horse activities created by horse people for anyone and everyone. Whether you’ve never ridden a horse or you are an experienced horse person, there is a horse adventure for you. All skill levels are welcome with HorseBnB Adventures. </p>
                             <hr className="host-hr text-center mx-auto" />
                         </div>
@@ -41,7 +46,7 @@ const AdventureStalls = () => {
                         <div className="row align-items-center padd-y-works px-md-5">
                             <div className="col-md-6 mb-5 mb-sm-0">
                                 <div className="col-md-9 px-0">
-                                    <img src="https://horsebnb.com/assets/img/design_your_experience.png" className="w-100" alt="" />
+                                    <img src={designExp} className="w-100" alt="" />
                                 </div>
                             </div>
                             <div className="col-md-6"><div >
@@ -60,14 +65,14 @@ const AdventureStalls = () => {
                             </div>
                             <div className="col-md-6 mb-5 mb-sm-0">
                                 <div className="col-md-9 px-0 ml-md-auto">
-                                    <img src="https://horsebnb.com/assets/img/submit_your_experience.png" className="w-100" alt="" />
+                                    <img src={submitExp} className="w-100" alt="" />
                                 </div>
                             </div>
                         </div>
                         <div className="row align-items-center padd-y-works px-md-5">
                             <div className="col-md-6 mb-5 mb-sm-0">
                                 <div className="col-md-9 px-0 mr-md-auto">
-                                    <img src="https://horsebnb.com/assets/img/host/jefferson.png" alt="" className="w-100" />
+                                    <img src={jeffrensonImg} alt="" className="w-100" />
                                 </div>
                             </div>
                             <div className="col-md-6 order-1 order-sm-0">

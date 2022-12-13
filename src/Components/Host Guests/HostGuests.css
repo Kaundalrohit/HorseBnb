@@ -20,3 +20,77 @@ hr {
     font-weight: 700;
     line-height: 70px;
 }
+.host-earn h4.text-white {
+    font-size: 45px;
+    font-weight: 700;
+}
+/* <......................................> */
+
+.steps-preview {
+    box-shadow: 0px 3px 6px #0000001f;
+    border: 1px solid #D8D8D8;
+    border-radius: 4px;
+}
+.steps-preview .prev-img {
+    height: 60px;
+    width: 80px;
+    min-width: 80px;
+}
+.obj-cover, .image-fit {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.single-line-ellipsis {
+    display: block !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text-left {
+    text-align: left!important;
+}
+.host-img {
+    height: 170px;
+    width: 100%;
+}
+.text-lite {
+    color: #343a4080 !important;
+}
+.del-bg {
+    position: absolute;
+    right: 40px;
+    top: 4px;
+    background: #fff;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.del-bg2 {
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    background: #fff;
+   
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.monthly-stable button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

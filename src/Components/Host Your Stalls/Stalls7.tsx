@@ -3,6 +3,13 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
+import backArrow from '../Images/chevron-left-primary.svg'
+import bulbImg from '../Images/lightbulb.svg'
+import deleteImg from '../Images/delete-24px.svg'
+import editImg from '../Images/edit.png'
+import publisgImg from '../Images/publish.svg'
+
+
 
 type props = {
     steps: any,
@@ -158,7 +165,7 @@ export default function Stall7(props: props) {
                         <p className="font-small-bold mb-4">Upload at least one photo to publish your listing. We strongly suggest adding multiple photos to attract attention to your listing. Do not include images of your barn name or contact information.</p>
                         <div className="upload-container mb-5  border border-5 border-dark p-5 text-center border-dotted">
                             <div className="">
-                                <img src="https://horsebnb.com/assets/img/publish.svg" alt="" className="mb-2" />
+                                <img src={publisgImg} alt="" className="mb-2" />
                             </div>
                             <div className="">
                                 <label
@@ -178,25 +185,25 @@ export default function Stall7(props: props) {
                                         <div className="position-relative">
                                             <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${checkCoverImg?.url}`} alt="" className="rounded-1" style={{ width: "200px", height: "200px" }} />
                                             <span className="del-bg del-bg1 border">
-                                                <img src="https://horsebnb.com/assets/img/delete-24px.svg" alt="" height="18px" />
+                                                <img src={deleteImg} alt="" height="18px" />
                                             </span>
                                             <span className="del-bg del-bg2 border">
-                                                <img src="https://horsebnb.com/assets/img/create-stalls/edit.png" alt="" height="18px" />
+                                                <img src={editImg} alt="" height="18px" />
                                                 <input type="file" className="d-none" />
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-                                {Array.isArray(imgfile) && imgfile.length && imgfile.map((l: any, index: any) =>
+                                {Array.isArray(imgfile) && imgfile.length && imgfile.map((e: any, index: any) =>
                                     <div className="col-md-6 images-gallery mb-4">
                                         <div className="cover-img ">
                                             <div className="position-relative">
-                                                <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${l?.url}`} alt="" className="rounded-1" style={{ width: "200px", height: "200px" }} />
+                                                <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${e?.url}`} alt="" className="rounded-1" style={{ width: "200px", height: "200px" }} />
                                                 <span className="del-bg del-bg1 border">
-                                                    <img src="https://horsebnb.com/assets/img/delete-24px.svg" alt="" height="18px" />
+                                                    <img src={deleteImg} alt="" height="18px" />
                                                 </span>
                                                 <span className="del-bg del-bg2 border">
-                                                    <img src="https://horsebnb.com/assets/img/create-stalls/edit.png" height="18px" alt="" />
+                                                    <img src={editImg} height="18px" alt="" />
                                                     <input type="file" className="d-none" />
                                                 </span>
                                             </div>
@@ -208,7 +215,7 @@ export default function Stall7(props: props) {
                         <div className="d-flex justify-content-between mt-5 border-top">
                             <Link to="/create-stall/step6">
                                 <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                    <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg"
+                                    <img src={backArrow}
                                         alt=""
                                         className="pr-1" /> Back
                                 </button>
@@ -221,7 +228,7 @@ export default function Stall7(props: props) {
                 <div className="col-md-6 px-md-0 d-none d-lg-block">
                     <div className="h-100 d-flex align-items-center px-md-5 bg-light justify-content-start">
                         <div className="border col-md-7 px-4 py-4 mb-4 bg-white">
-                            <img src="https://horsebnb.com/assets/img/lightbulb.svg" alt="" height="32px" className="mb-4" />
+                            <img src={bulbImg} alt="" height="32px" className="mb-4" />
                             <h6 className="font-medium-bold">Quick tips for quality photos</h6>
                             <ul className="list-unstyled">
                                 <li >

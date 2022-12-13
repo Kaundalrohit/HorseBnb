@@ -3,9 +3,12 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import stripeBtn from '../Images/connect_stripe_buttin.png'
+import checkCircleImg from '../Images/check-circle-primary.svg'
+
 
 export default function Publish() {
-    const match = useMatch('/create-stall/publish-listing/:id')
+    const match = useMatch('/manage-listing/publish-listing/:id')
     HenceForthApi.setToken(localStorage.getItem('token'));
     const navigate = useNavigate()
 
@@ -40,7 +43,7 @@ export default function Publish() {
                     progress: undefined,
                     theme: "light",
                 });
-                navigate('/')
+                navigate(`/manage-listing`)
             }
             catch (error) {
                 console.log(error);
@@ -74,7 +77,7 @@ export default function Publish() {
                             <p >You are almost finished! If you are happy with your listing you can publish it now. If you want to edit any information you can also do that now.</p>
                             <div >
                                 <div className="d-flex border-bottom py-3">
-                                    <img src="https://horsebnb.com/assets/img/check-circle-primary.svg" className="pr-3 align-self-start" alt="" />
+                                    <img src={checkCircleImg} className="pr-3 align-self-start" alt="" />
                                     <div >
                                         <span className="font-medium-bold text-black d-block">Edit your listing?</span>
                                     </div>
@@ -83,7 +86,7 @@ export default function Publish() {
                                 <div className="border-bottom py-3">
                                     <div className="ng-star-inserted">
                                         <div className="my-3 px-0 position-relative d-flex align-items-center justify-content-center">
-                                            <img src="https://horsebnb.com/assets/img/connect_stripe_buttin.png" alt="" />
+                                            <img src={stripeBtn} alt="" />
                                         </div>
                                     </div>
                                     <div className="mt-5">

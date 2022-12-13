@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
+import backArrow from '../Images/chevron-left-primary.svg'
+
 
 type props = {
     steps: Array<number>,
@@ -53,7 +55,7 @@ const GuestStep11 = (props: props) => {
 
                     <div className="d-flex justify-content-between border-top mt-auto">
                         <Link to={""}>   <button type="button" className="btn btn-transparent font-regular my-3 px-0">
-                            <img src="../../.././../assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back </button></Link>
+                            <img src={backArrow} className="pr-1" alt="" /> Back </button></Link>
 
                         <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep11} > Next </button>
 

@@ -3,6 +3,16 @@ import ListingViewer from "./ListingViewer";
 import HenceForthApi from "../../Utils/HenceForthApi"
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
+import shortTermImg from "../../Images/shortTermStalls.jpg"
+import monthlyTermImg from "../../Images/monthly_board_home.jpg"
+import guestTermImg from "../../Images/guest_large.jpeg"
+import adventureTermImg from "../../Images/monthly_board_home.jpg"
+import introImg from "../../Images/no_introducing_horsebnb.png"
+import rightArrow from "../../Images/rightArrow.png"
+import monthlyBanner from '../../Images/no_monthly_banner.png'
+import emptyImg from '../../Images/empty.png'
+
+
 
 export default function Listing() {
 
@@ -15,6 +25,8 @@ export default function Listing() {
         monthly: [],
         horseAdv: [],
     })
+
+
 
     // <................ Rendering All Stalls Data ....................>
     useEffect(() => {
@@ -54,23 +66,23 @@ export default function Listing() {
     const variousStalls = [
         {
             id: 1,
-            url: 'https://horsebnb.com:8081/assets/img/change_short_term_stalls.jpg',
+            url: shortTermImg,
             title: 'Short Term Stalls'
         },
         {
             id: 2,
-            url: 'https://horsebnb.com:8081/assets/img/monthly_board_home.jpg',
+            url: monthlyTermImg,
             title: 'Monthly Board'
         },
 
         {
             id: 3,
-            url: 'https://horsebnb.com:8081/assets/img/home/guest_large.jpeg',
+            url: guestTermImg,
             title: 'Guest Accommodations'
         },
         {
             id: 4,
-            url: 'https://horsebnb.com:8081/assets/img/home/exp_large.jpg',
+            url: adventureTermImg,
             title: 'Horse Adventures & Equine Activities'
         },
     ]
@@ -91,7 +103,7 @@ export default function Listing() {
                                     className="text-decoration-none">
                                     <div className="shadow bg-white">
                                         <div className="explore-out">
-                                            <img alt="..." className="obj-contain explore-img card-img rounded-top  " src={e.url} />
+                                            <img alt="Not Found" className="obj-contain explore-img card-img rounded-top  " src={e.url} />
                                             <div className="d-flex justify-content-between p-1">
                                                 <span className="text-black font-small fw-600 pt-1">{e.title}</span>
                                                 <span className="arw-outer d-flex align-items-center justify-content-center">
@@ -112,7 +124,7 @@ export default function Listing() {
                 <div className="pb-5 rounded-3">
                     <div className="position-relative">
                         <div className="intro-img">
-                            <img alt="..." className="obj-cover  ng-lazyloaded img-fluid rounded-3 " src="https://horsebnb.com:8081/assets/img/no_introducing_horsebnb.png" />
+                            <img alt="..." className="obj-cover  ng-lazyloaded img-fluid rounded-3 " src={introImg} />
                         </div>
                         <div className="intro-content pl-5">
                             <span >INTRODUCING</span>
@@ -148,7 +160,7 @@ export default function Listing() {
                             <div className="d-flex justify-content-center">
 
 
-                                < img className='p-2' alt="" src={'https://horsebnb.com:8081/assets/img/create-stalls/empty.png'} width="253" height="168" />
+                                < img className='p-2' alt="" src={emptyImg} width="253" height="168" />
                             </div>
                         }
                     </div>
@@ -160,7 +172,7 @@ export default function Listing() {
                             <span style={{ color: "#00a4b4" }}>
                                 Show all Short Term Stalls
                             </span>
-                            <img src="https://horsebnb.com:8081/assets/img/blue-arw.svg" alt="" />
+                            <img src={rightArrow} alt="" />
                         </div>
                     </div>
                 </Link>
@@ -183,7 +195,7 @@ export default function Listing() {
                             :
                             <div className="d-flex justify-content-center">
 
-                                < img className='p-2' alt="" src={'https://horsebnb.com:8081/assets/img/create-stalls/empty.png'} width="253" height="168" />
+                                < img className='p-2' alt="" src={emptyImg} width="253" height="168" />
                             </div>
                         }
                     </div>
@@ -195,7 +207,7 @@ export default function Listing() {
                             <span style={{ color: "#00a4b4" }}>
                                 Show all Guest Accommodations
                             </span>
-                            <img src="https://horsebnb.com:8081/assets/img/blue-arw.svg" alt="" />
+                            <img src={rightArrow} alt="" />
                         </div>
                     </div>
                 </Link>
@@ -203,19 +215,18 @@ export default function Listing() {
 
 
                 {/* <................... Monthly stabling for your horse  ..........................> */}
-                <div className="content-heading pb-5 mt-4">
+                <div className="content-heading pb-4 mt-4">
                     <h2 className="heading-secondary text-black">
                         Monthly stabling for your horse
                     </h2>
                     <p className="pb-2">Find monthly boarding facilities</p>
                     <div className="position-relative monthly-stable">
                         <div className="intro-img">
-                            <img alt="..." className="obj-cover  ng-lazyloaded img-fluid rounded-2" src="https://horsebnb.com:8081/assets/img/no_monthly_banner.png" />
+                            <img alt="..." className="obj-cover  ng-lazyloaded img-fluid rounded-2" src={monthlyBanner} />
                         </div>
-                        <button className="btn bg-white text-black d-flex align-items-center align-self-center">
-                            EXPLORE BOARDING FACILITIES
-                            <i className="bi bi-arrow-right-short ms-1 fw-bold"></i>
-                        </button>
+                        <Link to="/page/2" className="text-decoration-none">
+                            <button className="btn bg-white d-flex align-items-center align-self-center"> EXPLORE BOARDING FACILITIES <img src={rightArrow} alt="" height="19px" className="pl-1" /></button>
+                        </Link >
                     </div>
                 </div>
 
@@ -233,7 +244,7 @@ export default function Listing() {
                             :
                             <div className="d-flex justify-content-center">
 
-                                < img className='p-2' alt="" src={'https://horsebnb.com:8081/assets/img/create-stalls/empty.png'} width="253" height="168" />
+                                < img className='p-2' alt="" src={emptyImg} width="253" height="168" />
                             </div>
                         }
                     </div>
@@ -244,7 +255,7 @@ export default function Listing() {
                             <span style={{ color: "#00a4b4" }}>
                                 Show all Monthly Boards
                             </span>
-                            <img src="https://horsebnb.com:8081/assets/img/blue-arw.svg" alt="" />
+                            <img src={rightArrow} alt="" />
                         </div>
                     </div>
                 </Link >
@@ -269,7 +280,7 @@ export default function Listing() {
                             :
                             <div className="d-flex justify-content-center">
 
-                                < img className='p-2' alt="" src={'https://horsebnb.com:8081/assets/img/create-stalls/empty.png'} width="253" height="168" />
+                                < img className='p-2' alt="" src={emptyImg} width="253" height="168" />
                             </div>
                         }
                     </div>
@@ -281,7 +292,7 @@ export default function Listing() {
                             <span style={{ color: "#00a4b4" }}>
                                 Show all Horse Adventures and Activities
                             </span>
-                            <img src="https://horsebnb.com:8081/assets/img/blue-arw.svg" alt="" />
+                            <img src={rightArrow} alt="" />
                         </div>
                     </div>
                 </Link>

@@ -3,6 +3,8 @@ import { Link, useMatch } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
+import backArrow from '../Images/chevron-left-primary.svg'
+
 type props = {
     steps: any,
     setSteps: any
@@ -62,7 +64,7 @@ export default function Stalls11(props: props) {
                         <div className="d-flex justify-content-between mt-5 border-top">
                             <Link to="/create-stall/sucessfull-hosting">
                                 <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                    <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                    <img src={backArrow} className="pr-1" alt="" /> Back
                                 </button>
                             </Link>
                             <Link to={`/create-stall/step12/${match?.params.id}`}>

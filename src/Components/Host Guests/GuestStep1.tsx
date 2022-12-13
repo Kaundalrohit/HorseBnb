@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
+import guestMainImg from '../Images/guest_main.png'
 
 type props = {
     steps: any,
@@ -62,7 +63,7 @@ const GuestStep1 = (props: props) => {
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-8 text-center d-none d-md-flex flex-column align-items-center justify-content-center">
-                        <img src="https://horsebnb.com/assets/img/guest_main.png" width="500px" className="ipad-img" />
+                        <img src={guestMainImg} width="500px" className="ipad-img" />
                     </div>
                 </div>
             </div>

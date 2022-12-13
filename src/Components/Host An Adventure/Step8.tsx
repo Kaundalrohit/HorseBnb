@@ -3,6 +3,8 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
+import adventureExp from '../Images/experience.png'
+import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     adSteps: any
     setAdSteps: any;
@@ -109,7 +111,7 @@ const Step8 = (props: props) => {
                             <div className="d-flex justify-content-between mt-5 border-top">
                                 <Link to="">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                        <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
                                 <Link to={`/add-experience/step9/${match?.params.id}`}>
@@ -123,7 +125,7 @@ const Step8 = (props: props) => {
                     </div>
                     <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                         <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                            <img src="https://horsebnb.com/assets/img/experience.png" alt="" width="350px" />
+                            <img src={adventureExp} alt="" width="350px" />
                         </div>
                     </div>
                 </div>

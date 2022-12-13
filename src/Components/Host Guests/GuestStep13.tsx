@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
+import backArrow from '../Images/chevron-left-primary.svg'
+import stripeImg from '../Images/stripe_payments.svg'
+import stripeBtn from '../Images/connect_stripe_buttin.png'
 
 
 type props = {
@@ -49,7 +52,7 @@ const GuestStep13 = (props: props) => {
                         <h3 className="heading-big">Connect with Stripe to accept payments</h3>
                         <div className="d-flex align-items-center justify-cont ng-star-inserted">
                             <div className="btn my-3 px-3 position-relative d-flex align-items-center justify-content-center">
-                                <img alt="" src="https://horsebnb.com/assets/img/connect_stripe_buttin.png" />
+                                <img alt="" src={stripeBtn} />
                             </div>
 
                             <button type="button" className="btn btn-primary skip-btn font-regular my-3 px-3 mr-3" onClick={skipStripe} > Skip for now </button>
@@ -58,7 +61,7 @@ const GuestStep13 = (props: props) => {
                         <div className="d-flex justify-content-between mt-5 border-top">
                             <Link to="">
                                 <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                    <img alt="" src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" /> Back
+                                    <img alt="" src={backArrow} className="pr-1" /> Back
                                 </button>
                             </Link>
                             <Link to="">
@@ -70,7 +73,7 @@ const GuestStep13 = (props: props) => {
                 </div>
                 <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                     <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                        <img alt="" src="https://horsebnb.com/assets/img/stripe_payments.svg" height="250px" />
+                        <img alt="" src={stripeImg} height="250px" />
                     </div>
                 </div>
             </div>

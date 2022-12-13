@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 
 import "./HostGuests.css"
+import checkImg from '../Images/host-check-round.svg'
+import readyToLearnImg from '../Images/ready_to_learn.svg'
 
 // type props = {
 //     getStartedShow: () => void
@@ -40,21 +42,21 @@ const HostGuests = () => {
                         <div className="row">
                             <div className="col-md-4 mb-4 mb-md-0">
                                 <div className="h-100 border p-5 p-lg-4 br-4">
-                                    <img alt="" src="https://horsebnb.com/assets/img/host-check-round.svg" height="30px" className="mb-2 tick-R" />
+                                    <img alt="" src={checkImg} height="30px" className="mb-2 tick-R" />
                                     <h5 className="font-medium fw-700">CREATE AN ACCOUNT</h5>
                                     <p >Create an account using your email address and contact information on the HorseBnB website.</p>
                                 </div>
                             </div>
                             <div className="col-md-4 mb-4 mb-md-0">
                                 <div className="h-100 border p-5 p-lg-4 br-4">
-                                    <img src="https://horsebnb.com/assets/img/host-check-round.svg" height="30px" className="mb-2 tick-R" alt="" />
+                                    <img src={checkImg} height="30px" className="mb-2 tick-R" alt="" />
                                     <h5 className="font-medium fw-700">MAKE A LISTING</h5>
                                     <p >Take a few pictures and write up a brief description of your facility. Include as much information as you can so the guests can see exactly what you have to offer.</p>
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <div className="h-100 border p-5 p-lg-4 br-4">
-                                    <img src="https://horsebnb.com/assets/img/host-check-round.svg" height="30px" className="mb-2 tick-R" alt="" />
+                                    <img src={checkImg} height="30px" className="mb-2 tick-R" alt="" />
                                     <h5 className="font-medium fw-700">START EARNING MONEY</h5>
                                     <p >Start hosting other horse lovers and taking advantage of the HorseBnB platform. You can meet new friends and earn extra income at the same time!</p>
                                 </div>
@@ -67,7 +69,7 @@ const HostGuests = () => {
                         <div className="container">
                             <div className="row justify-content-between align-items-center">
                                 <div className="col-md-4 mb-5 mb-md-0">
-                                    <img src="https://horsebnb.com/assets/img/host/ready_to_learn.svg" alt="" className="w-100" />
+                                    <img src={readyToLearnImg} alt="" className="w-100" />
                                 </div>
                                 <div className="col-md-4">
                                     <h4 className="text-dark mb-5">Ready to earn ?</h4>

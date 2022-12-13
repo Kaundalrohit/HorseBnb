@@ -3,6 +3,9 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
+import backArrow from '../Images/chevron-left-primary.svg'
+import bulbImg from '../Images/lightbulb.svg'
+
 type props = {
     steps: any,
     setSteps: any
@@ -108,7 +111,7 @@ export default function Stalls12(props: props) {
                             <div className="d-flex justify-content-between mt-5 border-top">
                                 <Link to="/create-stall/step11">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                        <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
                                 <button className="btn my-3 px-3 text-white" onClick={poststep12Data} style={{ background: "rgb(0, 164, 180)" }}> Next
@@ -119,7 +122,7 @@ export default function Stalls12(props: props) {
                     <div className="col-md-6 px-md-0 d-none d-lg-block">
                         <div className="py-5 h-100 d-flex align-items-start px-md-5 bg-light justify-content-start">
                             <div className="border col-md-7 px-4 py-4 mb-4 bg-white">
-                                <img src="https://horsebnb.com/assets/img/lightbulb.svg" height="32px" className="mb-4" alt="" />
+                                <img src={bulbImg} height="32px" className="mb-4" alt="" />
                                 <h6 className="fw-600">Start with a lower price to attract bookings</h6>
                                 <p className="font-small mb-0">We suggest starting with a competitive price as you are new to the website. This will help you develop a good reputation and get some guest reviews to help with future bookings.</p>
                             </div>

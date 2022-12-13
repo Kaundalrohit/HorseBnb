@@ -3,6 +3,10 @@ import { useEffect, useState } from "react"
 import { useMatch, useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify";
 import HenceForthApi from "../Utils/HenceForthApi";
+import backArrow from '../Images/chevron-left-primary.svg'
+import guestSteps from '../Images/guest_steps.png'
+
+
 
 type props = {
     setSteps: any,
@@ -126,7 +130,7 @@ const GuestStep6 = (props: props) => {
                             {/* </div> */}
                             <div className="d-flex justify-content-between mt-5 border-top">
                                 <button type="button" className="btn btn-transparent font-regular my-3 px-0" tabIndex={0} >
-                                    <img src="" className="pr-1" alt="" /> Back
+                                    <img src={backArrow} className="pr-1" alt="" /> Back
                                 </button>
 
                                 <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep6}>
@@ -139,7 +143,7 @@ const GuestStep6 = (props: props) => {
                 </div>
                 <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                     <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                        <img alt="" src="https://horsebnb.com/assets/img/guest_steps.png" width="350px" />
+                        <img alt="" src={guestSteps} width="350px" />
                     </div>
                 </div>
             </div>

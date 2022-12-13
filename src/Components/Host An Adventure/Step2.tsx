@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link, useMatch, useNavigate, useSearchParams } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi";
+import adventureExp from '../Images/experience.png'
+import backArrow from '../Images/chevron-left-primary.svg'
+import locationIcon from '../Images/near_me.svg'
+
+
+
 type props = {
     adSteps: any
     setAdSteps: any;
@@ -59,13 +65,13 @@ const Step2 = (props: props) => {
                                 <div className="">
                                     <p className="font-small-bold my-3">Please input your exact address. Guests will not be able to see your exact address until they have made a booking.</p>
                                     <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
-                                        <img src="../../Horsebnb Assets/near_me.svg" alt="" className="img-fluid" />Use current location </button>
+                                        <img src={locationIcon} alt="" className="img-fluid" />Use current location </button>
 
                                 </div>
                                 <div className="d-flex justify-content-between mt-5 mb-0 border-top">
                                     <Link to="">
                                         <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                            <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                            <img src={backArrow} className="pr-1" alt="" /> Back
                                         </button>
                                     </Link>
 
@@ -80,7 +86,7 @@ const Step2 = (props: props) => {
                     </div>
                     <div className="col-lg-6 text-center px-0">
                         <div className="h-100 d-flex py-5 align-items-center border-start justify-content-center">
-                            <img src="https://horsebnb.com/assets/img/experience.png" alt="" width="250px" />
+                            <img src={adventureExp} alt="" width="250px" />
                         </div>
                     </div>
                 </div>

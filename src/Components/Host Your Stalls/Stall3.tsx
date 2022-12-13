@@ -3,6 +3,12 @@ import { Link, useMatch, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
+import horseImg from '../Images/horse_image.png'
+import removeImg from '../Images/remove_circle_outline.svg'
+import addImg from '../Images/add_circle_outline.svg'
+import backArrow from '../Images/chevron-left-primary.svg'
+
+
 
 type props = {
     steps: any,
@@ -90,7 +96,7 @@ export default function Stall3(props: props) {
                                         }}
                                             disabled={count === 0}
                                         >
-                                            <img src="https://horsebnb.com/assets/img/remove_circle_outline.svg" alt="" width="18px" />
+                                            <img src={removeImg} alt="" width="18px" />
                                         </button>
                                     </div>
                                     <input type="text" className=" form-control text-center border-1" value={count} style={{ flex: "0.1 1 auto" }} />
@@ -98,16 +104,16 @@ export default function Stall3(props: props) {
                                         <button className="btn border-0" onClick={() => {
                                             setCount(count + 1)
                                         }}>
-                                            <img src="https://horsebnb.com/assets/img/add_circle_outline.svg" alt="" width="18px" />
+                                            <img src={addImg} alt="" width="18px" />
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <hr className="my-5 py-5 border-0" />
                             <div className="d-flex justify-content-between mt-5 mb-0 border-top">
-                                <Link to="/create-stall/step1">
+                                <Link to="/create-stall/step1" >
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                        <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/step5"> */}
@@ -118,7 +124,7 @@ export default function Stall3(props: props) {
                     </div>
                     <div className="col-md-6 text-center px-0">
                         <div className="h-100 d-flex py-5 align-items-center border-start justify-content-center">
-                            <img src="https://horsebnb.com/assets/img/create-stalls/horse_image.png" alt="" width="250px" />
+                            <img src={horseImg} alt="" width="250px" />
                         </div>
                     </div>
                 </div>

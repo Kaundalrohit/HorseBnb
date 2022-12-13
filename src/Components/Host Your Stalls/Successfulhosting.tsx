@@ -3,6 +3,8 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import horseImg from '../Images/horse_image.png'
+import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     steps: any,
     setSteps: any
@@ -84,7 +86,7 @@ export default function SuccessfullHosting(props: props) {
                             <div className="d-flex justify-content-between mt-5 border-top">
                                 <Link to="/create-stall/checkin-and-checkout">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                        <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
                                 <button className="btn my-3 px-3 text-white" onClick={agreeConditions} style={{ background: "rgb(0, 164, 180)" }}> Next
@@ -94,7 +96,7 @@ export default function SuccessfullHosting(props: props) {
                     </div>
                     <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                         <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                            <img src="https://horsebnb.com/assets/img/create-stalls/horse_image.png" alt="" width="250px" />
+                            <img src={horseImg} alt="" width="250px" />
                         </div>
                     </div>
                 </div>

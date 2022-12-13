@@ -64,6 +64,14 @@ const uploadAdImg = {
     )
 }
 
+const reviewListing = {
+  bookingReviews: (listingId: number) =>
+    requests.get(
+      `/bookings/reviews?listingId=${listingId}&state=public&include=author`
+    )
+
+}
+
 const Auth = {
   availabiltycreate: (info: any) =>
     requests.post("/availability_exceptions/create", info),
@@ -121,6 +129,7 @@ export default {
   listing,
   uploadAdImg,
   hostListing,
+  reviewListing,
   // Administrator,
   // Staff,
   // Common,

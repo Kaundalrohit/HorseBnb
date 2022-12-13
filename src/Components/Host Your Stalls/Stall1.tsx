@@ -1,8 +1,11 @@
 import { useState } from "react";
+import './HostyourStalls.css'
 import { useNavigate } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Stall1Img from '../Images/stalls1.png'
+
 
 type props = {
     steps: any,
@@ -10,6 +13,8 @@ type props = {
 }
 
 export default function Stall1(props: props) {
+
+    const [loader, setLoader] = useState<boolean>(false)
 
     const navigate = useNavigate()
     const { steps } = props
@@ -23,9 +28,11 @@ export default function Stall1(props: props) {
     }
 
     const postStep1Data = async () => {
+
         HenceForthApi.setToken(localStorage.getItem("token"))
         try {
             if (selectedStall && title) {
+                setLoader(true)
                 let res = await HenceForthApi.Auth.createdraftlisting({
                     title: title,
                     publicData: {
@@ -35,6 +42,7 @@ export default function Stall1(props: props) {
                         ]
                     }
                 })
+                setLoader(false)
                 navigate(`/create-stall/step3/${res.data.id.uuid}`)
             }
             else {
@@ -81,12 +89,15 @@ export default function Stall1(props: props) {
                                     }} />
                                     <button type="button" className="btn text-white px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" style={{ background: "rgb(0, 164, 180)" }}
                                         onClick={postStep1Data}
-                                    > Continue </button>
+                                    >  {!loader ? "continue" : "Loading....."} </button>
+                                    <h1>
+
+                                    </h1>
                                 </form>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-8 d-flex align-items-center justify-content-center">
-                            <img src="http://192.168.1.66:3001/Horsebnb%20Assets/image.png" width="500px" alt="" className="img-fluid" />
+                            <img src={Stall1Img} width="500px" alt="" className="img-fluid" />
                         </div>
                     </div>
                 </div>

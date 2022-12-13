@@ -1,6 +1,9 @@
 import { useEffect } from "react"
 import { Link, useMatch } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
+import horseImg from '../Images/horse_image.png'
+import backArrow from '../Images/chevron-left-primary.svg'
+import locationIcon from '../Images/near_me.svg'
 type props = {
     steps: any,
     setSteps: any
@@ -52,14 +55,15 @@ export default function Stalls5(props: props) {
                                 <h3 className="fw-600 heading-big">Where is your place located?</h3>
                                 <div className="">
                                     <p className="font-small-bold my-3">Please input your exact address. Guests will not be able to see your exact address until they have made a booking.</p>
-                                    <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
-                                        <img src="../../Horsebnb Assets/near_me.svg" alt="" className="img-fluid" />Use current location </button>
+                                    <button className="btn btn-sky-outline-lg border-0 my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
+                                        <img src={locationIcon} alt="" className="img-fluid" />
+                                        <span style={{ color: "#00a4b4" }} className="fw-bold ps-2"> Use current location </span></button>
 
                                 </div>
                                 <div className="d-flex justify-content-between mt-5 mb-0 border-top">
                                     <Link to="/create-stall/step3">
                                         <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                            <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" className="pr-1" alt="" /> Back
+                                            <img src={backArrow} className="pr-1" alt="" /> Back
                                         </button>
                                     </Link>
                                     <Link to={`/create-stall/step6/${match?.params.id}`}>
@@ -72,7 +76,7 @@ export default function Stalls5(props: props) {
                     </div>
                     <div className="col-lg-6 text-center px-0">
                         <div className="h-100 d-flex py-5 align-items-center border-start justify-content-center">
-                            <img src="https://horsebnb.com/assets/img/create-stalls/horse_image.png" alt="" width="250px" />
+                            <img src={horseImg} alt="" width="250px" />
                         </div>
                     </div>
                 </div>

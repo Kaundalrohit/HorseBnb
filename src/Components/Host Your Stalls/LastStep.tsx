@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useMatch } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
 import CompletedSteps from "./CompletedSteps";
+import backArrow from '../Images/chevron-left-primary.svg'
+import finishListing from '../Images/chevron-left-primary.svg'
+
 
 export default function LastStep() {
     const [step, setStep] = useState<any>([])
@@ -116,7 +119,7 @@ export default function LastStep() {
                     <div className="col-md-7 text-center d-flex flex-column">
                         <div className="d-flex align-items-center flex-column justify-content-center flex-grow-1">
                             <div className="d-flex flex-column w-md-100">
-                                <img src="https://horsebnb.com/assets/img/create-stalls/finish_your_listing.svg" alt="" width="400px" className="d-none d-md-block" />
+                                <img src={finishListing} alt="" width="400px" className="d-none d-md-block" />
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
@@ -137,14 +140,14 @@ export default function LastStep() {
                                 <div className="">
                                     <Link to="/create-stall/step13">
                                         <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                            <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg"
+                                            <img src={backArrow}
                                                 alt=""
                                                 className="pr-1" /> Back
                                         </button>
                                     </Link>
                                 </div>
                                 <div className="">
-                                    <Link to={`/create-stall/publish-listing/${match?.params.id}`}>
+                                    <Link to={`/manage-listing/publish-listing/${match?.params.id}`}>
                                         <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}> Next
                                         </button>
                                     </Link>

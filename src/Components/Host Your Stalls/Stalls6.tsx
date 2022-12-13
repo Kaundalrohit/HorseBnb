@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import horseImg from '../Images/horse_image.png'
+import backArrow from '../Images/chevron-left-primary.svg'
 import HenceForthApi from "../Utils/HenceForthApi";
 type props = {
     steps: any,
@@ -136,7 +138,7 @@ export default function Stalls6(props: props) {
                     <div className="d-flex justify-content-between mt-5 border-top">
                         <Link to="/create-stall/step5">
                             <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                <img src="https://horsebnb.com/assets/img/chevron-left-primary.svg" alt="" className="pr-1" /> Back
+                                <img src={backArrow} alt="" className="pr-1" /> Back
                             </button>
                         </Link>
 
@@ -147,7 +149,7 @@ export default function Stalls6(props: props) {
                 </div>
                 <div className="col-lg-6 text-center px-0">
                     <div className="h-100 d-flex py-5 align-items-center border-start justify-content-center">
-                        <img src="https://horsebnb.com/assets/img/create-stalls/horse_image.png" alt="" width="250px" />
+                        <img src={horseImg} alt="" width="250px" />
                     </div>
                 </div>
             </div>
