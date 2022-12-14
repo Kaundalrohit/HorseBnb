@@ -28,9 +28,7 @@ const GuestCheckIn = (props: props) => {
         }
     }
     useEffect(() => {
-        // getStartedShow()
         listId()
-        // eslint-disable-next-line 
     }, [])
 
     const uploadTimings = async () => {
