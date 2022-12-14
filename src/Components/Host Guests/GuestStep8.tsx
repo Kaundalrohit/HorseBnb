@@ -16,9 +16,11 @@ const GuestStep8 = (props: props) => {
 
     const { steps, setSteps } = props
 
+
     const [state, setState] = useState({
         description: "",
-        extra_detail: ""
+        extra_detail: "",
+        userImg: ""
 
     })
 
@@ -39,6 +41,10 @@ const GuestStep8 = (props: props) => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params?.id)
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setState({
+                ...state,
+                userImg: res?.data?.attributes?.publicData?.host_image
+            })
         } catch (error) {
             console.log(error);
         }
@@ -60,12 +66,12 @@ const GuestStep8 = (props: props) => {
                 stepsCompleted: [...steps, 8]
             }
         }
-
         if (state.description && state.extra_detail) {
-
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
-                navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
+                {
+                    !state.userImg ? navigate(`/create-guest/step9/${match?.params.id}`) : navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
+                }
             } catch (error) {
                 console.log(error);
             }

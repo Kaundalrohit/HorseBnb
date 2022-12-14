@@ -3,7 +3,7 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
-import horseImg from '../Images/horse_image.png'
+import selfieImg from '../Images/taking_selfie.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
 
 type props = {
@@ -12,68 +12,95 @@ type props = {
 }
 
 export default function Stalls9(props: props) {
+    const [data, setData] = useState<any>([])
+    const [loader, setLoader] = useState<boolean>(false)
     const { steps, setSteps } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
-    const match = useMatch('/create-stall/checkin-and-checkout/:id')
+    const match = useMatch('/create-stall/step9/:id')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
+    const list = async () => {
+        try {
+            let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+            setData(res)
+        } catch (error) {
+            console.log(error);
         }
+    }
+    useEffect(() => {
         list()
         // eslint-disable-next-line 
     }, [])
 
-    const [state, setstate] = useState({
-        arrive: "",
-        leave: ""
-    })
-    const updateState = (e: any) => {
-        setstate({
-            ...state,
-            [e.target.name]: e.target.value
-        })
+    const handleSubmit = async (e: any) => {
+        let file = e.target.files[0]
+        console.log(file);
+        try {
+            setLoader(true)
+            let res = (await HenceForthApi.Auth.Uploadimage("file", file))
+            await uploadImg(res.filename)
+            await list()
+            setLoader(false)
+        } catch (error) {
+            console.log(error);
+
+        }
+
     }
 
-    const postStep9Data = async () => {
-        if (state.arrive && state.leave) {
-            try {
-                (await HenceForthApi.Auth.Updatedlisting({
-                    id: match?.params.id,
-                    publicData: {
-                        arrive_after: state.arrive,
-                        leave_before: state.leave,
-                        stepsCompleted: [
-                            ...steps, 9
-                        ]
-                    }
+    const uploadImg = async (url: string) => {
+        const list = {
+            publicData: {
+                image: url
+            }
+        }
+        try {
+            let res = (await HenceForthApi.Auth.updateUserProfile(list))
+            console.log(res);
+        } catch (error) {
+            console.log(error);
 
-                }))
-                navigate(`/create-stall/sucessfull-hosting/${match?.params.id}`)
-            }
-            catch (error) {
-                console.log(error);
-            }
-        } else {
-            toast('🦄 Please Choose Your Time Slot', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            })
         }
     }
+
+    // const postStep9Data = async () => {
+    //     // if () {
+    //     try {
+    //         (await HenceForthApi.Auth.Updatedlisting({
+    //             id: match?.params.id,
+    //             publicData: {
+
+    //                 stepsCompleted: [
+    //                     ...steps, 9
+    //                 ]
+    //             }
+
+    //         }))
+    //         navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    //     // } else {
+    //     //     toast('🦄 Please Choose Your Time Slot', {
+    //     //         position: "top-right",
+    //     //         autoClose: 2000,
+    //     //         hideProgressBar: false,
+    //     //         closeOnClick: true,
+    //     //         pauseOnHover: true,
+    //     //         draggable: true,
+    //     //         progress: undefined,
+    //     //         theme: "light",
+    //     //     })
+    //     // }
+    // }
+
+    let userImg = data?.attributes?.publicData?.host_image
+    console.log(userImg);
+
+
 
     return (
         <>
@@ -85,31 +112,44 @@ export default function Stalls9(props: props) {
                 </div>
                 <div className="row mx-0 h-100">
                     <div className="col-md-6 py-5 px-md-0 frame-height overflow-y-auto">
-                        <div className="col-md-8 mx-auto d-flex flex-column h-100">
-                            <h4 className="fw-600 heading-big text-black mb-1">Check In &amp; Check Out</h4>
-                            <p className="font-small-bold my-2">Choose a time for Check-in and Check-out</p>
-                            <div className="form-group">
-                                <label htmlFor="arrive_after" className="font-small-bold w-100">Arrive After <input type="time" value={state.arrive} name="arrive" onChange={updateState} className="form-control" /></label>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="arrive_after" className="font-small-bold w-100">Leave Before <input type="time" value={state.leave} name="leave" onChange={updateState} className="form-control" /></label>
-                            </div>
-                            <div className="d-flex justify-content-between border-top mt-5">
-                                <Link to="/create-stall/step8">
+                        <div className="col-lg-8 col-md-11 px-md-0 mx-auto">
+                            <h3 className="heading-big pb-4">Profile picture</h3>
+                            {loader && <p>Feching Image....</p>}
+                            <div >
+
+                                <div className="d-flex mb-3 align-items-start">
+                                    <div className="h-101 mr-4 position-relative">
+
+                                        <img className="rounded-circle img-fluid profile-img"
+                                            src={`${HenceForthApi.API_FILE_ROOT_SMALL}${userImg}`}
+                                        />
+                                    </div>
+
+                                    <div className="d-flex flex-column align-items-start">
+                                        <p className="mt-1">Add your photo so other users can see who they are communicating with</p>
+                                        <label htmlFor="file">
+                                            {/* <i className="bi bi-image-fill ms-2 h3"> */}
+                                            <span className="h3 ms-1 btn-primary p-2 rounded-2">Change Photo</span>
+                                            {/* </i> */}
+                                        </label>
+
+                                        <input type="file" id="file" onChange={handleSubmit} className="d-none" />
+                                    </div>
+                                </div>
+                                <div className="d-flex justify-content-between border-top mt-5">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src={backArrow} className="pr-1" alt="" /> Back
-                                    </button>
-                                </Link>
-                                {/* <Link to="/create-stall/sucessfull-hosting"> */}
-                                <button className="btn my-3 px-3 text-white" onClick={postStep9Data} style={{ background: "rgb(0, 164, 180)" }}> Next
-                                </button>
-                                {/* </Link> */}
+                                        <img src={backArrow} className="pr-1" /> Back </button>
+                                    <Link to={`/create-stall/checkin-and-checkout/${match?.params.id}`}>
+                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> Next </button>
+                                    </Link>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 text-center px-md-0 d-none d-md-block">
                         <div className="py-5 h-100 d-flex align-items-center bg-light justify-content-center">
-                            <img src={horseImg} alt="" width="250px" />
+                            <img src={selfieImg} alt="" width="250px" />
                         </div>
                     </div>
                 </div>

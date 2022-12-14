@@ -109,7 +109,7 @@ const Auth = {
     requests.file(
       `/upload/aws?storageType=5&environment=2&isDefaultAsset=0`, key, file
     ),
-  updateProfileImage: (info: any) =>
+  updateUserProfile: (info: any) =>
     requests.post("/current_user/update_profile", info),
 };
 

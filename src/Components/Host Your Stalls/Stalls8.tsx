@@ -16,13 +16,16 @@ export default function Stalls8(props: props) {
     const match = useMatch(`/create-stall/step8/:id`)
     const navigate = useNavigate()
 
+    const [userImg, setUserImg] = useState<string>('')
+
     const [checked, setChecked] = useState<string | number | readonly string[] | undefined>()
 
     useEffect(() => {
         const list = async () => {
             try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
+                setSteps(res?.attributes?.publicData?.stepsCompleted)
+                setUserImg(res?.attributes?.publicData?.host_image)
             } catch (error) {
                 console.log(error);
             }
@@ -56,7 +59,11 @@ export default function Stalls8(props: props) {
                         ]
                     }
                 }))
-                navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+
+                {
+                    !userImg ? navigate(`/create-stall/step9/${match?.params.id}`) :
+                        navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+                }
             }
             catch (error) {
                 console.log(error);

@@ -19,3 +19,26 @@
     overflow: hidden;
     margin-right: 12px;
 }
+.acc-box{
+    box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+    border-radius: 6px;
+    padding: 2.4rem 1.8rem;
+    height: 100%;
+}
+.book-img {
+    height: 100px;
+    width: 100px;
+}
+.profile-img {
+    width: 90px;
+    height: 90px;
+    max-width: 90px!important;
+}
+.btn-primary {
+    background-color: #00a4b4;
+    font-size: 14px;
+    color: #fff;
+    border: 1px solid #00a4b4;
+    font-weight: 700;
+    min-height: 39px;
+}
