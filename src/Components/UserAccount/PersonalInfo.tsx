@@ -97,9 +97,10 @@ const PersonalInfo = () => {
         <>
             <div className="container mt-4">
                 <nav aria-label="breadcrumb mb-4">
-                    <ol className="breadcrumb pl-0 mb-2"><li className="breadcrumb-item">
-                        <Link to="/account">Account</Link>
-                    </li>
+                    <ol className="breadcrumb pl-0 mb-2">
+                        <li className="breadcrumb-item">
+                            <Link to="/account" className='text-decoration-none text-black'>Account</Link>
+                        </li>
                         <li aria-current="page" className="breadcrumb-item active d-flex align-items-center justify-content-center"> Personal Info </li>
                     </ol>
                 </nav>

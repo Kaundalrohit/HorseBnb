@@ -16,16 +16,13 @@ const GuestStep8 = (props: props) => {
 
     const { steps, setSteps } = props
 
-
     const [state, setState] = useState({
         description: "",
         extra_detail: "",
         userImg: ""
-
     })
 
     const handleText = (e: any) => {
-
         setState({
             ...state,
             [e.target.name]: e.target.value
@@ -57,13 +54,17 @@ const GuestStep8 = (props: props) => {
 
 
     const handleStep8 = async () => {
-
+        let step = !state.userImg ? [
+            ...steps, 8,
+        ] : [
+            ...steps, 8, 9
+        ]
         const list = {
             id: match?.params.id,
             description: state.description,
             publicData: {
                 extra_detail: state.extra_detail,
-                stepsCompleted: [...steps, 8]
+                stepsCompleted: step
             }
         }
         if (state.description && state.extra_detail) {

@@ -71,34 +71,41 @@ export default function LastStep() {
         },
         {
             id: 7,
-            step: "Check in and Check out",
-            url: `create-stall/checkin-and-checkout/${match?.params.id}`,
+            step: "Photo",
+            url: `create-stall/step9/${match?.params.id}`,
             stepNumber: 9
 
         },
         {
             id: 8,
+            step: "Check in and Check out",
+            url: `create-stall/checkin-and-checkout/${match?.params.id}`,
+            stepNumber: 10
+
+        },
+        {
+            id: 9,
             step: "Agreement",
             url: `create-stall/sucessfull-hosting/${match?.params.id}`,
             stepNumber: 14
 
         },
         {
-            id: 9,
+            id: 10,
             step: "Calendar Availability",
             url: `create-stall/step11/${match?.params.id}`,
             stepNumber: 15
 
         },
         {
-            id: 10,
+            id: 11,
             step: "Pricing",
             url: `create-stall/step12/${match?.params.id}`,
             stepNumber: 11
 
         },
         {
-            id: 11,
+            id: 12,
             step: "Stripe Connect",
             url: `create-stall/step13/${match?.params.id}`,
             stepNumber: 12

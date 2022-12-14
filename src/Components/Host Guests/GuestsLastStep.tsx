@@ -89,34 +89,41 @@ const GuestsLastStep = (props: props) => {
         // {id:7, step:"Profile Photo" , url:"Timmings/:id"},
         {
             id: 7,
-            step: "Check in and Check out",
+            step: "Photos",
             url: `create-guest/step9/${match?.params.id}`,
             stepNumber: 9
 
         },
         {
             id: 8,
+            step: "Check in and Check out",
+            url: `create-guest/checkin-and-checkout/${match?.params.id}`,
+            stepNumber: 10
+
+        },
+        {
+            id: 9,
             step: "Agreement",
             url: `create-guest/step10/${match?.params.id}`,
             stepNumber: 14
 
         },
         {
-            id: 9,
+            id: 10,
             step: "Calendar Availability",
             url: `create-guest/step11/${match?.params.id}`,
             stepNumber: 15
 
         },
         {
-            id: 10,
+            id: 11,
             step: "Pricing",
             url: `create-guest/step12/${match?.params.id}`,
             stepNumber: 11
 
         },
         {
-            id: 11,
+            id: 12,
             step: "Stripe Connect",
             url: `create-guest/step3/${match?.params.id}`,
             stepNumber: 12

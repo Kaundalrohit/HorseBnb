@@ -13,9 +13,9 @@ type props = {
 }
 
 export default function Stalls9(props: props) {
+    const { steps, setSteps } = props
     const [userImg, setUserImg] = useState<string>('')
     const [loader, setLoader] = useState<boolean>(false)
-    const { steps, setSteps } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-stall/step9/:id')
@@ -67,38 +67,6 @@ export default function Stalls9(props: props) {
         }
     }
 
-    // const postStep9Data = async () => {
-    //     // if () {
-    //     try {
-    //         (await HenceForthApi.Auth.Updatedlisting({
-    //             id: match?.params.id,
-    //             publicData: {
-
-    //                 stepsCompleted: [
-    //                     ...steps, 9
-    //                 ]
-    //             }
-
-    //         }))
-    //         navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
-    //     }
-    //     catch (error) {
-    //         console.log(error);
-    //     }
-    //     // } else {
-    //     //     toast('🦄 Please Choose Your Time Slot', {
-    //     //         position: "top-right",
-    //     //         autoClose: 2000,
-    //     //         hideProgressBar: false,
-    //     //         closeOnClick: true,
-    //     //         pauseOnHover: true,
-    //     //         draggable: true,
-    //     //         progress: undefined,
-    //     //         theme: "light",
-    //     //     })
-    //     // }
-    // }
-
     return (
         <>
             <div >
@@ -125,11 +93,8 @@ export default function Stalls9(props: props) {
                                     <div className="d-flex flex-column align-items-start">
                                         <p className="mt-1">Add your photo so other users can see who they are communicating with</p>
                                         <label htmlFor="file">
-                                            {/* <i className="bi bi-image-fill ms-2 h3"> */}
                                             <span className="h3 ms-1 btn-primary p-2 rounded-2">{!userImg ? "Upload Photo" : "Change Photo"}</span>
-                                            {/* </i> */}
                                         </label>
-
                                         <input type="file" id="file" onChange={handleSubmit} className="d-none" />
                                     </div>
                                 </div>

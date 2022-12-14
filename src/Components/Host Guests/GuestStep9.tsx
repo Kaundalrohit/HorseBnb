@@ -12,19 +12,21 @@ type props = {
 }
 
 export default function GuestStep9(props: props) {
-    const [data, setData] = useState<any>([])
-    const [loader, setLoader] = useState<boolean>(false)
     const { steps, setSteps } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-guest/step9/:id')
     const navigate = useNavigate()
 
+    const [userImg, setUserImg] = useState<string>('')
+    const [loader, setLoader] = useState<boolean>(false)
+
+
     const list = async () => {
         try {
             let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            setData(res)
+            setSteps(res?.attributes?.publicData?.stepsCompleted)
+            setUserImg(res?.attributes?.publicData?.host_image)
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +55,8 @@ export default function GuestStep9(props: props) {
     const uploadImg = async (url: string) => {
         const list = {
             publicData: {
-                image: url
+                image: url,
+                stepsCompleted: [...steps, 9]
             }
         }
         try {
@@ -66,8 +69,7 @@ export default function GuestStep9(props: props) {
     }
 
 
-    let userImg = data?.attributes?.publicData?.host_image
-    console.log(userImg);
+
 
 
 
