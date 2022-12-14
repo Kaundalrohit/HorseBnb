@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import selfieImg from '../Images/taking_selfie.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
+import defaultUserImg from '../Images/defaultUserImg.jpg'
 
 type props = {
     steps: any,
@@ -12,7 +13,7 @@ type props = {
 }
 
 export default function Stalls9(props: props) {
-    const [data, setData] = useState<any>([])
+    const [userImg, setUserImg] = useState<string>('')
     const [loader, setLoader] = useState<boolean>(false)
     const { steps, setSteps } = props
 
@@ -23,8 +24,8 @@ export default function Stalls9(props: props) {
     const list = async () => {
         try {
             let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            setData(res)
+            setSteps(res?.attributes?.publicData?.stepsCompleted)
+            setUserImg(res?.attributes?.publicData?.host_image)
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +54,8 @@ export default function Stalls9(props: props) {
     const uploadImg = async (url: string) => {
         const list = {
             publicData: {
-                image: url
+                image: url,
+                stepsCompleted: [...steps, 9,]
             }
         }
         try {
@@ -97,11 +99,6 @@ export default function Stalls9(props: props) {
     //     // }
     // }
 
-    let userImg = data?.attributes?.publicData?.host_image
-    console.log(userImg);
-
-
-
     return (
         <>
             <div >
@@ -121,7 +118,7 @@ export default function Stalls9(props: props) {
                                     <div className="h-101 mr-4 position-relative">
 
                                         <img className="rounded-circle img-fluid profile-img"
-                                            src={`${HenceForthApi.API_FILE_ROOT_SMALL}${userImg}`}
+                                            src={userImg ? `${HenceForthApi.API_FILE_ROOT_SMALL}${userImg}` : defaultUserImg}
                                         />
                                     </div>
 
@@ -129,7 +126,7 @@ export default function Stalls9(props: props) {
                                         <p className="mt-1">Add your photo so other users can see who they are communicating with</p>
                                         <label htmlFor="file">
                                             {/* <i className="bi bi-image-fill ms-2 h3"> */}
-                                            <span className="h3 ms-1 btn-primary p-2 rounded-2">Change Photo</span>
+                                            <span className="h3 ms-1 btn-primary p-2 rounded-2">{!userImg ? "Upload Photo" : "Change Photo"}</span>
                                             {/* </i> */}
                                         </label>
 

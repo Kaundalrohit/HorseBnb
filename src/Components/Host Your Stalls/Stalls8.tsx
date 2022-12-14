@@ -46,6 +46,11 @@ export default function Stalls8(props: props) {
     }
 
     const postStep8Data = async () => {
+        let step = !userImg ? [
+            ...steps, 8,
+        ] : [
+            ...steps, 8, 9
+        ]
         if (state.description && state.extra_detail) {
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
@@ -54,9 +59,7 @@ export default function Stalls8(props: props) {
                     publicData: {
                         extra_detail: state.extra_detail,
                         is_accomodation_offered: checked,
-                        stepsCompleted: [
-                            ...steps, 8,
-                        ]
+                        stepsCompleted: step
                     }
                 }))
 
