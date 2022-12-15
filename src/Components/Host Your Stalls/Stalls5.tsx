@@ -41,6 +41,15 @@ export default function Stalls5(props: props) {
         }
     }
 
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(function (position) {
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+            });
+        }
+    }
+
     return (
         <>
             <section className="add_Location">
@@ -55,9 +64,10 @@ export default function Stalls5(props: props) {
                                 <h3 className="fw-600 heading-big">Where is your place located?</h3>
                                 <div className="">
                                     <p className="font-small-bold my-3">Please input your exact address. Guests will not be able to see your exact address until they have made a booking.</p>
-                                    <button className="btn btn-sky-outline-lg border-0 my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
+                                    <button className="btn btn-sky-outline-lg border-0 my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }} onClick={getLocation}>
                                         <img src={locationIcon} alt="" className="img-fluid" />
-                                        <span style={{ color: "#00a4b4" }} className="fw-bold ps-2"> Use current location </span></button>
+                                        <span style={{ color: "#00a4b4" }} className="fw-bold ps-2"> Use current location </span>
+                                    </button>
 
                                 </div>
                                 <div className="d-flex justify-content-between mt-5 mb-0 border-top">

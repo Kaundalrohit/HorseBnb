@@ -33,7 +33,7 @@ const BookingDetails = () => {
             let res1 = (await HenceForthApi.hostListing.queryListing(res.id.hostId, 3, 1)).data
             let reviewRes = (await HenceForthApi.reviewListing.bookingReviews(id)).data
             setBookingDetails(res)
-            console.log(reviewRes);
+            // console.log(reviewRes);
 
             setHostData(res1)
             setReview(reviewRes)
@@ -54,8 +54,11 @@ const BookingDetails = () => {
     let rating: string = bookingDetails?.attributes?.publicData?.rating
     let hostImg: string = bookingDetails?.attributes?.publicData?.host_image
     let hostName: string = bookingDetails?.attributes?.publicData?.hosted_by
+    let hostId: string = bookingDetails?.id?.hostId
     let bookingType = bookingDetails?.attributes?.publicData?.type
 
+
+    console.log(hostId);
 
 
     const isImage = (url: string): boolean => {
@@ -114,15 +117,17 @@ const BookingDetails = () => {
                                 <div >
                                     <h2 className="font-22-bold text-black my-0 line-height-space" > business  hosted by {hostName}</h2>
                                 </div>
-                                <div className="round-img ml-3">
-                                    <img className="obj-cover" alt="" style={{ width: "70px" }} src={
-                                        isImage(hostImg)
-                                            ?
-                                            `${HenceForthApi.API_FILE_ROOT_SMALL}${hostImg}`
-                                            :
-                                            hostImg
-                                    } />
-                                </div>
+                                <Link to={`/profile/${hostId}`}>
+                                    <div className="round-img ml-3">
+                                        <img className="obj-cover" alt="" style={{ width: "70px" }} src={
+                                            isImage(hostImg)
+                                                ?
+                                                `${HenceForthApi.API_FILE_ROOT_SMALL}${hostImg}`
+                                                :
+                                                hostImg
+                                        } />
+                                    </div>
+                                </Link>
                             </div>
                             <div className="border-bottom py-3">
                                 <div className="d-flex align-items-center">
@@ -179,6 +184,7 @@ const BookingDetails = () => {
                                     <span className="three-line-ellipsis">{description} </span>
                                 </p>
                             </div>
+
                             <div className="col-md-12">
                                 <h4 className="fw-600 heading-big mb-4">Select check-in date</h4>
                                 <div className="date my-3">
@@ -377,8 +383,7 @@ const BookingDetails = () => {
                                         />
                                     </div>
                                     <div className="d-inline-block">
-                                        <h6 className="text-black font-22-bold">Hosted By {bookingDetails?.attributes?.publicData?.hosted_by
-                                        } </h6>
+                                        <h6 className="text-black font-22-bold">Hosted By {hostName} </h6>
                                         <p className="text-line font-small mb-0 mt-2"> Joined on
                                             {
                                                 (new Date(bookingDetails?.attributes?.publicData?.joined_in)).toLocaleDateString()

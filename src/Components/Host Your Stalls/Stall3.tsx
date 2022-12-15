@@ -8,8 +8,6 @@ import removeImg from '../Images/remove_circle_outline.svg'
 import addImg from '../Images/add_circle_outline.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
 
-
-
 type props = {
     steps: any,
     setSteps: any
@@ -20,10 +18,41 @@ export default function Stall3(props: props) {
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch(`/create-stall/step3/:id`)
-    // const { id } = useParams()
     const navigate = useNavigate();
 
     const [count, setCount] = useState<number>(0);
+
+    const entries = [
+        {
+            dayOfWeek: "sun",
+            seats: count
+        },
+        {
+            dayOfWeek: "mon",
+            seats: count
+        },
+        {
+            dayOfWeek: "tue",
+            seats: count
+        },
+        {
+            dayOfWeek: "wed",
+            seats: count
+        },
+        {
+            dayOfWeek: "thu",
+            seats: count
+        },
+        {
+            dayOfWeek: "fri",
+            seats: count
+        },
+        {
+            dayOfWeek: "sat",
+            seats: count
+        }
+
+    ]
 
     useEffect(() => {
         const list = async () => {
@@ -42,6 +71,10 @@ export default function Stall3(props: props) {
     const postStep3Data = async () => {
 
         const list = {
+            availabilityPlan: {
+                entries,
+                type: "availability-plan/day"
+            },
             id: match?.params.id,
             publicData: {
                 guests: 0,

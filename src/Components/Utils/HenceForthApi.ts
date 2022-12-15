@@ -111,6 +111,8 @@ const Auth = {
     ),
   updateUserProfile: (info: any) =>
     requests.post("/current_user/update_profile", info),
+  hostProfile: (host_id: number) =>
+    requests.get(`/host/profile?host_id=${host_id}`),
 };
 
 // Uploadimage: (key: string, file: any, storageType: number, environment: number) =>

@@ -11,9 +11,7 @@ import introImg from "../../Images/no_introducing_horsebnb.png"
 import rightArrow from "../../Images/rightArrow.png"
 import monthlyBanner from '../../Images/no_monthly_banner.png'
 import emptyImg from '../../Images/empty.png'
-
-
-
+import GoogleMaps from "../../GoogleMap/GoogleMaps";
 export default function Listing() {
 
     HenceForthApi.setToken(localStorage.getItem('token'));
@@ -86,6 +84,7 @@ export default function Listing() {
             title: 'Horse Adventures & Equine Activities'
         },
     ]
+
 
 
 
@@ -297,6 +296,7 @@ export default function Listing() {
                     </div>
                 </Link>
             </div>
+            <GoogleMaps />
         </>
     )
 }

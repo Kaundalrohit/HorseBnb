@@ -77,15 +77,6 @@ const PersonalInfo = () => {
         getData()
     }
 
-
-
-
-
-
-
-
-
-
     useEffect(() => {
         getData()
     }, [])

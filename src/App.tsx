@@ -49,6 +49,7 @@ import PersonalInfo from "./Components/UserAccount/PersonalInfo";
 import UpdatePassword from "./Components/UserAccount/UpdatePassword";
 import Payments from "./Components/UserAccount/Payments";
 import Stalls9 from "./Components/Host Your Stalls/Stalls9";
+import HostProfile from "./Components/BookingDetails/HostProfile";
 
 
 function App() {
@@ -128,6 +129,7 @@ function App() {
 
             {/* <...........................................> */}
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="profile/:id" element={<HostProfile />} />
 
 
             {/* <..............User Account..................> */}
