@@ -111,7 +111,7 @@ const Auth = {
     ),
   updateUserProfile: (info: any) =>
     requests.post("/current_user/update_profile", info),
-  hostProfile: (host_id: number) =>
+  hostProfile: (host_id: any) =>
     requests.get(`/host/profile?host_id=${host_id}`),
 };
 
@@ -132,6 +132,7 @@ export default {
   uploadAdImg,
   hostListing,
   reviewListing,
+
   // Administrator,
   // Staff,
   // Common,

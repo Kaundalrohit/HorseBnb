@@ -12,6 +12,7 @@ import rightArrow from "../../Images/rightArrow.png"
 import monthlyBanner from '../../Images/no_monthly_banner.png'
 import emptyImg from '../../Images/empty.png'
 import GoogleMaps from "../../GoogleMap/GoogleMaps";
+import StepDate from "../../Date/StepDate";
 export default function Listing() {
 
     HenceForthApi.setToken(localStorage.getItem('token'));
@@ -296,7 +297,9 @@ export default function Listing() {
                     </div>
                 </Link>
             </div>
-            <GoogleMaps />
+            {/* <GoogleMaps /> */}
+            {/* <StepDate /> */}
+
         </>
     )
 }
