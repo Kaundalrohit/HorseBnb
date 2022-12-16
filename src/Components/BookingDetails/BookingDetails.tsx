@@ -58,12 +58,14 @@ const BookingDetails = () => {
     let bookingType = bookingDetails?.attributes?.publicData?.type
 
 
-    console.log(hostId);
+    // console.log(hostId);
 
 
     const isImage = (url: string): boolean => {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     }
+    console.log(hostImg);
+
 
 
     return (
@@ -119,13 +121,16 @@ const BookingDetails = () => {
                                 </div>
                                 <Link to={`/profile/${hostId}`}>
                                     <div className="round-img ml-3">
-                                        <img className="obj-cover" alt="" style={{ width: "70px" }} src={
-                                            isImage(hostImg)
-                                                ?
-                                                `${HenceForthApi.API_FILE_ROOT_SMALL}${hostImg}`
-                                                :
-                                                hostImg
-                                        } />
+                                        <img className="obj-cover" alt="" style={{ width: "70px" }}
+                                            src={
+                                                isImage(hostImg)
+                                                    ?
+                                                    `${HenceForthApi.API_FILE_ROOT_SMALL}${hostImg}`
+                                                    :
+                                                    hostImg
+                                            }
+                                        // src={hostImg}
+                                        />
                                     </div>
                                 </Link>
                             </div>

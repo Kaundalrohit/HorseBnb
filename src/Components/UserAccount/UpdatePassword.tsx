@@ -2,10 +2,13 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import passImg from '../Images/Key.svg'
 import HenceForthApi from '../Utils/HenceForthApi'
+import { strongPassword } from '../Utils/Validation'
+
 
 
 const UpdatePassword = () => {
     const [toggle, setToggle] = useState<boolean>(true)
+    HenceForthApi.setToken(localStorage.getItem("token"))
 
     const handleToggle = () => {
         setToggle(!toggle)
@@ -25,16 +28,37 @@ const UpdatePassword = () => {
         })
     }
 
+
     console.log(pass.currentPass);
     console.log(pass.newPass);
     console.log(pass.confirmPass);
 
 
     const changePass = async () => {
-        let res = (await HenceForthApi.Auth.changePassword({
-            currentPassword: "",
-            newPassword: ""
-        }))
+        if (strongPassword(pass.newPass)) {
+            try {
+
+                let res = (await HenceForthApi.Auth.changespassword({
+                    currentPassword: pass.currentPass,
+                    newPassword: pass.newPass
+                }))
+                console.log(res);
+                setPass({
+                    currentPass: "",
+                    newPass: "",
+                    confirmPass: ""
+                })
+                alert('Password Changed Successfully')
+                setToggle(true)
+            } catch (error) {
+                console.log(error);
+                alert('Please enter correct current password!')
+
+            }
+        } else {
+            alert('Your password should be atleast 8 characters long and alphanumeric with one special character, 1 uppercase , 1 lowercase.')
+        }
+
     }
     return (
         <>
@@ -61,8 +85,8 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">Current password</label>
                                         <input type="password" placeholder="Enter current password"
-                                            value={pass.currentPass} name="currentpassword"
-                                            onClick={updatePass}
+                                            value={pass.currentPass} name="currentPass"
+                                            onChange={updatePass}
                                             className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
                                         </div>
@@ -72,8 +96,8 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">New password</label>
                                         <input type="password"
-                                            value={pass.newPass} name="newpassword"
-                                            onClick={updatePass} placeholder="Enter new password" className="form-control ng-untouched ng-pristine ng-invalid" />
+                                            value={pass.newPass} name="newPass"
+                                            onChange={updatePass} placeholder="Enter new password" className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
                                         </div>
                                     </div>
@@ -82,15 +106,15 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">Confirm password</label>
                                         <input type="password"
-                                            value={pass.confirmPass} name="confirmpassword"
-                                            onClick={updatePass}
+                                            value={pass.confirmPass} name="confirmPass"
+                                            onChange={updatePass}
                                             placeholder="Enter confirm password" className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-12">
-                                    <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"> Update password </button>
+                                    <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" disabled={pass.newPass.length === 0} onClick={changePass}> Update password </button>
                                 </div>
                             </div>}
                         </div>
