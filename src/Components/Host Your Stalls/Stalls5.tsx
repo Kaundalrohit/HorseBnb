@@ -11,6 +11,7 @@ type props = {
 export default function Stalls5(props: props) {
     const { steps, setSteps } = props
     const match = useMatch(`/create-stall/step5/:id`)
+
     useEffect(() => {
         const list = async () => {
             try {

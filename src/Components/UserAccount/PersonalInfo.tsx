@@ -1,4 +1,3 @@
-import { wait } from '@testing-library/user-event/dist/utils'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import userImgIcon from '../Images/business-card.svg'
@@ -152,6 +151,7 @@ const PersonalInfo = () => {
             // setLoader(true)
             let res = (await HenceForthApi.Auth.Uploadimage("file", file))
             await uploadImg(res.filename)
+            await getData()
             // await list()
             // setLoader(false)
         } catch (error) {

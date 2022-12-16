@@ -18,23 +18,11 @@ export default function CheckInCheckOut(props: props) {
     const match = useMatch('/create-stall/checkin-and-checkout/:id')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
-
     const [state, setstate] = useState({
         arrive: "",
         leave: ""
     })
+
     const updateState = (e: any) => {
         setstate({
             ...state,
@@ -75,6 +63,23 @@ export default function CheckInCheckOut(props: props) {
         }
     }
 
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setstate({
+                    ...state,
+                    arrive: res?.data?.attributes?.publicData?.arrive_after,
+                    leave: res?.data?.attributes?.publicData?.leave_before
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
     return (
         <>
             <div >

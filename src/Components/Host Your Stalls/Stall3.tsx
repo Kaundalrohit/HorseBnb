@@ -54,20 +54,6 @@ export default function Stall3(props: props) {
 
     ]
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-                console.log(res);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
-
     const postStep3Data = async () => {
 
         const list = {
@@ -107,6 +93,20 @@ export default function Stall3(props: props) {
             });
         }
     }
+
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setCount(res?.data?.attributes?.publicData?.stalls)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
     return (
         <>
             <section className="stall_step3">

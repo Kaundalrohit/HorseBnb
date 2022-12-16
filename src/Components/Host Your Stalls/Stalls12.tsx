@@ -18,23 +18,8 @@ export default function Stalls12(props: props) {
     const match = useMatch('/create-stall/step12/:id')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
-
     const [price, setPrice] = useState<number>()
-    const [check, setCheck] = useState<number>()
-
-
+    const [check, setCheck] = useState<any>()
 
     const poststep12Data = async () => {
         if (price) {
@@ -71,6 +56,22 @@ export default function Stalls12(props: props) {
             })
         }
     }
+
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setPrice(res?.data?.attributes?.publicData?.listing_price)
+                setCheck(res?.data?.attributes?.publicData?.bookingAcceptType)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, []);
+
     return (
         <>
             <div >
@@ -98,12 +99,19 @@ export default function Stalls12(props: props) {
                                 <div >
                                     <label htmlFor="radio-three" className="radio-lable px-3 d-flex position-relative align-items-center">
                                         <span className="ml-3 font-medium">Yes</span>
-                                        <input type="radio" id="radio-three" value={1} onChange={(e: any) => setCheck(e.target.value)} className="ng-untouched ng-pristine ng-valid" name='radio-btn' />
+                                        <input type="radio" id="radio-three" value={1} checked={check == 1} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                            console.log(e.target.value)
+                                        }
+                                        } name='radio-btn' />
                                         <span className="radio-checkmark"></span>
                                     </label>
                                     <label htmlFor="radio-four" className="radio-lable px-3 d-flex position-relative align-items-center">
                                         <span className="ml-3 font-medium">No</span>
-                                        <input type="radio" id="radio-four" value={2} onChange={(e: any) => setCheck(e.target.value)} name='radio-btn' className="ng-untouched ng-pristine ng-valid" />
+                                        <input type="radio" id="radio-four" value={2} checked={check == 2} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                            console.log(e.target.value)
+                                        }} name='radio-btn' />
                                         <span className="radio-checkmark"></span>
                                     </label>
                                 </div>

@@ -12,23 +12,8 @@ type props = {
 
 export default function Stalls11(props: props) {
     const { steps, setSteps } = props
-
     const match = useMatch('/create-stall/step11/:id')
-    const [date, setDate] = useState()
-    console.log(date);
-
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
+    const [date, setDate] = useState<string | number>()
 
     const uploadStep11Data = async () => {
         try {
@@ -45,6 +30,21 @@ export default function Stalls11(props: props) {
 
         }
     }
+
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                // setDate()
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>

@@ -71,7 +71,9 @@ function App() {
             {/* <.....................................> */}
 
             <Route path="host-stalls" element={<Hoststalls />} />
-            <Route path="create-stall/step1" element={<Stall1 setSteps={setSteps} steps={steps} />} />
+            <Route path="create-stall/step1" element={<Stall1 setSteps={setSteps} steps={steps} />} >
+              <Route path=":id" element={<Stall1 setSteps={setSteps} steps={steps} />} />
+            </Route>
             <Route path="create-stall/step3/:id" element={<Stall3 setSteps={setSteps} steps={steps} />} />
             <Route path="create-stall/step5/:id" element={<Stalls5 setSteps={setSteps} steps={steps} />} />
             <Route path="create-stall/step6/:id" element={<Stalls6 setSteps={setSteps} steps={steps} />} />
@@ -89,7 +91,9 @@ function App() {
 
 
             <Route path="host-guests" element={<HostGuests />} />
-            <Route path="create-guest/step1" element={<GuestStep1 steps={steps} />} />
+            <Route path="create-guest/step1" element={<GuestStep1 steps={steps} />} >
+              <Route path=":id" element={<GuestStep1 steps={steps} />} />
+            </Route>
             <Route path="create-guest/step3/:id" element={<GuestStep3 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step5/:id" element={<GuestStep5 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step6/:id" element={<GuestStep6 steps={steps} setSteps={setSteps} />} />
@@ -108,7 +112,9 @@ function App() {
             {/* <.....................................> */}
 
             <Route path="host-an-experience" element={<AdventureStalls />} />
-            <Route path="add-experience/step1/" element={<Step1 adSteps={adSteps} />} />
+            <Route path="add-experience/step1/" element={<Step1 adSteps={adSteps} />} >
+              <Route path=":id" element={<Step1 adSteps={adSteps} />} />
+            </Route>
             <Route path="add-experience/step2/:id" element={<Step2 adSteps={adSteps} setAdSteps={setAdSteps} />} />
             <Route path="add-experience/step4/:id" element={<Step4 adSteps={adSteps} setAdSteps={setAdSteps} />} />
             <Route path="add-experience/step5/:id" element={<Step5 adSteps={adSteps} setAdSteps={setAdSteps} />} />

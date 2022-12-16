@@ -17,27 +17,12 @@ export default function Stalls8(props: props) {
     const navigate = useNavigate()
 
     const [userImg, setUserImg] = useState<string>('')
-
-    const [checked, setChecked] = useState<string | number | readonly string[] | undefined>()
-
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
-                setSteps(res?.attributes?.publicData?.stepsCompleted)
-                setUserImg(res?.attributes?.publicData?.host_image)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
-
+    const [check, setCheck] = useState<any>()
     const [state, setstate] = useState({
         description: "",
         extra_detail: "",
     })
+
     const updateState = (e: any) => {
         setstate({
             ...state,
@@ -58,7 +43,7 @@ export default function Stalls8(props: props) {
                     id: match?.params.id,
                     publicData: {
                         extra_detail: state.extra_detail,
-                        is_accomodation_offered: checked,
+                        is_accomodation_offered: check,
                         stepsCompleted: step
                     }
                 }))
@@ -87,7 +72,25 @@ export default function Stalls8(props: props) {
 
     }
 
-
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = (await HenceForthApi.Auth.Listid(match?.params.id)).data
+                setSteps(res?.attributes?.publicData?.stepsCompleted)
+                setUserImg(res?.attributes?.publicData?.host_image)
+                setCheck(res?.attributes?.publicData?.is_accomodation_offered)
+                setstate({
+                    ...state,
+                    description: res?.attributes?.description,
+                    extra_detail: res?.attributes?.publicData?.extra_detail
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
 
     return (
         <>
@@ -115,8 +118,8 @@ export default function Stalls8(props: props) {
                             </div>
                             <div className="mt-5">
                                 <label htmlFor="is_accomodation_offered" className="tickbox tickbox-sm text-default" > I also offer guest accommodations <input type="checkbox"
-                                    value={checked} onChange={(e: any) => {
-                                        setChecked(e.target.checked)
+                                    checked={check} onChange={(e: any) => {
+                                        setCheck(e.target.checked)
                                     }} id="is_accomodation_offered" name="is_accomodation_offered" className="ng-untouched ng-pristine ng-valid" />
                                     <span className="checkmark skyblue"></span>
                                 </label>

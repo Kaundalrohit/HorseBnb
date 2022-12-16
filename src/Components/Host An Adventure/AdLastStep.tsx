@@ -26,7 +26,7 @@ const AdLastStep = (props: props) => {
         {
             id: 1,
             step: "Title",
-            url: `add-experience/step1`,
+            url: `add-experience/step1/${match?.params.id}`,
             stepNumber: 1
         },
         {

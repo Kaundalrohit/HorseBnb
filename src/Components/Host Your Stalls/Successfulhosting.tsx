@@ -12,31 +12,18 @@ type props = {
 
 export default function SuccessfullHosting(props: props) {
     const { steps, setSteps } = props
-
-    const [checked, setChecked] = useState()
-    const match = useMatch(`/create-stall/sucessfull-hosting/:id`)
     const navigate = useNavigate()
+    const match = useMatch(`/create-stall/sucessfull-hosting/:id`)
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
+    const [check, setCheck] = useState()
 
     const agreeConditions = async () => {
-        if (checked) {
+        if (check) {
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
                     publicData: {
-                        gotIt: checked,
+                        gotIt: check,
                         stepsCompleted: [
                             ...steps, 15
                         ]
@@ -62,6 +49,20 @@ export default function SuccessfullHosting(props: props) {
         }
 
     }
+
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setCheck(res?.data?.attributes?.publicData?.gotIt)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
     return (
         <>
             <div >
@@ -77,8 +78,8 @@ export default function SuccessfullHosting(props: props) {
                             <p className="font-small-bold my-3">Guests will be able to book your listing instantly. By keeping your calendar up to date you will only get bookings when you are able to host. If you make multiple cancellations it could affect your listings ranking and create negative reviews as it causes problems for travellers.</p>
                             <form className="ng-untouched ng-pristine ng-valid">
                                 <label htmlFor="calendar_up_to_date" className="tickbox tickbox-sm mt-0 mb-4 text-default"> Got it! I'll keep my calendar up to date.
-                                    <input type="checkbox" id="calendar_up_to_date" name="got_it" ng-reflect-name="got_it" value={checked} onChange={(e: any) => {
-                                        setChecked(e.target.checked)
+                                    <input type="checkbox" id="calendar_up_to_date" name="got_it" ng-reflect-name="got_it" checked={check} onChange={(e: any) => {
+                                        setCheck(e.target.checked)
                                     }} className="ng-untouched ng-pristine ng-valid" />
                                     <span className="checkmark skyblue"></span>
                                 </label>

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './HostyourStalls.css'
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,37 +13,54 @@ type props = {
 }
 
 export default function Stall1(props: props) {
+    const { steps, setSteps } = props
+
+    HenceForthApi.setToken(localStorage.getItem("token"))
+    const match = useMatch(`/create-stall/step1/:id`)
+    let id: any = match?.params?.id
+    const navigate = useNavigate()
 
     const [loader, setLoader] = useState<boolean>(false)
-
-    const navigate = useNavigate()
-    const { steps } = props
-
-
-    const [selectedStall, setSelectedStall] = useState<any>();
+    const [type, setType] = useState<any>(0)
     const [title, setTitle] = useState<string>("")
 
     const handleSelectChange = (event: any) => {
-        setSelectedStall(event.target.value);
+        setType(event.target.value);
     }
 
     const postStep1Data = async () => {
 
-        HenceForthApi.setToken(localStorage.getItem("token"))
         try {
-            if (selectedStall && title) {
+            if (type && title && id) {
                 setLoader(true)
-                let res = await HenceForthApi.Auth.createdraftlisting({
+                let res = await HenceForthApi.Auth.Updatedlisting({
                     title: title,
+                    id: id,
                     publicData: {
-                        type: parseInt(selectedStall),
+                        type: parseInt(type),
                         stepsCompleted: [
                             ...steps, 1
                         ]
                     }
                 })
                 setLoader(false)
-                navigate(`/create-stall/step3/${res.data.id.uuid}`)
+                navigate(`/create-stall/step3/${res.data.id.uuid
+                    }`)
+            }
+            else if (type && title) {
+                setLoader(true)
+                let res = await HenceForthApi.Auth.createdraftlisting({
+                    title: title,
+                    publicData: {
+                        type: parseInt(type),
+                        stepsCompleted: [
+                            ...steps, 1
+                        ]
+                    }
+                })
+                setLoader(false)
+                navigate(`/create-stall/step3/${res.data.id.uuid
+                    }`)
             }
             else {
                 toast('🦄 Please fill the details', {
@@ -57,10 +74,29 @@ export default function Stall1(props: props) {
                     theme: "light",
                 });
             }
+
         } catch (error) {
             console.log(error);
         }
     }
+
+    const list = async () => {
+        if (match?.params?.id) {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setType(res?.data?.attributes?.publicData?.type)
+                setTitle(res?.data?.attributes?.title)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    useEffect(() => {
+        list()
+        // eslint-disable-next-line 
+    }, [])
 
     return (
         <>
@@ -77,10 +113,10 @@ export default function Stall1(props: props) {
                             </div>
                             <div>
                                 <form className="form-group">
-                                    <select className="form-control mt-4 decorated" value={selectedStall} name="stallType" onChange={handleSelectChange}>
-                                        <option value="0">Choose stall type</option>
-                                        <option value={1}>Short term stall</option>
-                                        <option value={2}>Monthly board</option>
+                                    <select className="form-control mt-4 decorated" disabled={id} name="stallType" onChange={handleSelectChange} value={type}>
+                                        <option value={0} >Choose stall type</option>
+                                        <option value={1} >Short term stall</option>
+                                        <option value={2} >Monthly board</option>
                                     </select>
                                     <h2 className="heading-big mt-4">Create a title for your listing?</h2>
                                     <p>Catch guest's attention with a listing title that highlights what makes your place special. This can not be your business name.</p>

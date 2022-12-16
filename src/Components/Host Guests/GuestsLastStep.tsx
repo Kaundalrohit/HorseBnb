@@ -48,7 +48,7 @@ const GuestsLastStep = (props: props) => {
         {
             id: 1,
             step: "Title",
-            url: "create-guest/step1",
+            url: `create-guest/step1/${match?.params.id}`,
             stepNumber: 1
         },
         {

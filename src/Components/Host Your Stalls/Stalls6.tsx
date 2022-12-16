@@ -18,18 +18,7 @@ export default function Stalls6(props: props) {
     const match = useMatch(`/create-stall/step6/:id`)
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const list = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        list()
-        // eslint-disable-next-line 
-    }, [])
+    const [check, setCheck] = useState<any>([]);
 
     const amenitiesOffers = [
         { option: "Climate Contolled Barn", id: 1 },
@@ -63,23 +52,21 @@ export default function Stalls6(props: props) {
         { option: "Accepts Stallions", id: 29 },
     ]
 
-    const [checked, setChecked] = useState<any>([]);
 
     const handleChecked = (e: any) => {
         let value = e.target.value
-        let prev = checked;
+        let prev = check;
         let itemIndex = prev.indexOf(value);
         if (itemIndex !== -1) {
             prev.splice(itemIndex, 1);
         } else {
             prev.push(value);
         }
-        setChecked([...prev]);
+        setCheck([...prev]);
     };
 
-
     const postStep6Data = async () => {
-        if (checked.length === 0) return toast('🦄 Please Select at-least one option', {
+        if (check.length === 0) return toast('🦄 Please Select at-least one option', {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -96,7 +83,7 @@ export default function Stalls6(props: props) {
                 stepsCompleted: [
                     ...steps, 6
                 ],
-                amenities: checked
+                amenities: check
             }
 
         }
@@ -107,6 +94,20 @@ export default function Stalls6(props: props) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        const list = async () => {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setCheck(res?.data?.attributes?.publicData?.amenities)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        list()
+        // eslint-disable-next-line 
+    }, [])
 
     return (
         <>
@@ -125,7 +126,7 @@ export default function Stalls6(props: props) {
                                 <div className="row">
                                     <label className="tickbox tickbox-sm mt-0 mb-4 text-default ng-star-inserted">
                                         <input type="checkbox" value={e.option} className="form-check-input me-2"
-                                            onChange={(e: any) => handleChecked(e)}
+                                            onChange={(e: any) => handleChecked(e)} checked={check.includes(e.option)}
                                         />
                                         {e.option}
                                         <span className="checkmark ">

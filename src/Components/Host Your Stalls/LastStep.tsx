@@ -31,7 +31,7 @@ export default function LastStep() {
         {
             id: 1,
             step: "Title",
-            url: "create-stall/step1",
+            url: `create-stall/step1/${match?.params.id}`,
             stepNumber: 1
         },
         {
