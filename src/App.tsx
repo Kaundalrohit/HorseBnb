@@ -50,6 +50,8 @@ import UpdatePassword from "./Components/UserAccount/UpdatePassword";
 import Payments from "./Components/UserAccount/Payments";
 import Stalls9 from "./Components/Host Your Stalls/Stalls9";
 import HostProfile from "./Components/BookingDetails/HostProfile";
+import Navbar from "./Components/Home_Page/Navbar/Navbar";
+import UserAccount from "./Components/UserAccount/UserAccount";
 
 
 function App() {
@@ -57,7 +59,7 @@ function App() {
 
 
   const [steps, setSteps] = useState<any>([])
-  const [adSteps, setAdSteps] = useState<any>([])
+  // const [steps, setsteps] = useState<any>([])
   console.log(steps);
 
 
@@ -91,8 +93,8 @@ function App() {
 
 
             <Route path="host-guests" element={<HostGuests />} />
-            <Route path="create-guest/step1" element={<GuestStep1 steps={steps} />} >
-              <Route path=":id" element={<GuestStep1 steps={steps} />} />
+            <Route path="create-guest/step1" element={<GuestStep1 setSteps={setSteps} steps={steps} />} >
+              <Route path=":id" element={<GuestStep1 setSteps={setSteps} steps={steps} />} />
             </Route>
             <Route path="create-guest/step3/:id" element={<GuestStep3 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step5/:id" element={<GuestStep5 steps={steps} setSteps={setSteps} />} />
@@ -106,25 +108,23 @@ function App() {
             <Route path="create-guest/step12/:id" element={<GuestStep12 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step13/:id" element={<GuestStep13 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/last-step/:id" element={<GuestsLastStep steps={steps} setSteps={setSteps} />} />
-            {/* <Route path="create-guest/publish-listing/:id" element={<GuestPublish />} /> */}
 
 
             {/* <.....................................> */}
 
             <Route path="host-an-experience" element={<AdventureStalls />} />
-            <Route path="add-experience/step1/" element={<Step1 adSteps={adSteps} />} >
-              <Route path=":id" element={<Step1 adSteps={adSteps} />} />
+            <Route path="add-experience/step1/" element={<Step1 steps={steps} />} >
+              <Route path=":id" element={<Step1 steps={steps} />} />
             </Route>
-            <Route path="add-experience/step2/:id" element={<Step2 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/step4/:id" element={<Step4 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/step5/:id" element={<Step5 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/step6/:id" element={<Step6 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/step8/:id" element={<Step8 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/step9/:id" element={<Step9 adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            <Route path="add-experience/last-step/:id" element={<AdLastStep adSteps={adSteps} setAdSteps={setAdSteps} />} />
-            {/* <Route path="manage-listing/publish-listing/:id" element={<AdPublish />} /> */}
+            <Route path="add-experience/step2/:id" element={<Step2 steps={steps} setSteps={setSteps} />} />
+            <Route path="add-experience/step4/:id" element={<Step4 steps={steps} setSteps={setSteps} />} />
+            <Route path="add-experience/step5/:id" element={<Step5 steps={steps} setsteps={setSteps} />} />
+            <Route path="add-experience/step6/:id" element={<Step6 steps={steps} setsteps={setSteps} />} />
+            <Route path="add-experience/step8/:id" element={<Step8 steps={steps} setsteps={setSteps} />} />
+            <Route path="add-experience/step9/:id" element={<Step9 steps={steps} setsteps={setSteps} />} />
+            <Route path="add-experience/last-step/:id" element={<AdLastStep />} />
 
-
+            {/* <...........................> */}
             <Route path="manage-listing/publish-listing/:id" element={<Publish />} />
 
 
@@ -139,10 +139,13 @@ function App() {
 
 
             {/* <..............User Account..................> */}
-            <Route path="account" element={<Account />} />
-            <Route path="account/personal-info" element={<PersonalInfo />} />
-            <Route path="account/update-password" element={<UpdatePassword />} />
-            <Route path="account/payments-and-payouts" element={<Payments />} />
+
+            <Route path="account" element={<UserAccount />} >
+              <Route index element={<Account />} />
+              <Route path="personal-info" element={<PersonalInfo />} />
+              <Route path="update-password" element={<UpdatePassword />} />
+              <Route path="payments-and-payouts" element={<Payments />} />
+            </Route>
 
           </Route>
 

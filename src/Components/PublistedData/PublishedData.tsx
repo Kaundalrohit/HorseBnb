@@ -32,7 +32,7 @@ const PublishedData = () => {
                                     <th scope="col" style={{ width: "300px" }}>Location</th>
                                     <th scope="col">Created On</th>
                                     <th scope="col">
-                                        <img src="" />
+                                        <img src="" alt='' />
                                     </th>
                                 </tr>
                             </thead>
@@ -42,10 +42,10 @@ const PublishedData = () => {
                                         <>
                                             <tr className="ng-star-inserted">
                                                 <td >{index + 1}</td>
-                                                <td scope="row" style={{ width: "300px" }}>
+                                                <td style={{ width: "300px" }}>
                                                     <div className="d-flex align-items-center">
                                                         <div className="manage-img mr-3">
-                                                            <img className="obj-cover  ng-star-inserted ng-lazyloaded" src={(e?.attributes?.publicData?.cover_photo?.url) ? `${HenceForthApi.API_FILE_ROOT_SMALL}${e?.attributes?.publicData?.cover_photo?.url}` : "https://horsebnb.com:8081/assets/img/default_image.svg"} style={{ width: "35px", height: "35px" }} />
+                                                            <img alt='' className="obj-cover  ng-star-inserted ng-lazyloaded" src={(e?.attributes?.publicData?.cover_photo?.url) ? `${HenceForthApi.API_FILE_ROOT_SMALL}${e?.attributes?.publicData?.cover_photo?.url}` : "https://horsebnb.com:8081/assets/img/default_image.svg"} style={{ width: "35px", height: "35px" }} />
                                                         </div>
                                                         <span className="para-small mb-0 single-line-ellipsis ps-2" style={{ maxWidth: "220px" }} title={e.attributes.description}>{e.attributes.description}</span>
                                                     </div>
@@ -66,7 +66,7 @@ const PublishedData = () => {
                                                 <td >{(new Date(e?.attributes?.createdAt)).toLocaleDateString()}</td>
                                                 <td >
                                                     <span className="d-inline-block dropdown">
-                                                        <img aria-haspopup="true" src="" id="dropdownBasic2" className="dropdown-toggle pointer" aria-expanded="false" />
+                                                        <img alt='' src="" id="dropdownBasic2" className="dropdown-toggle pointer" aria-expanded="false" />
                                                         <div aria-labelledby="dropdownBasic2" x-placement="bottom-left" className="dropdown-menu">
                                                             <button className="dropdown-item">Edit</button>
                                                             <button className="dropdown-item ng-star-inserted">Deactivate</button>

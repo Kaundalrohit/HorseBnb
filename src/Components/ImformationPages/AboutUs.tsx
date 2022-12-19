@@ -9,7 +9,7 @@ const AboutUs = () => {
                 </h3>
                 <div className="d-flex flex-column flex-lg-row my-5 pb-4 align-items-center">
                     <div className="col-lg-6 col-md-4">
-                        <img src={aboutUs} className="obj-cover" style={{ borderRadius: "20px" }} />
+                        <img src={aboutUs} alt='' className="obj-cover" style={{ borderRadius: "20px" }} />
                     </div>
                     <div className="col-lg-6 col-md-8 py-5 py-lg-3 px-3 px-lg-5">
                         <p >

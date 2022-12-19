@@ -20,9 +20,12 @@ export default function Stalls12(props: props) {
 
     const [price, setPrice] = useState<number>()
     const [check, setCheck] = useState<any>()
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const poststep12Data = async () => {
         if (price) {
+            setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
@@ -38,6 +41,7 @@ export default function Stalls12(props: props) {
                         ]
                     }
                 }))
+                setLoader(false)
                 navigate(`/create-stall/step13/${match?.params.id}`)
             }
             catch (error) {
@@ -101,7 +105,6 @@ export default function Stalls12(props: props) {
                                         <span className="ml-3 font-medium">Yes</span>
                                         <input type="radio" id="radio-three" value={1} checked={check == 1} onChange={(e: any) => {
                                             setCheck(e.target.value);
-                                            console.log(e.target.value)
                                         }
                                         } name='radio-btn' />
                                         <span className="radio-checkmark"></span>
@@ -110,7 +113,6 @@ export default function Stalls12(props: props) {
                                         <span className="ml-3 font-medium">No</span>
                                         <input type="radio" id="radio-four" value={2} checked={check == 2} onChange={(e: any) => {
                                             setCheck(e.target.value);
-                                            console.log(e.target.value)
                                         }} name='radio-btn' />
                                         <span className="radio-checkmark"></span>
                                     </label>
@@ -122,7 +124,7 @@ export default function Stalls12(props: props) {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={poststep12Data} style={{ background: "rgb(0, 164, 180)" }}> Next
+                                <button className="btn my-3 px-3 text-white" onClick={poststep12Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </div>
                         </div>

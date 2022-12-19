@@ -3,10 +3,7 @@ import { Link, useMatch, useNavigate } from "react-router-dom"
 import CompletedSteps from "../Host Your Stalls/CompletedSteps"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
-import finishListing from '../Images/chevron-left-primary.svg'
-
-
-
+import finishListing from '../Images/finish_your_listing.svg'
 
 type props = {
     setSteps: any
@@ -15,33 +12,12 @@ type props = {
 
 const GuestsLastStep = (props: props) => {
     const { steps, setSteps } = props
-    let [coverPhoto, setCoverPhoto] = useState<string>("")
-
-
-
 
     const navigate = useNavigate()
-
     const match = useMatch(`create-guest/last-step/:id`)
 
-
-
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            console.log();
-            setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo.url);
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        listId()
-        // eslint-disable-next-line 
-    }, [])
-
+    let [coverPhoto, setCoverPhoto] = useState<string>("")
+    const [loader, setLoader] = useState<boolean>(false)
 
 
     const allSteps = [
@@ -86,7 +62,6 @@ const GuestsLastStep = (props: props) => {
             stepNumber: 8
 
         },
-        // {id:7, step:"Profile Photo" , url:"Timmings/:id"},
         {
             id: 7,
             step: "Photos",
@@ -98,43 +73,63 @@ const GuestsLastStep = (props: props) => {
             id: 8,
             step: "Check in and Check out",
             url: `create-guest/checkin-and-checkout/${match?.params.id}`,
-            stepNumber: 10
+            stepNumber: 14
 
         },
         {
             id: 9,
             step: "Agreement",
             url: `create-guest/step10/${match?.params.id}`,
-            stepNumber: 14
+            stepNumber: 15
 
         },
         {
             id: 10,
             step: "Calendar Availability",
             url: `create-guest/step11/${match?.params.id}`,
-            stepNumber: 15
+            stepNumber: 11
 
         },
         {
             id: 11,
             step: "Pricing",
             url: `create-guest/step12/${match?.params.id}`,
-            stepNumber: 11
+            stepNumber: 12
 
         },
         {
             id: 12,
             step: "Stripe Connect",
             url: `create-guest/step3/${match?.params.id}`,
-            stepNumber: 12
-            // checked: {}
+            stepNumber: 13
         },
     ]
 
+    console.log(coverPhoto);
+
 
     const lastStep = () => {
+        setLoader(true)
         navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+        setLoader(false)
+
     }
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            console.log();
+            setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo?.url);
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
 
 
     return (
@@ -162,8 +157,8 @@ const GuestsLastStep = (props: props) => {
                                             <h6 className="font-medium single-line-ellipsis">oo</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00A4B4" }} to={""}>Preview</Link>
                                         </div>
-                                        <div className="prev-img">
-                                            <img alt="" className="obj-cover  ng-star-inserted ng-lazyloaded" src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}`} />
+                                        <div className="">
+                                            <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}`} alt="Not Found" className="obj-cover" />
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +177,7 @@ const GuestsLastStep = (props: props) => {
                                 </div>
                                 <div className="">
 
-                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}> Next
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}> {!loader ? "Next" : "Loading.."}
                                     </button>
 
 

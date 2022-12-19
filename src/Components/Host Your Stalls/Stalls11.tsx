@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useMatch } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
@@ -14,9 +14,12 @@ export default function Stalls11(props: props) {
     const { steps, setSteps } = props
     const match = useMatch('/create-stall/step11/:id')
     const [date, setDate] = useState<string | number>()
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const uploadStep11Data = async () => {
         try {
+            setLoader(true)
             await HenceForthApi.Auth.Updatedlisting({
                 id: match?.params.id,
                 publicData: {
@@ -25,6 +28,7 @@ export default function Stalls11(props: props) {
                     ]
                 }
             })
+            setLoader(false)
         } catch (error) {
             console.log(error);
 
@@ -70,7 +74,7 @@ export default function Stalls11(props: props) {
                             <Link to={`/create-stall/step12/${match?.params.id}`}>
                                 <button className="btn my-3 px-3 text-white"
                                     onClick={uploadStep11Data}
-                                    style={{ background: "rgb(0, 164, 180)" }}> Next
+                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </Link>
                         </div>

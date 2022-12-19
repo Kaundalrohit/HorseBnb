@@ -11,12 +11,12 @@ import publisgImg from '../Images/publish.svg'
 import bulbImg from '../Images/lightbulb.svg'
 
 type props = {
-    adSteps: any
-    setAdSteps: any;
+    steps: any
+    setsteps: any;
 }
 
 const Step5 = (props: props) => {
-    const { adSteps, setAdSteps } = props
+    const { steps: steps, setsteps } = props
 
     const navigate = useNavigate()
 
@@ -26,23 +26,9 @@ const Step5 = (props: props) => {
 
     const [checkCoverImage, setcheckCoverImage] = useState<any>({})
     const [imgFile, setImgFile] = useState<any>([])
+    const [loader, setLoader] = useState<boolean>(false)
 
-    const list = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setcheckCoverImage(res.data.attributes.publicData.cover_photo);
-            setImgFile(res.data.attributes.publicData.images)
-            setAdSteps(res.data.attributes.publicData.stepsCompleted)
 
-        }
-        catch (error) {
-
-        }
-    }
-
-    useEffect(() => {
-        list()
-    }, [])
 
     const fileSelectedHandler = async (e: any) => {
 
@@ -82,7 +68,7 @@ const Step5 = (props: props) => {
                         }
                         ],
                         stepsCompleted: [
-                            ...adSteps,
+                            ...steps,
                             5
                         ]
                     }
@@ -98,7 +84,7 @@ const Step5 = (props: props) => {
                             url: last?.url
                         },
                         stepsCompleted: [
-                            ...adSteps,
+                            ...steps,
                             5
                         ]
                     }
@@ -126,7 +112,9 @@ const Step5 = (props: props) => {
         }
         try {
             if (checkCoverImage) {
+                setLoader(true)
                 await HenceForthApi?.Auth?.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/add-experience/step6/${match?.params.id}`)
             } else {
                 toast('🦄 Please Upload Images', {
@@ -145,6 +133,24 @@ const Step5 = (props: props) => {
         }
 
     }
+
+    const list = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setcheckCoverImage(res.data.attributes.publicData.cover_photo);
+            setImgFile(res.data.attributes.publicData.images)
+            setsteps(res.data.attributes.publicData.stepsCompleted)
+
+        }
+        catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        list()
+    }, [])
+
 
     return (
         <>
@@ -215,12 +221,12 @@ const Step5 = (props: props) => {
                                         className="pr-1" /> Back
                                 </button>
                             </Link>
-                            <Link to={`/add-experience/step6/${match?.params.id}`}>
-                                <button className="btn my-3 px-3 text-white"
-                                    // onClick={nextPage} 
-                                    style={{ background: "rgb(0, 164, 180)" }}> Next
-                                </button>
-                            </Link>
+                            {/* <Link to={`/add-experience/step6/${match?.params.id}`}> */}
+                            <button className="btn my-3 px-3 text-white"
+                                onClick={nextPage}
+                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

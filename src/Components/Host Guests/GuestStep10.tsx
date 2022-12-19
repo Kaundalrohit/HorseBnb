@@ -16,25 +16,12 @@ type props = {
 
 const GuestStep10 = (props: props) => {
     const { steps, setSteps } = props
-    const [check, setCheck] = useState()
-
-
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/sucessfull-hosting/:id`)
 
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        // getStartedShow()
-        listId()
-        // eslint-disable-next-line 
-    }, [])
+
+    const [check, setCheck] = useState()
+    const [loader, setLoader] = useState<boolean>(false)
 
     const setAvailability = async () => {
 
@@ -42,13 +29,14 @@ const GuestStep10 = (props: props) => {
             id: match?.params.id,
             publicData: {
                 gotIt: check,
-                stepsCompleted: [...steps, 14]
+                stepsCompleted: [...steps, 15]
             }
         }
         if (check === true) {
-
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/Step11/${match?.params.id}`)
             } catch (error) {
                 console.log(error);
@@ -67,6 +55,22 @@ const GuestStep10 = (props: props) => {
 
         }
     }
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setCheck(res?.data?.attributes?.publicData?.gotIt);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        // getStartedShow()
+        listId()
+        // eslint-disable-next-line 
+    }, [])
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -91,7 +95,7 @@ const GuestStep10 = (props: props) => {
                                 <img src={backArrow} className="pr-1" alt="" /> Back </button></Link>
 
 
-                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setAvailability} > Next </button>
+                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setAvailability} > {!loader ? "Next" : "Loading.."} </button>
 
                         </div>
                     </div>

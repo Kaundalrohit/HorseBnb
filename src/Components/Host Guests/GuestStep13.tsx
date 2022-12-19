@@ -14,10 +14,17 @@ type props = {
 const GuestStep13 = (props: props) => {
     const { steps, setSteps } = props
 
-
-
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step13/:id`)
+
+    const [loader, setLoader] = useState<boolean>(false)
+
+
+    const skipStripe = () => {
+        setLoader(true)
+        navigate(`/create-guest/last-step/${match?.params.id}`)
+        setLoader(false)
+    }
 
     const listId = async () => {
         try {
@@ -33,12 +40,6 @@ const GuestStep13 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
-
-    const skipStripe = () => {
-
-        navigate(`/create-guest/last-step/${match?.params.id}`)
-
-    }
 
     return (
         <>
@@ -65,7 +66,7 @@ const GuestStep13 = (props: props) => {
                                 </button>
                             </Link>
                             <Link to="">
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }}> Next
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
                                 </button>
                             </Link>
                         </div>

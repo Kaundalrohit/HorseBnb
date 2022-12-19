@@ -8,20 +8,45 @@ import locationIcon from '../Images/near_me.svg'
 
 
 type props = {
-    adSteps: any
-    setAdSteps: any;
+    steps: any
+    setSteps: any;
 }
 
 const Step2 = (props: props) => {
-    const { adSteps, setAdSteps } = props
+    const { steps, setSteps } = props
+
     HenceForthApi.setToken(localStorage.getItem('token'))
     const match = useMatch('/add-experience/step2/:id');
     const navigate = useNavigate()
 
+    const [loader, setLoader] = useState<boolean>(false)
+
+    const postStep2Data = async () => {
+
+        try {
+            setLoader(true)
+            let res = await HenceForthApi.Auth.Updatedlisting({
+                id: match?.params.id,
+                publicData: {
+                    stepsCompleted: [
+                        ...steps, 2
+                    ]
+                }
+            })
+            console.log(res);
+            setLoader(false)
+            navigate(`/add-experience/step4/${match?.params.id}`)
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
     const list = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setAdSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
         }
         catch (error) {
 
@@ -31,25 +56,6 @@ const Step2 = (props: props) => {
     useState(() => {
         list()
     })
-
-    const postStep2Data = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Updatedlisting({
-                id: match?.params.id,
-                publicData: {
-                    stepsCompleted: [
-                        ...adSteps, 2
-                    ]
-                }
-            })
-            console.log(res);
-            navigate(`/add-experience/step4/${match?.params.id}`)
-
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
     return (
         <>
             <section className="add_Location">
@@ -77,7 +83,7 @@ const Step2 = (props: props) => {
 
                                     <button className="btn my-3 px-3 text-white"
                                         onClick={postStep2Data}
-                                        style={{ background: "rgb(0, 164, 180)" }}> Next
+                                        style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                     </button>
 
                                 </div>

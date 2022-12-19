@@ -111,7 +111,7 @@ export default function GuestStep9(props: props) {
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
                                         <img src={backArrow} className="pr-1" /> Back </button>
                                     <Link to={`/create-guest/checkin-and-checkout/${match?.params.id}`} className="text-decoration-none">
-                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> Next </button>
+                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading.."} </button>
                                     </Link>
                                 </div>
 

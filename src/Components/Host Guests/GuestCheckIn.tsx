@@ -15,21 +15,12 @@ const GuestCheckIn = (props: props) => {
 
     const { steps, setSteps } = props
 
-    const [arrive, setArrive] = useState<string>("")
-    const [leave, setLeave] = useState<string>("")
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/checkin-and-checkout/:id`)
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        listId()
-    }, [])
+
+    const [arrive, setArrive] = useState<string>("")
+    const [loader, setLoader] = useState<boolean>(false)
+    const [leave, setLeave] = useState<string>("")
 
     const uploadTimings = async () => {
         const list = {
@@ -37,13 +28,14 @@ const GuestCheckIn = (props: props) => {
             publicData: {
                 arrive_after: arrive,
                 leave_before: leave,
-                stepsCompleted: [...steps, 9],
+                stepsCompleted: [...steps, 14],
             }
         }
         try {
             if (arrive && leave) {
-
+                setLoader(true)
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/sucessfull-hosting/${match?.params.id}`)
             } else {
                 toast('Select Timmings', {
@@ -60,6 +52,20 @@ const GuestCheckIn = (props: props) => {
         } catch (error) {
         }
     }
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setArrive(res?.data?.attributes?.publicData?.arrive_after);
+            setLeave(res?.data?.attributes?.publicData?.leave_before);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        listId()
+    }, [])
 
     return (
         <>
@@ -92,7 +98,7 @@ const GuestCheckIn = (props: props) => {
                             </Link>
 
                             <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={uploadTimings} >
-                                Next
+                                {!loader ? "Next" : "Loading.."}
                             </button>
 
                         </div>

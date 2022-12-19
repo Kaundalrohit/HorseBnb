@@ -24,21 +24,22 @@ const Payments = () => {
                                 <h3 className="font-22-ebold my-2 text-black">Payout methods</h3>
                                 <p className="mb-5"> Please connect your account with Stripe. This will be a deposit only account and you will never be charged or debited any funds. Your funds will be direct deposited into your account once your reservation has completed. </p>
                                 <div className="ng-star-inserted">
-                                    <a href="javaScript:void(0)">
-                                        <button type="button" className="btn my-3 px-3 position-relative d-flex align-items-center justify-content-center">
-                                            <img src={stripeBtn} />
-                                        </button>
-                                    </a>
+                                    {/* <a href="javaScript:void(0)"> */}
+                                    <button type="button" className="btn my-3 px-3 position-relative d-flex align-items-center justify-content-center">
+                                        <img src={stripeBtn} alt='' />
+                                    </button>
+                                    {/* </a> */}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-5 col-lg-4">
                         <div className="border px-4 py-4 mb-4">
-                            <img src={paymentIcon} height="32px" className="mb-4" />
+                            <img src={paymentIcon} alt='' height="32px" className="mb-4" />
                             <h6 className="font-medium-bold text-black">HorseBnB Payments</h6>
-                            <p >Always pay and communicate through HorseBnB to ensure you’re protected under our <Link className="text-decoration-none" style={{ color: "#00a4b4" }} to="/terms-conditions">Terms of Service</Link>
-                                <a className="text-primary"></a>, cancellation, and other safeguards. </p>
+                            <p >Always pay and communicate through HorseBnB to ensure you’re protected under our
+                                <Link className="text-decoration-none" style={{ color: "#00a4b4" }} to="/terms-conditions">Terms of Service</Link>
+                                , cancellation, and other safeguards. </p>
                         </div>
                     </div>
                 </div>

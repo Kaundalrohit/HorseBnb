@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-import { Link, useMatch } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
 import horseImg from '../Images/horse_image.png'
 import backArrow from '../Images/chevron-left-primary.svg'
@@ -11,6 +11,10 @@ type props = {
 export default function Stalls5(props: props) {
     const { steps, setSteps } = props
     const match = useMatch(`/create-stall/step5/:id`)
+    const navigate = useNavigate()
+
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     useEffect(() => {
         const list = async () => {
@@ -27,6 +31,7 @@ export default function Stalls5(props: props) {
 
     const uploadStep5Data = async () => {
         try {
+            setLoader(true)
             await HenceForthApi.Auth.Updatedlisting({
                 id: match?.params.id,
                 publicData: {
@@ -36,6 +41,8 @@ export default function Stalls5(props: props) {
                     ]
                 }
             })
+            setLoader(false)
+            navigate(`/create-stall/step6/${match?.params.id}`)
         } catch (error) {
             console.log(error);
 
@@ -77,10 +84,10 @@ export default function Stalls5(props: props) {
                                             <img src={backArrow} className="pr-1" alt="" /> Back
                                         </button>
                                     </Link>
-                                    <Link to={`/create-stall/step6/${match?.params.id}`}>
-                                        <button className="btn my-3 px-3 text-white" onClick={uploadStep5Data} style={{ background: "rgb(0, 164, 180)" }}> Next
-                                        </button>
-                                    </Link>
+                                    {/* <Link to={`/create-stall/step6/${match?.params.id}`}> */}
+                                    <button className="btn my-3 px-3 text-white" onClick={uploadStep5Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                    </button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>

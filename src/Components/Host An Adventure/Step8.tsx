@@ -6,13 +6,13 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
-    adSteps: any
-    setAdSteps: any;
+    steps: any
+    setsteps: any;
 }
 
 
 const Step8 = (props: props) => {
-    const { adSteps, setAdSteps } = props
+    const { steps, setsteps } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/add-experience/step8/:id')
@@ -20,9 +20,12 @@ const Step8 = (props: props) => {
 
     const [price, setPrice] = useState<number>()
     const [check, setCheck] = useState<number>()
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const poststep8Data = async () => {
         if (price) {
+            setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
@@ -34,12 +37,13 @@ const Step8 = (props: props) => {
                         bookingAcceptType: check,
                         listing_price: price,
                         stepsCompleted: [
-                            ...adSteps,
+                            ...steps,
                             8
                         ]
 
                     }
                 }))
+                setLoader(false)
                 navigate(`/add-experience/step9/${match?.params.id}`)
             }
             catch (error) {
@@ -58,10 +62,13 @@ const Step8 = (props: props) => {
             })
         }
     }
+
     const list = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setAdSteps(res.data.attributes.publicData.stepsCompleted)
+            setsteps(res.data.attributes.publicData.stepsCompleted)
+            setPrice(res.data.attributes.publicData.listing_price)
+            setCheck(res.data.attributes.publicData.bookingAcceptType)
         }
         catch (error) {
 
@@ -98,12 +105,17 @@ const Step8 = (props: props) => {
                                 <div >
                                     <label htmlFor="radio-three" className="radio-lable px-3 d-flex position-relative align-items-center">
                                         <span className="ml-3 font-medium">Yes</span>
-                                        <input type="radio" id="radio-three" value={1} onChange={(e: any) => setCheck(e.target.value)} className="ng-untouched ng-pristine ng-valid" name='radio-btn' />
+                                        <input type="radio" id="radio-three" value={1} checked={check == 1} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                        }
+                                        } name='radio-btn' />
                                         <span className="radio-checkmark"></span>
                                     </label>
                                     <label htmlFor="radio-four" className="radio-lable px-3 d-flex position-relative align-items-center">
                                         <span className="ml-3 font-medium">No</span>
-                                        <input type="radio" id="radio-four" value={2} onChange={(e: any) => setCheck(e.target.value)} name='radio-btn' className="ng-untouched ng-pristine ng-valid" />
+                                        <input type="radio" id="radio-four" value={2} checked={check == 2} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                        }} name='radio-btn' />
                                         <span className="radio-checkmark"></span>
                                     </label>
                                 </div>
@@ -114,12 +126,10 @@ const Step8 = (props: props) => {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <Link to={`/add-experience/step9/${match?.params.id}`}>
-                                    <button className="btn my-3 px-3 text-white"
-                                        onClick={poststep8Data}
-                                        style={{ background: "rgb(0, 164, 180)" }}> Next
-                                    </button>
-                                </Link>
+                                <button className="btn my-3 px-3 text-white"
+                                    onClick={poststep8Data}
+                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                                </button>
                             </div>
                         </div>
                     </div>

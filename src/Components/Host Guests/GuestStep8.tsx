@@ -16,6 +16,10 @@ const GuestStep8 = (props: props) => {
 
     const { steps, setSteps } = props
 
+    const navigate = useNavigate()
+    const match = useMatch(`/create-guest/Step8/:id`)
+
+    const [loader, setLoader] = useState<boolean>(false)
     const [state, setState] = useState({
         description: "",
         extra_detail: "",
@@ -30,28 +34,6 @@ const GuestStep8 = (props: props) => {
 
 
     }
-
-    const navigate = useNavigate()
-    const match = useMatch(`/create-guest/Step8/:id`)
-
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params?.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
-            setState({
-                ...state,
-                userImg: res?.data?.attributes?.publicData?.host_image
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        // getStartedShow()
-        listId()
-        // eslint-disable-next-line 
-    }, [])
-
 
     const handleStep8 = async () => {
         let step = !state.userImg ? [
@@ -68,8 +50,10 @@ const GuestStep8 = (props: props) => {
             }
         }
         if (state.description && state.extra_detail) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 {
                     !state.userImg ? navigate(`/create-guest/step9/${match?.params.id}`) : navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
                 }
@@ -90,10 +74,25 @@ const GuestStep8 = (props: props) => {
         }
     }
 
-
-
-
-
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params?.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setState({
+                ...state,
+                userImg: res?.data?.attributes?.publicData?.host_image,
+                description: res?.data?.attributes?.description,
+                extra_detail: res?.data?.attributes?.publicData?.extra_detail
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        // getStartedShow()
+        listId()
+        // eslint-disable-next-line 
+    }, [])
 
     return (
         <>
@@ -123,7 +122,7 @@ const GuestStep8 = (props: props) => {
                                         Back
                                     </button>
 
-                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep8} > Next </button>
+                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep8} > {!loader ? "Next" : "Loading.."} </button>
 
                                 </div>
                             </form>

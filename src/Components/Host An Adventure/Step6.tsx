@@ -1,34 +1,42 @@
 import { useState } from "react"
-import { Link, useMatch } from "react-router-dom"
+import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
-    adSteps: any
-    setAdSteps: any;
+    steps: any
+    setsteps: any;
 }
 
 const Step6 = (props: props) => {
-    const { adSteps, setAdSteps } = props
+    const { steps, setsteps } = props
 
     const match = useMatch('add-experience/step6/:id')
     HenceForthApi.setToken(localStorage.getItem('token'))
+    const navigate = useNavigate()
+
+
+    const [loader, setLoader] = useState<boolean>(false)
     const [grpSize, setGrpSize] = useState<any>()
+
     const postStep6Data = async () => {
         if (grpSize) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
                     publicData: {
                         group_size: parseInt(grpSize),
                         stepsCompleted: [
-                            ...adSteps,
+                            ...steps,
                             6
                         ]
                     }
                 })
+                setLoader(false)
+                navigate(`/add-experience/step8/${match?.params.id}`)
 
             }
             catch (error) {
@@ -49,10 +57,12 @@ const Step6 = (props: props) => {
         }
 
     }
+
     const list = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setAdSteps(res.data.attributes.publicData.stepsCompleted)
+            setsteps(res.data.attributes.publicData.stepsCompleted)
+            setGrpSize(res.data.attributes.publicData.group_size)
         }
         catch (error) {
 
@@ -79,11 +89,9 @@ const Step6 = (props: props) => {
                                 <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
                                     <img src={backArrow} alt="" className="pr-1" /> Back </button>
                             </Link>
-                            <Link to={`/add-experience/step8/${match?.params.id}`}>
-                                <button type="button"
-                                    onClick={postStep6Data}
-                                    className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> Next </button>
-                            </Link>
+                            <button type="button"
+                                onClick={postStep6Data}
+                                className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading....."} </button>
                         </div>
                     </div>
                 </div>

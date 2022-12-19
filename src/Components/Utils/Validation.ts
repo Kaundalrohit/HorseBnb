@@ -5,10 +5,10 @@ var NumericResultRegEx = /^(\d{0,2}(\.\d{1,2})?|100(\.00?)?)$/;
 var NameRegEx = /^[a-zA-Z \s()-]{0,60}$/;
 var NumberRegEx = /^[0]?[789]\d{9}$/;
 var IndNumberRegEx = /^((\+91)?|91)?[789][0-9]{9}/;
-var FoodLicenseRegEx = /^[0-9]{5,10}$/;
-var DrugLicenseRegEx = /^[0-9]{5,10}$/;
+// var FoodLicenseRegEx = /^[0-9]{5,10}$/;
+// var DrugLicenseRegEx = /^[0-9]{5,10}$/;
 var PincodeRegEx = /^\d{6}$/;
-var AddressRegEx = /^[a-zA-Z0-9\s,'-]*$/;
+// var AddressRegEx = /^[a-zA-Z0-9\s,'-]*$/;
 var LatLngRegEx = /^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}/;
 var GstRegEx = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}$/;
 var CountryRegEx = "India";
@@ -18,86 +18,86 @@ var letterRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}
 
 
 
-const email1 = (email:any) => {
+const email1 = (email: any) => {
     return EmailRegEx.test(String(email).toLowerCase());
 }
-const numberDataTypeValidation = (str:any) => {
+const numberDataTypeValidation = (str: any) => {
     return typeof (str) === "number";
 }
-const nameValidation = (str:any) => {
+const nameValidation = (str: any) => {
     return NameRegEx.test(String(str).trim());
 }
-const UserNameValidation = (str:any) => {
+const UserNameValidation = (str: any) => {
     return UserNameRegEx.test(String(str).trim());
 }
-const MobileNumberValidation = (str:any) => {
+const MobileNumberValidation = (str: any) => {
     return NumberRegEx.test(str);
 }
-const NumberValidation = (str:any) => {
+const NumberValidation = (str: any) => {
     return NumericNumberRegEx.test(str);
 }
-const ResultValidation = (str:any) => {
+const ResultValidation = (str: any) => {
     return NumericResultRegEx.test(str);
 }
-const MobileNumberWithInValidation = (str:any) => {
+const MobileNumberWithInValidation = (str: any) => {
     return IndNumberRegEx.test(str);
 }
-const FoodLicenseValidation = (str:any) => {
+const FoodLicenseValidation = (str: any) => {
     // return FoodLicenseRegEx.test(str);
     return str
 }
-const DrugLicenseValidation = (str:any) => {
+const DrugLicenseValidation = (str: any) => {
     // return DrugLicenseRegEx.test(str);
     return str
 }
-const GstValidation = (str:any) => {
+const GstValidation = (str: any) => {
     return GstRegEx.test(str);
 }
-const AddressValidation = (str:any) => {
+const AddressValidation = (str: any) => {
     // return (String(str).length > 10) ? AddressRegEx.test(str) : false
     return (String(str).trim().length > 10) ? str : false
 }
-const PincodeValidation = (str:any) => {
+const PincodeValidation = (str: any) => {
     return PincodeRegEx.test(str);
 }
-const LatLngValidation = (str:any) => {
+const LatLngValidation = (str: any) => {
     return LatLngRegEx.test(str);
 }
-const CountryValidation = (str:any) => {
+const CountryValidation = (str: any) => {
     return str === CountryRegEx;
 }
-const UuidValidation = (str:any) => {
+const UuidValidation = (str: any) => {
     return UUIDRegEx.test(str);
 }
-const StringValidation = (str:any) => {
+const StringValidation = (str: any) => {
     return (typeof (str) === 'undefined') ? false : (String(str).trim().length >= 3) ? nameValidation(str) : false
 }
-const ObjectValidation = (str:any) => {
+const ObjectValidation = (str: any) => {
     return (typeof (str) === 'object')
 }
-const LengthValidation = (str:any, length:any) => {
+const LengthValidation = (str: any, length: any) => {
     return (String(str).trim().length > length)
 }
-const capitalizeFirstLetter = (string:any) => {
+const capitalizeFirstLetter = (string: any) => {
     if (string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     } else {
         return `_`
     }
 }
-const strongPassword = (str:any) => {
+const strongPassword = (str: any) => {
     return strongPasswordRegEx.test(str);
 }
-const numberWithCommas = (x:any) => {
+const numberWithCommas = (x: any) => {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const letter = (str:any) => {
+const letter = (str: any) => {
     return letterRegEx.test(String(str).trim());
 }
 
 
-export{
+export {
     email1,
     numberDataTypeValidation,
     nameValidation,

@@ -21,6 +21,8 @@ export default function Stall3(props: props) {
     const navigate = useNavigate();
 
     const [count, setCount] = useState<number>(0);
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const entries = [
         {
@@ -73,8 +75,10 @@ export default function Stall3(props: props) {
             }
         }
         if (count) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-stall/step5/${match?.params.id}`)
             }
             catch (error: any) {
@@ -150,7 +154,7 @@ export default function Stall3(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/step5"> */}
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={postStep3Data} style={{ background: "rgb(0, 164, 180)" }}> Next</button>
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={postStep3Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "continue" : "Loading....."}</button>
                                 {/* </Link> */}
                             </div>
                         </div>

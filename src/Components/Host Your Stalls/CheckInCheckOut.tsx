@@ -22,6 +22,8 @@ export default function CheckInCheckOut(props: props) {
         arrive: "",
         leave: ""
     })
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const updateState = (e: any) => {
         setstate({
@@ -32,6 +34,7 @@ export default function CheckInCheckOut(props: props) {
 
     const postStep9Data = async () => {
         if (state.arrive && state.leave) {
+            setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
@@ -44,6 +47,7 @@ export default function CheckInCheckOut(props: props) {
                     }
 
                 }))
+                setLoader(false)
                 navigate(`/create-stall/sucessfull-hosting/${match?.params.id}`)
             }
             catch (error) {
@@ -106,7 +110,7 @@ export default function CheckInCheckOut(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/sucessfull-hosting"> */}
-                                <button className="btn my-3 px-3 text-white" onClick={postStep9Data} style={{ background: "rgb(0, 164, 180)" }}> Next
+                                <button className="btn my-3 px-3 text-white" onClick={postStep9Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                                 {/* </Link> */}
                             </div>

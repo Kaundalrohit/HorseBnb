@@ -15,27 +15,14 @@ type props = {
 }
 const GuestStep3 = (props: props) => {
 
-
     const { steps, setSteps } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'))
-    let [count, setCount] = useState<number>(0)
-
-
     const navigate = useNavigate();
     const match = useMatch(`/create-guest/Step3/:id`)
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        listId()
-        // eslint-disable-next-line 
-    }, [])
+
+    let [count, setCount] = useState<number>(0)
+    const [loader, setLoader] = useState<boolean>(false)
 
 
     const setRoomCount = async () => {
@@ -43,12 +30,14 @@ const GuestStep3 = (props: props) => {
             id: match?.params.id,
             publicData: {
                 rooms: count,
-                stepsCompleted: [...steps, 3]
+                stepsCompleted: [...steps, 3, 5]
             }
         }
         if (count && count !== 0) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/step5/${match?.params.id}`)
             } catch (error) {
                 console.log(error);
@@ -67,6 +56,21 @@ const GuestStep3 = (props: props) => {
         }
     }
 
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setCount(res?.data?.attributes?.publicData?.rooms);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
 
 
     return (
@@ -102,7 +106,7 @@ const GuestStep3 = (props: props) => {
                                 Back
                             </button>
 
-                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setRoomCount}> Next
+                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setRoomCount}> {!loader ? "Next" : "Loading.."}
                             </button>
                         </div>
                     </div>

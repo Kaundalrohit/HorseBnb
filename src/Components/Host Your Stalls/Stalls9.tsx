@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useMatch, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { Link, useMatch } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import selfieImg from '../Images/taking_selfie.svg'
@@ -19,7 +19,7 @@ export default function Stalls9(props: props) {
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-stall/step9/:id')
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const list = async () => {
         try {
@@ -59,7 +59,9 @@ export default function Stalls9(props: props) {
             }
         }
         try {
+            setLoader(true)
             let res = (await HenceForthApi.Auth.updateUserProfile(list))
+            setLoader(false)
             console.log(res);
         } catch (error) {
             console.log(error);
@@ -85,7 +87,7 @@ export default function Stalls9(props: props) {
                                 <div className="d-flex mb-3 align-items-start">
                                     <div className="h-101 mr-4 position-relative">
 
-                                        <img className="rounded-circle img-fluid profile-img"
+                                        <img className="rounded-circle img-fluid profile-img" alt=''
                                             src={userImg ? `${HenceForthApi.API_FILE_ROOT_SMALL}${userImg}` : defaultUserImg}
                                         />
                                     </div>
@@ -100,9 +102,9 @@ export default function Stalls9(props: props) {
                                 </div>
                                 <div className="d-flex justify-content-between border-top mt-5">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                        <img src={backArrow} className="pr-1" /> Back </button>
+                                        <img src={backArrow} alt='' className="pr-1" /> Back </button>
                                     <Link to={`/create-stall/checkin-and-checkout/${match?.params.id}`}>
-                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> Next </button>
+                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading....."} </button>
                                     </Link>
                                 </div>
 

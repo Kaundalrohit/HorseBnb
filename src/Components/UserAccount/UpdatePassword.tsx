@@ -121,7 +121,7 @@ const UpdatePassword = () => {
                     </div>
                     <div className="col-md-5 col-lg-4">
                         <div className="border px-4 py-4 mb-4">
-                            <img src={passImg} height="32px" className="mb-4" />
+                            <img src={passImg} alt="" height="32px" className="mb-4" />
                             <h6 className="font-medium-bold text-black">Keeping your account secure</h6>
                             <p >We regularly review accounts to make sure they’re as secure as possible. We’ll also let you know if there’s more we can do to increase the security of your account.</p>
                         </div>

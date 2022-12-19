@@ -3,23 +3,18 @@ import { Link, useMatch } from "react-router-dom";
 import CompletedSteps from "../Host Your Stalls/CompletedSteps";
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
-import finishListing from '../Images/chevron-left-primary.svg'
+import finishListing from '../Images/finish_your_listing.svg'
 
 
-type props = {
-    adSteps: any
-    setAdSteps: any;
-}
-
-const AdLastStep = (props: props) => {
-    const { adSteps, setAdSteps } = props
-
-    const match = useMatch('/add-experience/last-step/:id')
-    const [step, setStep] = useState<any>([])
+const AdLastStep = () => {
 
     HenceForthApi.setToken(localStorage.getItem('token'));
+    const match = useMatch('/add-experience/last-step/:id')
 
+    const [step, setStep] = useState<any>([])
     const [coverImg, setCoverImg] = useState<any>()
+    const [loader, setLoader] = useState<boolean>(false)
+
 
 
     const allSteps = [
@@ -74,16 +69,6 @@ const AdLastStep = (props: props) => {
 
     ]
 
-    const list = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setAdSteps(res.data.arrtibutes.publicData.stepsCompleted)
-        }
-        catch (error) {
-
-        }
-    }
-
     useEffect(() => {
         const getData = async () => {
             try {
@@ -95,7 +80,6 @@ const AdLastStep = (props: props) => {
             }
         }
         getData();
-        list()
     }, [])
 
     return (
@@ -141,7 +125,7 @@ const AdLastStep = (props: props) => {
                                 </div>
                                 <div className="">
                                     <Link to={`/manage-listing/publish-listing/${match?.params.id}`}>
-                                        <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}> Next
+                                        <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                         </button>
                                     </Link>
                                 </div>

@@ -19,6 +19,8 @@ export default function Stalls6(props: props) {
     const navigate = useNavigate();
 
     const [check, setCheck] = useState<any>([]);
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const amenitiesOffers = [
         { option: "Climate Contolled Barn", id: 1 },
@@ -88,7 +90,9 @@ export default function Stalls6(props: props) {
 
         }
         try {
+            setLoader(true)
             await HenceForthApi.Auth.Updatedlisting(list)
+            setLoader(false)
             navigate(`/create-stall/step7/${match?.params.id}`)
         } catch (error: any) {
             console.log(error);
@@ -143,7 +147,7 @@ export default function Stalls6(props: props) {
                             </button>
                         </Link>
 
-                        <button className="btn my-3 px-3 text-white" onClick={postStep6Data} style={{ background: "rgb(0, 164, 180)" }}> Next
+                        <button className="btn my-3 px-3 text-white" onClick={postStep6Data} style={{ background: "rgb(0, 164, 180)" }}>{!loader ? "Next" : "Loading....."}
                         </button>
 
                     </div>

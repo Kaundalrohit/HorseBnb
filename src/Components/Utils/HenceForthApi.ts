@@ -113,6 +113,8 @@ const Auth = {
     requests.post("/current_user/update_profile", info),
   hostProfile: (host_id: any) =>
     requests.get(`/host/profile?host_id=${host_id}`),
+  ownBookings: (type: number, perPage: number, pageNo: number) =>
+    requests.get(`/own_bookings?tab=${type}&perPage=${perPage}&page=${pageNo}`),
 };
 
 // Uploadimage: (key: string, file: any, storageType: number, environment: number) =>

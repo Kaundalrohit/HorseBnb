@@ -1,54 +1,91 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import adventureExp from '../Images/experience.png'
 
 type props = {
-    adSteps: any
+    steps: any
 }
 
-const Step1 = ({ adSteps }: props) => {
+const Step1 = ({ steps }: props) => {
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const navigate = useNavigate()
+    const match = useMatch('/add-experience/step1/:id');
+    let id = match?.params?.id
+
 
     const [title, setTitle] = useState<string>("")
+    const [loader, setLoader] = useState<boolean>(false)
 
 
     const postStep1Data = async () => {
         try {
-            // if (title) {
-            let res = await HenceForthApi.Auth.createdraftlisting({
-                title: title,
-                publicData: {
-                    type: 3,
-                    stepsCompleted: [
-                        ...adSteps,
-                        1
-                    ]
-                }
-            })
-            console.log(res);
-            navigate(`/add-experience/step2/${res.data.id.uuid}`);
-            // }
-            // else {
-            //     toast('🦄 Please fill the details', {
-            //         position: "top-right",
-            //         autoClose: 1000,
-            //         hideProgressBar: false,
-            //         closeOnClick: true,
-            //         pauseOnHover: true,
-            //         draggable: true,
-            //         progress: undefined,
-            //         theme: "light",
-            //     });
-            // }
+            if (title && id) {
+                setLoader(true)
+                let res = await HenceForthApi.Auth.Updatedlisting({
+                    title: title,
+                    id: id,
+                    publicData: {
+                        stepsCompleted: [
+                            ...steps, 1
+                        ]
+                    }
+                })
+                setLoader(false)
+                navigate(`/add-experience/step2/${res.data.id.uuid
+                    }`)
+            }
+            else if (title) {
+                setLoader(true)
+                let res = await HenceForthApi.Auth.createdraftlisting({
+                    title: title,
+                    publicData: {
+                        type: 4,
+                        stepsCompleted: [
+                            ...steps, 1
+                        ]
+                    }
+                })
+                setLoader(false)
+                navigate(`/add-experience/step2/${res.data.id.uuid
+                    }`)
+            }
+            else {
+                toast('🦄 Please fill the details', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
         } catch (error) {
             console.log(error);
         }
     }
+
+    const listId = async () => {
+        if (match?.params?.id) {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                // setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setTitle(res?.data?.attributes?.title)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
 
     return (
         <>
@@ -66,7 +103,7 @@ const Step1 = ({ adSteps }: props) => {
                                     </div>
                                 </div>
                                 <button type="button"
-                                    onClick={postStep1Data} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"> Continue </button>
+                                    onClick={postStep1Data} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"> {!loader ? "continue" : "Loading....."} </button>
                             </div>
                         </div>
                         <div className="col-md-6 text-center px-md-0 d-none d-md-block">

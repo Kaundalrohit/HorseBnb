@@ -18,6 +18,7 @@ export default function Stalls8(props: props) {
 
     const [userImg, setUserImg] = useState<string>('')
     const [check, setCheck] = useState<any>()
+    const [loader, setLoader] = useState<boolean>(false)
     const [state, setstate] = useState({
         description: "",
         extra_detail: "",
@@ -37,6 +38,7 @@ export default function Stalls8(props: props) {
             ...steps, 8, 9
         ]
         if (state.description && state.extra_detail) {
+            setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     description: state.description,
@@ -47,7 +49,7 @@ export default function Stalls8(props: props) {
                         stepsCompleted: step
                     }
                 }))
-
+                setLoader(false)
                 {
                     !userImg ? navigate(`/create-stall/step9/${match?.params.id}`) :
                         navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
@@ -131,7 +133,7 @@ export default function Stalls8(props: props) {
                                             alt="" className="pr-1" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={postStep8Data} style={{ background: "rgb(0, 164, 180)" }}> Next
+                                <button className="btn my-3 px-3 text-white" onClick={postStep8Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </div>
                         </div>

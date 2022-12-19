@@ -197,7 +197,7 @@ const PersonalInfo = () => {
                                 <div className="book-img mx-auto mb-3 border position-relative">
                                     <div className="centered-spinner">
                                     </div>
-                                    <img className="obj-cover  ng-lazyloaded" src={state.userImg ? isImage(state.userImg)
+                                    <img className="obj-cover  ng-lazyloaded" alt='' src={state.userImg ? isImage(state.userImg)
                                         ?
                                         `${HenceForthApi.API_FILE_ROOT_SMALL}${state.userImg}`
                                         :
@@ -212,7 +212,7 @@ const PersonalInfo = () => {
                             </div>
                         </div>
                         <div className="border px-4 py-4 mb-4">
-                            <img src={userImgIcon} height="32px" className="mb-4" />
+                            <img src={userImgIcon} alt='' height="32px" className="mb-4" />
                             <h6 className="font-medium-bold text-black">What info is shared with others?</h6>
                             <p >HorseBnB only release contact information for hosts and guests after a reservation is confirmed.</p>
                         </div>

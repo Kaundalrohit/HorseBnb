@@ -18,7 +18,10 @@ const GuestStep7 = (props: props) => {
 
     const { steps, setSteps } = props
 
+    const navigate = useNavigate()
+    const match = useMatch(`/create-guest/Step7/:id`)
 
+    const [loader, setLoader] = useState<boolean>(false)
     const [checkCoverImg, setCheckCoverImg] = useState<any>({
         caption: null,
         id: '',
@@ -27,10 +30,6 @@ const GuestStep7 = (props: props) => {
     })
 
     const [imgfile, setImgFile] = useState<Array<object>>([])
-    console.log(imgfile);
-
-    const navigate = useNavigate()
-    const match = useMatch(`/create-guest/Step7/:id`)
 
     const listId = async () => {
         try {
@@ -43,14 +42,9 @@ const GuestStep7 = (props: props) => {
         }
     }
     useEffect(() => {
-        // getStartedShow()
         listId()
         // eslint-disable-next-line 
     }, [])
-
-
-    // console.log(showState);
-
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -85,7 +79,6 @@ const GuestStep7 = (props: props) => {
                             caption: ""
                         }
                         ],
-
                     }
                 } : list = {
                     id: match?.params?.id,
@@ -95,15 +88,11 @@ const GuestStep7 = (props: props) => {
                             id: last?.id,
                             priority: ar?.length,
                             caption: ""
-                        }
-
+                        },
                     }
                 }
         }
-
-
         try {
-
             await HenceForthApi?.Auth?.Updatedlisting(list)
             await listId()
 
@@ -122,8 +111,10 @@ const GuestStep7 = (props: props) => {
             }
         }
         if (checkCoverImg) {
+            setLoader(true)
             try {
                 await HenceForthApi?.Auth?.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/Step8/${match?.params.id}`)
             } catch (error) {
                 console.log(error);
@@ -210,7 +201,7 @@ const GuestStep7 = (props: props) => {
                                 </button>
                             </Link>
 
-                            <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={nextPage}> Next
+                            <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={nextPage}> {!loader ? "Next" : "Loading.."}
                             </button>
 
                         </div>

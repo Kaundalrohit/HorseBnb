@@ -17,33 +17,19 @@ const GuestStep6 = (props: props) => {
 
     const { steps, setSteps } = props
 
-    const [checked, setChecked] = useState<Array<string>>([])
-
+    HenceForthApi.setToken(localStorage.getItem('token'))
     const navigate = useNavigate();
     const match = useMatch(`/create-guest/Step6/:id`)
 
-
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+    const [check, setCheck] = useState<Array<string>>([])
+    const [loader, setLoader] = useState<boolean>(false)
 
 
 
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        listId()
-        // eslint-disable-next-line 
-    }, [])
 
-
-    console.log(checked);
 
     const handleOffers = (e: any) => {
-        const prev = checked
+        const prev = check
         const val = e.target.value
         const lastIndex = prev.indexOf(val)
         if (lastIndex !== -1) {
@@ -51,22 +37,23 @@ const GuestStep6 = (props: props) => {
         } else {
             prev.push(val)
         }
-        setChecked([...prev])
+        setCheck([...prev])
     }
 
     const handleStep6 = async () => {
         let list = {
             id: match?.params.id,
             publicData: {
-                amenities: checked,
+                amenities: check,
                 stepsCompleted: [...steps, 6]
             }
         }
 
-        if (checked.length !== 0) {
-
+        if (check.length !== 0) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/Step7/${match?.params.id}`)
             } catch (error) {
                 console.log(error);
@@ -102,6 +89,22 @@ const GuestStep6 = (props: props) => {
         { "id": 11, amenities: "RV Parking/Trailer" },
     ]
 
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setCheck(res?.data?.attributes?.publicData?.amenities);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
+
     return (
         <>
 
@@ -122,7 +125,7 @@ const GuestStep6 = (props: props) => {
                             {guestAmenities.map((e: any, index: number) =>
                                 <div className="checkbox-outerDiv">
                                     <label className="tickbox tickbox-sm mt-0 mb-4 text-default ng-star-inserted">
-                                        <input type="checkbox" value={e.amenities} className="ng-valid ng-dirty ng-touched" onChange={(e: any) => handleOffers(e)} />
+                                        <input type="checkbox" value={e.amenities} checked={check.includes(e.amenities)} className="ng-valid ng-dirty ng-touched" onChange={(e: any) => handleOffers(e)} />
                                         <span className="ps-1">{e.amenities}</span>
                                     </label>
                                 </div>
@@ -134,7 +137,7 @@ const GuestStep6 = (props: props) => {
                                 </button>
 
                                 <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep6}>
-                                    Next
+                                    {!loader ? "Next" : "Loading.."}
                                 </button>
 
                             </div>

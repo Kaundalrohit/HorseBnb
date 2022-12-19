@@ -84,7 +84,7 @@ const AdventureStalls = () => {
                         </div>
                         <div className="text-center mt-5">
                             <Link to="/add-experience/step1">
-                                <button className="btn btn-primary-outline-lg" tabIndex={0} ng-reflect-router-link="/add-experience">Start creating your adventure</button>
+                                <button className="btn btn-primary-outline-lg" tabIndex={0} >Start creating your adventure</button>
                             </Link>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ const AdventureStalls = () => {
                     <div className="col-md-6 px-md-0 text-center">
                         <h3 className="mb-3">Learn more about hosting with HorseBnB Adventures</h3>
                         <Link to="/add-experience/step1">
-                            <button type="button" className="btn btn-white-outline px-3 py-2" tabIndex={0} ng-reflect-router-link="/add-experience">Let’s go</button>
+                            <button type="button" className="btn btn-white-outline px-3 py-2">Let’s go</button>
                         </Link>
                     </div>
                 </div>

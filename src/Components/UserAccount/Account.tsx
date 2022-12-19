@@ -11,20 +11,20 @@ const Account = () => {
                 <p className="mb-0 mt-3"><b >Rohit Kumar</b>, rohit.kumar.henceforth@gmail.com </p>
                 <div className="row my-4">
                     <div className="col-md-4 mb-5 mb-md-0" tabIndex={0}>
-                        <Link to='/account/personal-info' className='text-decoration-none text-black'>
+                        <Link to='personal-info' className='text-decoration-none text-black'>
                             <div className="acc-box">
                                 <h4 className="font-22-bold text-black mb-3">
-                                    <img src={userImgIcon} height="24px" className="mr-2" /> Personal info <img src={nextBtnImg} />
+                                    <img src={userImgIcon} alt='' height="24px" className="mr-2" /> Personal info <img src={nextBtnImg} alt='' />
                                 </h4>
                                 <p className="mb-0">Provide personal details and how we can reach you</p>
                             </div>
                         </Link>
                     </div>
                     <div className="col-md-4 mb-5 mb-md-0" tabIndex={0}>
-                        <Link to='/account/update-password' className='text-decoration-none text-black'>
+                        <Link to='update-password' className='text-decoration-none text-black'>
                             <div className="acc-box">
                                 <h4 className="font-22-bold text-black mb-3">
-                                    <img src={passImg} height="24px" className="mr-2" /> Update Password <img src={nextBtnImg} />
+                                    <img src={passImg} alt='' height="24px" className="mr-2" /> Update Password <img src={nextBtnImg} alt='' />
 
                                 </h4>
                                 <p className="mb-0">Update your password and secure your account</p>
@@ -32,16 +32,17 @@ const Account = () => {
                         </Link>
                     </div>
                     <div className="col-md-4" tabIndex={0}>
-                        <Link to='/account/payments-and-payouts' className='text-decoration-none text-black'>
+                        <Link to='payments-and-payouts' className='text-decoration-none text-black'>
                             <div className="acc-box">
                                 <h4 className="font-22-bold text-black mb-3">
-                                    <img src={paymentIcon} height="24px" className="mr-2" /> Payments <img src={nextBtnImg} />
+                                    <img src={paymentIcon} alt='' height="24px" className="mr-2" /> Payments <img src={nextBtnImg} alt='' />
                                 </h4>
                                 <p className="mb-0">Receive payments from HorseBnB reservations</p>
                             </div>
                         </Link>
                     </div>
                 </div>
+                {/* <Outlet /> */}
             </div>
         </>
     )

@@ -9,17 +9,20 @@ import stripeImg from '../Images/stripe_payments.svg'
 import stripeBtn from '../Images/connect_stripe_buttin.png'
 
 type props = {
-    adSteps: any
-    setAdSteps: any;
+    steps: any
+    setsteps: any;
 }
 const Step9 = (props: props) => {
-    const { adSteps, setAdSteps } = props
+    const { steps, setsteps } = props
 
     const match = useMatch('/add-experience/step9/:id')
+
+    const [loader, setLoader] = useState<boolean>(false)
+
     const list = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setAdSteps(res.data.attributes.publicData.stepsCompleted)
+            setsteps(res.data.attributes.publicData.stepsCompleted)
         }
         catch (error) {
 
@@ -63,12 +66,12 @@ const Step9 = (props: props) => {
                             </Link>
                         </div>
                         <div className="d-flex justify-content-between mt-5 border-top">
-                            <Link to="/create-stall/step12">
-                                <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                    <img src={backArrow} className="pr-1" alt="" /> Back
-                                </button>
-                            </Link>
-                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}> Next
+
+                            <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
+                                <img src={backArrow} className="pr-1" alt="" /> Back
+                            </button>
+
+                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                             </button>
 
                         </div>

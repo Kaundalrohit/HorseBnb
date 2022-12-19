@@ -16,49 +16,29 @@ const GuestStep12 = (props: props) => {
 
     const { steps, setSteps } = props
 
-
-
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step12/:id`)
-    const [state, setstate] = useState({
-        listing_price: 0 as number,
-        bookingAcceptType: 0 as number,
-    })
-    const handleState = (e: any) => {
-        setstate({
-            ...state,
-            [e.target.name]: e.target.value
-        })
-    }
-    const listId = async () => {
-        try {
-            let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
 
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        // getStartedShow()
-        listId()
-        // eslint-disable-next-line 
-    }, [])
+
+    const [price, setPrice] = useState<number>()
+    const [check, setCheck] = useState<any>()
+    const [loader, setLoader] = useState<boolean>(false)
 
     const setPricing = async () => {
         let list = {
             id: match?.params.id,
             publicData:
             {
-                listing_price: state.listing_price,
-                bookingAcceptType: state.bookingAcceptType,
-                stepsCompleted: [...steps, 11],
+                listing_price: price,
+                bookingAcceptType: check,
+                stepsCompleted: [...steps, 12],
             }
         }
-        if (state.listing_price !== 0 && state.bookingAcceptType !== 0) {
-
+        if (price !== 0 && check !== 0) {
+            setLoader(true)
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-guest/Step13/${match?.params.id}`)
             } catch (error) {
                 console.log(error);
@@ -76,6 +56,23 @@ const GuestStep12 = (props: props) => {
             })
         }
     }
+
+    const listId = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            setCheck(res?.data?.attributes?.publicData?.bookingAcceptType);
+            setPrice(res?.data?.attributes?.publicData?.listing_price);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        // getStartedShow()
+        listId()
+        // eslint-disable-next-line 
+    }, [])
 
 
 
@@ -97,20 +94,29 @@ const GuestStep12 = (props: props) => {
                                 <div className="input-group-prepend">
                                     <span className="input-group-text dollar">$</span>
                                 </div>
-                                <input type="number" placeholder="" className="form-control dollar ng-untouched ng-pristine ng-valid" name='listing_price' value={state.listing_price} onChange={handleState} />
+                                <input type="number" placeholder="" className="form-control dollar ng-untouched ng-pristine ng-valid" name='listing_price' value={price} onChange={(e: any) => {
+                                    setPrice(e.target.value)
+                                }} />
                             </div>
                             <div className="mt-3">
                                 <div >
                                     <h5 className="pb-2">Do you want to allow guests to make instant bookings?</h5>
                                 </div>
-                                <div className="form-check row"  >
-                                    <input className="form-check-input col-md-1" type="radio" id="flexRadioDefault1" value={1} onChange={handleState} name="bookingAcceptType" />
-                                    <label className="form-check-label col-md-2" htmlFor="flexRadioDefault1">
-                                        Yes
+                                <div className="form-check row">
+                                    <label htmlFor="radio-three" className="radio-lable px-3 d-flex position-relative align-items-center">
+                                        <span className="ml-3 font-medium">Yes</span>
+                                        <input type="radio" id="radio-three" value={1} checked={check == 1} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                        }
+                                        } name='radio-btn' />
+                                        <span className="radio-checkmark"></span>
                                     </label>
-                                    <input className="form-check-input col-md-1" type="radio" name="bookingAcceptType" id="flexRadioDefault2" onChange={handleState} value={2} />
-                                    <label className="form-check-label col-md-2" htmlFor="flexRadioDefault2">
-                                        No
+                                    <label htmlFor="radio-four" className="radio-lable px-3 d-flex position-relative align-items-center">
+                                        <span className="ml-3 font-medium">No</span>
+                                        <input type="radio" id="radio-four" value={2} checked={check == 2} onChange={(e: any) => {
+                                            setCheck(e.target.value);
+                                        }} name='radio-btn' />
+                                        <span className="radio-checkmark"></span>
                                     </label>
                                 </div>
                             </div>
@@ -121,7 +127,7 @@ const GuestStep12 = (props: props) => {
                                     </button>
                                 </Link>
 
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }} onClick={setPricing} > Next
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }} onClick={setPricing} > {!loader ? "Next" : "Loading.."}
                                 </button>
 
                             </div>

@@ -1,46 +1,92 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useMatch, useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import guestMainImg from '../Images/guest_main.png'
 
 type props = {
     steps: any,
+    setSteps: any
 }
 const GuestStep1 = (props: props) => {
-    const { steps } = props
+    const { steps, setSteps } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'))
+    const navigate = useNavigate()
+    const match = useMatch(`/create-guest/step1/:id`)
+    let id = match?.params.id
 
     const [title, setTitle] = useState<string>("")
-    const navigate = useNavigate()
+    const [loader, setLoader] = useState<boolean>(false)
+
+
     let step1 = async () => {
-        if (title) {
-            try {
+        try {
+            if (title && id) {
+                setLoader(true)
+                let res = await HenceForthApi.Auth.Updatedlisting({
+                    title: title,
+                    id: id,
+                    publicData: {
+                        stepsCompleted: [
+                            ...steps, 1
+                        ]
+                    }
+                })
+                setLoader(false)
+                navigate(`/create-guest/step3/${res.data.id.uuid
+                    }`)
+            }
+            else if (title) {
+                setLoader(true)
                 let res = await HenceForthApi.Auth.createdraftlisting({
                     title: title,
                     publicData: {
                         type: 4,
-                        stepsCompleted: [...steps, 1],
+                        stepsCompleted: [
+                            ...steps, 1
+                        ]
                     }
                 })
-                navigate(`/create-guest/step3/${res.data.id.uuid}`)
+                setLoader(false)
+                navigate(`/create-guest/step3/${res.data.id.uuid
+                    }`)
+            }
+            else {
+                toast('🦄 Please fill the details', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const listId = async () => {
+        if (match?.params?.id) {
+            try {
+                let res = await HenceForthApi.Auth.Listid(match?.params.id)
+                setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+                setTitle(res?.data?.attributes?.title)
             } catch (error) {
                 console.log(error);
             }
-        } else {
-            toast('Please fill  Title', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
         }
     }
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
+
 
     return (
         <>
@@ -58,7 +104,7 @@ const GuestStep1 = (props: props) => {
                             <p >Catch guest's attention with a listing title that highlights what makes your place special. This can not be your business name.</p>
                             <input type="text" placeholder="Enter title" className="form-control mt-4 firstLetterCapital ng-dirty ng-valid ng-touched" value={title} onChange={(e: any) => setTitle(e.target.value)} />
                             <button type="button" onClick={step1} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center">
-                                Continue
+                                {!loader ? "Continue" : "Loading.."}
                             </button>
                         </div>
                     </div>

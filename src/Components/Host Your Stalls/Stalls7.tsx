@@ -30,6 +30,8 @@ export default function Stall7(props: props) {
         // priority: 0,
         // url: ""
     })
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const [imgfile, setImgFile] = useState<any>([])
 
@@ -131,7 +133,9 @@ export default function Stall7(props: props) {
         }
         try {
             if (checkCoverImg) {
+                setLoader(true)
                 await HenceForthApi?.Auth?.Updatedlisting(list)
+                setLoader(false)
                 navigate(`/create-stall/step8/${match?.params?.id}`)
             } else {
                 toast('🦄 Please Upload Images', {
@@ -220,7 +224,7 @@ export default function Stall7(props: props) {
                                         className="pr-1" /> Back
                                 </button>
                             </Link>
-                            <button className="btn my-3 px-3 text-white" onClick={nextPage} style={{ background: "rgb(0, 164, 180)" }}> Next
+                            <button className="btn my-3 px-3 text-white" onClick={nextPage} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                             </button>
                         </div>
                     </div>

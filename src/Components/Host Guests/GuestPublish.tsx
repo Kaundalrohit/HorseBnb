@@ -83,7 +83,7 @@ const GuestPublish = () => {
                         <div className="py-5 h-100 d-flex align-items-start px-md-5 bg-light justify-content-start">
                             <div className="border col-md-12 col-lg-7 px-4 py-4 mb-4 bg-white">
                                 <div className="host-img mb-1">
-                                    <img alt="" className="obj-cover  ng-star-inserted ng-lazyloaded" ng-reflect-default-image="https://horsebnb.s3.us-east-2." ng-reflect-lazy-image="https://horsebnb.s3.us-east-2." src={`${HenceForthApi.API_FILE_ROOT_SMALL}${coverImg}`} />
+                                    <img alt="" className="obj-cover " src={`${HenceForthApi.API_FILE_ROOT_SMALL}${coverImg}`} />
                                 </div>
                                 <p className="text-lite mb-1 font-small">PMCX+F64, Industrial Area, Sector 73, Sahibzada Ajit Singh Nagar, Punjab 140308, India</p>
                                 <p className="mb-1 font-small w-100 single-line-ellipsis">oo</p>

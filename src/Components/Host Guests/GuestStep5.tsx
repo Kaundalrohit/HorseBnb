@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
@@ -19,6 +19,9 @@ const GuestStep5 = (props: props) => {
     const navigate = useNavigate();
     const match = useMatch(`/create-guest/Step5/:id`)
 
+    const [loader, setLoader] = useState<boolean>(false)
+
+
 
 
     const listId = async () => {
@@ -38,7 +41,9 @@ const GuestStep5 = (props: props) => {
 
 
     const handleStep = () => {
+        setLoader(true)
         navigate(`/create-guest/step6/${match?.params.id}`)
+        setLoader(false)
     }
 
     return (
@@ -68,7 +73,7 @@ const GuestStep5 = (props: props) => {
 
 
                                     <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep}>
-                                        Next
+                                        {!loader ? "Next" : "Loading.."}
                                     </button>
 
                                 </div>

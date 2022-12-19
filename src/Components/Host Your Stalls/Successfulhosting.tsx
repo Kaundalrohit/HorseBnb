@@ -16,9 +16,12 @@ export default function SuccessfullHosting(props: props) {
     const match = useMatch(`/create-stall/sucessfull-hosting/:id`)
 
     const [check, setCheck] = useState()
+    const [loader, setLoader] = useState<boolean>(false)
+
 
     const agreeConditions = async () => {
         if (check) {
+            setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
@@ -29,6 +32,7 @@ export default function SuccessfullHosting(props: props) {
                         ]
                     }
                 }))
+                setLoader(false)
                 navigate(`/create-stall/step11/${match?.params.id}`)
             }
             catch (error) {
@@ -90,7 +94,7 @@ export default function SuccessfullHosting(props: props) {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={agreeConditions} style={{ background: "rgb(0, 164, 180)" }}> Next
+                                <button className="btn my-3 px-3 text-white" onClick={agreeConditions} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </div>
                         </div>
