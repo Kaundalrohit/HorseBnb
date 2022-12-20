@@ -59,7 +59,7 @@ const PersonalInfo = () => {
             firstName: state.userFirstName,
             lastName: state.userLastName,
         }))
-        console.log(res);
+
         getData()
     }
     const updateGender = async () => {
@@ -68,7 +68,7 @@ const PersonalInfo = () => {
                 gender: state.gender
             }
         }))
-        console.log(res);
+
         getData()
     }
     const updateAge = async () => {
@@ -77,7 +77,7 @@ const PersonalInfo = () => {
                 age: state.age
             }
         }))
-        console.log(res);
+
         getData()
     }
     const updatePhone = async () => {
@@ -86,16 +86,14 @@ const PersonalInfo = () => {
                 phoneNumber: state.phone
             }
         }))
-        console.log(res);
+
         getData()
     }
     const updateEmail = async () => {
         let res = (await HenceForthApi.Auth.updateUserProfile({
-
             email: state.userEmail
-
         }))
-        console.log(res);
+
         getData()
     }
     const updateAbout = async () => {
@@ -104,7 +102,7 @@ const PersonalInfo = () => {
             bio: state.about
 
         }))
-        console.log(res);
+
         getData()
     }
     const updateLang = async () => {
@@ -113,7 +111,6 @@ const PersonalInfo = () => {
                 language: state.language
             }
         }))
-        console.log(res);
         getData()
     }
 
@@ -146,7 +143,6 @@ const PersonalInfo = () => {
 
     const handleSubmit = async (e: any) => {
         let file = e.target.files[0]
-        console.log(file);
         try {
             // setLoader(true)
             let res = (await HenceForthApi.Auth.Uploadimage("file", file))
@@ -170,7 +166,6 @@ const PersonalInfo = () => {
         }
         try {
             let res = (await HenceForthApi.Auth.updateUserProfile(list))
-            console.log(res);
         } catch (error) {
             console.log(error);
 

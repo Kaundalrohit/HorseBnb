@@ -42,3 +42,33 @@
     font-weight: 700;
     min-height: 39px;
 }
+
+
+.sidebar {
+    background: #fff;
+}
+
+.sidebar {
+    min-height: 100vh;
+}
+.sidebar .side-head {
+    padding: 30px 20px;
+}
+
+.align-items-center {
+    align-items: center!important;
+}
+.justify-content-start {
+    justify-content: flex-start!important;
+}
+.sidebar .menu {
+    list-style-type: none;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+}
+.sidebar .side-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}

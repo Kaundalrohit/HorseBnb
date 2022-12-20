@@ -28,13 +28,9 @@ export default function UserNav({ setShowNav }: props) {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     }
 
-    console.log(userData);
 
     let userName = userData?.attributes?.profile?.displayName
     let userImg = userData?.attributes?.profile?.publicData?.profile_image
-    console.log(userImg);
-
-
 
     return (
         <>

@@ -49,7 +49,6 @@ export default function Stall7(props: props) {
     const getData = async () => {
         try {
             let res = await HenceForthApi.Auth.getdata()
-            console.log(res.data.attributes.profile.publicData.country_code);
         } catch (error) {
             console.log(error);
         }

@@ -33,7 +33,6 @@ const Step2 = (props: props) => {
                     ]
                 }
             })
-            console.log(res);
             setLoader(false)
             navigate(`/add-experience/step4/${match?.params.id}`)
 
@@ -83,7 +82,7 @@ const Step2 = (props: props) => {
 
                                     <button className="btn my-3 px-3 text-white"
                                         onClick={postStep2Data}
-                                        style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                        style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
                                     </button>
 
                                 </div>

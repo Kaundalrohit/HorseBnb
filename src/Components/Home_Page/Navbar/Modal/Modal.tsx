@@ -53,7 +53,6 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
                     country_code: "string"
                 }
             }))
-            console.log(res.data.token);
             localStorage.setItem("token", res.data.token)
             handleToken(res.data.token);
 
@@ -75,7 +74,6 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
                 deviceType: 3,
                 fcmId: "string"
             }))
-            console.log(res.data.token);
             localStorage.setItem("token", res.data.token)
             handleToken(res.data.token);
 
@@ -136,8 +134,8 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
                                         country={'in'}
                                         value={user.phoneNumber}
                                         onChange={(phone: any, data: any) => {
-                                            console.log(phone.slice(data.dialCode.length, phone.length));
-                                            console.log(data);
+                                            // console.log(phone.slice(data.dialCode.length, phone.length));
+                                            // console.log(data);
                                         }}
                                     />
                                     < div className="form-group mb-2 my-3">

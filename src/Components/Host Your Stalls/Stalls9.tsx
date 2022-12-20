@@ -37,7 +37,6 @@ export default function Stalls9(props: props) {
 
     const handleSubmit = async (e: any) => {
         let file = e.target.files[0]
-        console.log(file);
         try {
             setLoader(true)
             let res = (await HenceForthApi.Auth.Uploadimage("file", file))
@@ -62,7 +61,6 @@ export default function Stalls9(props: props) {
             setLoader(true)
             let res = (await HenceForthApi.Auth.updateUserProfile(list))
             setLoader(false)
-            console.log(res);
         } catch (error) {
             console.log(error);
 

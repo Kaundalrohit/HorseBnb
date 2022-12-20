@@ -63,8 +63,6 @@ export default function Publish() {
         }
     }
 
-    console.log(check);
-
     return (
         <>
             <div >

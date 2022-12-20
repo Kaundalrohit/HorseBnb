@@ -52,16 +52,12 @@ import Stalls9 from "./Components/Host Your Stalls/Stalls9";
 import HostProfile from "./Components/BookingDetails/HostProfile";
 import Navbar from "./Components/Home_Page/Navbar/Navbar";
 import UserAccount from "./Components/UserAccount/UserAccount";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 
 function App() {
 
-
-
   const [steps, setSteps] = useState<any>([])
-  // const [steps, setsteps] = useState<any>([])
-  console.log(steps);
-
 
   return (
     <div className="App">
@@ -147,6 +143,8 @@ function App() {
               <Route path="payments-and-payouts" element={<Payments />} />
             </Route>
 
+
+            <Route path="list-details/dashboard" element={<Dashboard />} />
           </Route>
 
         </Routes>

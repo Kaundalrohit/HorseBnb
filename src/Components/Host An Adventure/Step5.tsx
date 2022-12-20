@@ -39,7 +39,6 @@ const Step5 = (props: props) => {
 
             await uploadImg([...imgFile, { url: res.filename, id: res.id }])
             list()
-            console.log(res);
         }
         catch (error) {
             console.log(error);
@@ -92,7 +91,6 @@ const Step5 = (props: props) => {
         }
         try {
             let res = await HenceForthApi.Auth.Updatedlisting(list)
-            console.log(res);
         }
         catch (error) {
             console.log(error);
@@ -224,7 +222,7 @@ const Step5 = (props: props) => {
                             {/* <Link to={`/add-experience/step6/${match?.params.id}`}> */}
                             <button className="btn my-3 px-3 text-white"
                                 onClick={nextPage}
-                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
                             </button>
                             {/* </Link> */}
                         </div>

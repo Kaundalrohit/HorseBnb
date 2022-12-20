@@ -6,8 +6,6 @@ import mapImg from '../Images/map.svg'
 const ShowAllDetails = () => {
 
     const { type } = useParams() as any
-    console.log(type);
-
 
     const [check, setCheck] = useState<boolean>(true)
 
@@ -22,7 +20,6 @@ const ShowAllDetails = () => {
     const getCardData = async () => {
         setLoading(true)
         let res1 = (await HenceForthApi.listing.querylisting(types, 50, 1)).data
-        console.log(res1);
         setLoading(false)
         setstate({
             shortTerm: res1
@@ -44,7 +41,6 @@ const ShowAllDetails = () => {
         getCardData()
         // eslint-disable-next-line
     }, [types])
-    console.log(type);
 
     return (
         <>

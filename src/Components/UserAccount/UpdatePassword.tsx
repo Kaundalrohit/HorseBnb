@@ -4,8 +4,6 @@ import passImg from '../Images/Key.svg'
 import HenceForthApi from '../Utils/HenceForthApi'
 import { strongPassword } from '../Utils/Validation'
 
-
-
 const UpdatePassword = () => {
     const [toggle, setToggle] = useState<boolean>(true)
     HenceForthApi.setToken(localStorage.getItem("token"))
@@ -20,6 +18,7 @@ const UpdatePassword = () => {
         newPass: "",
         confirmPass: ""
     })
+    const { currentPass, newPass, confirmPass } = pass
 
     const updatePass = (e: any) => {
         setPass({
@@ -29,20 +28,15 @@ const UpdatePassword = () => {
     }
 
 
-    console.log(pass.currentPass);
-    console.log(pass.newPass);
-    console.log(pass.confirmPass);
-
 
     const changePass = async () => {
-        if (strongPassword(pass.newPass)) {
+        if (strongPassword(newPass)) {
             try {
 
                 let res = (await HenceForthApi.Auth.changespassword({
-                    currentPassword: pass.currentPass,
-                    newPassword: pass.newPass
+                    currentPassword: currentPass,
+                    newPassword: newPass
                 }))
-                console.log(res);
                 setPass({
                     currentPass: "",
                     newPass: "",
@@ -85,7 +79,7 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">Current password</label>
                                         <input type="password" placeholder="Enter current password"
-                                            value={pass.currentPass} name="currentPass"
+                                            value={currentPass} name="currentPass"
                                             onChange={updatePass}
                                             className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
@@ -96,7 +90,7 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">New password</label>
                                         <input type="password"
-                                            value={pass.newPass} name="newPass"
+                                            value={newPass} name="newPass"
                                             onChange={updatePass} placeholder="Enter new password" className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
                                         </div>
@@ -106,7 +100,7 @@ const UpdatePassword = () => {
                                     <div className="form-group">
                                         <label htmlFor="firstname" className="fw-600">Confirm password</label>
                                         <input type="password"
-                                            value={pass.confirmPass} name="confirmPass"
+                                            value={confirmPass} name="confirmPass"
                                             onChange={updatePass}
                                             placeholder="Enter confirm password" className="form-control ng-untouched ng-pristine ng-invalid" />
                                         <div className="invalid-feedback d-block">
@@ -114,7 +108,7 @@ const UpdatePassword = () => {
                                     </div>
                                 </div>
                                 <div className="col-md-12">
-                                    <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" disabled={pass.newPass.length === 0} onClick={changePass}> Update password </button>
+                                    <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" disabled={newPass.length === 0} onClick={changePass}> Update password </button>
                                 </div>
                             </div>}
                         </div>

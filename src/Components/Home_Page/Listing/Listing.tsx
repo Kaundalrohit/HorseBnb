@@ -38,12 +38,6 @@ export default function Listing() {
                 let res3 = (await HenceForthApi.listing.querylisting(3, post_page, page_no)).data
                 let res4 = (await HenceForthApi.listing.querylisting(4, post_page, page_no)).data
 
-
-                console.log(res1);
-                console.log(res2);
-                console.log(res3);
-                console.log(res4);
-
                 setList({
                     ...list,
                     shortTerm: res1,
@@ -85,9 +79,6 @@ export default function Listing() {
             title: 'Horse Adventures & Equine Activities'
         },
     ]
-
-
-
 
     return (
         <>

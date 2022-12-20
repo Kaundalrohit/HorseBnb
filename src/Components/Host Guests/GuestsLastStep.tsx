@@ -105,9 +105,6 @@ const GuestsLastStep = (props: props) => {
         },
     ]
 
-    console.log(coverPhoto);
-
-
     const lastStep = () => {
         setLoader(true)
         navigate(`/manage-listing/publish-listing/${match?.params.id}`)
@@ -118,7 +115,6 @@ const GuestsLastStep = (props: props) => {
     const listId = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
-            console.log();
             setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo?.url);
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
 

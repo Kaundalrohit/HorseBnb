@@ -65,8 +65,6 @@ const AdPublish = () => {
 
     }
 
-    console.log(check);
-
     return (
         <>
             <div >

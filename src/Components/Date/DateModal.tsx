@@ -39,8 +39,6 @@ const DateModal = (props: props) => {
         setStartTimeState(timeNumber)
         let AMPM = (e.target.value).slice(-2)
         setAmPm(AMPM)
-        console.log(AMPM);
-
     }
 
 

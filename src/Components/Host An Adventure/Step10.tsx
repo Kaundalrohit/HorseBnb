@@ -21,14 +21,14 @@ const Step10 = () => {
                                 </Link>
                             </div>
                             <div className="col col-sm-6">
-                                <Link to="">
-                                    <div className="selectCard">
-                                        <div className="">
-                                            <i className="bi bi-calendar3 h1"></i>
-                                        </div>
-                                        <span >Multiple Day Adventure</span>
+                                {/* <Link to=""> */}
+                                <div className="selectCard">
+                                    <div className="">
+                                        <i className="bi bi-calendar3 h1"></i>
                                     </div>
-                                </Link>
+                                    <span >Multiple Day Adventure</span>
+                                </div>
+                                {/* </Link> */}
                             </div>
                         </div>
                     </div>

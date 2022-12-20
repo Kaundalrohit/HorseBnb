@@ -58,15 +58,9 @@ const BookingDetails = () => {
     let bookingType = bookingDetails?.attributes?.publicData?.type
 
 
-    // console.log(hostId);
-
-
     const isImage = (url: string): boolean => {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     }
-    console.log(hostImg);
-
-
 
     return (
         <>
@@ -129,7 +123,7 @@ const BookingDetails = () => {
                                                     :
                                                     hostImg
                                             }
-                                        // src={hostImg}
+
                                         />
                                     </div>
                                 </Link>

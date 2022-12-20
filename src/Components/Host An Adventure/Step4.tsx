@@ -121,7 +121,7 @@ const Step4 = (props: props) => {
                                 {/* <Link to="/add-experience/step5"> */}
                                 <button className="btn my-3 px-3 text-white"
                                     onClick={postStep4Data}
-                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
                                 </button>
                                 {/* </Link> */}
                             </div>

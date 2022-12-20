@@ -32,7 +32,6 @@ const GuestPublish = () => {
             let res = (await HenceForthApi.Auth.publishListing({
                 id: match?.params.id,
             }))
-            console.log(res.data);
             navigate(`/publishedData/${match?.params.id}`)
         }
         catch (error) {

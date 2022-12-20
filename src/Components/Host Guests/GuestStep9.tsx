@@ -38,7 +38,6 @@ export default function GuestStep9(props: props) {
 
     const handleSubmit = async (e: any) => {
         let file = e.target.files[0]
-        console.log(file);
         try {
             setLoader(true)
             let res = (await HenceForthApi.Auth.Uploadimage("file", file))
@@ -61,7 +60,6 @@ export default function GuestStep9(props: props) {
         }
         try {
             let res = (await HenceForthApi.Auth.updateUserProfile(list))
-            console.log(res);
         } catch (error) {
             console.log(error);
 

@@ -8,7 +8,6 @@ const PublishedData = () => {
         let allres = await HenceForthApi.Auth.listedalltype()
         setAllData(allres.data)
     }
-    console.log(allData);
     useEffect(() => {
         PublishedData()
     }, [])

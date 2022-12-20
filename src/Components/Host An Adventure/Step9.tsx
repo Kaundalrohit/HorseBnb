@@ -71,7 +71,7 @@ const Step9 = (props: props) => {
                                 <img src={backArrow} className="pr-1" alt="" /> Back
                             </button>
 
-                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
                             </button>
 
                         </div>

@@ -91,7 +91,7 @@ const Step6 = (props: props) => {
                             </Link>
                             <button type="button"
                                 onClick={postStep6Data}
-                                className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading....."} </button>
+                                className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading.."} </button>
                         </div>
                     </div>
                 </div>
