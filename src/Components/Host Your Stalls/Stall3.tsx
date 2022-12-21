@@ -7,6 +7,7 @@ import horseImg from '../Images/horse_image.png'
 import removeImg from '../Images/remove_circle_outline.svg'
 import addImg from '../Images/add_circle_outline.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
@@ -168,7 +169,9 @@ export default function Stall3(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/step5"> */}
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={() => postStep3Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "continue" : "Loading....."}</button>
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={() => postStep3Data('Next')} style={{ background: "rgb(0, 164, 180)" }} disabled={loader} >
+
+                                    {!loader ? "Next" : <Spinner />}</button>
                                 {/* </Link> */}
                             </div>
                         </div>

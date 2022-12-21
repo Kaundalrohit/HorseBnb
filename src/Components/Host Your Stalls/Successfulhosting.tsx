@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import horseImg from '../Images/horse_image.png'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 type props = {
     steps: any,
     setSteps: any
@@ -106,7 +107,7 @@ export default function SuccessfullHosting(props: props) {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={() => agreeConditions('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => agreeConditions('Next')} style={{ background: "rgb(0, 164, 180)" }} disabled={loader}> {!loader ? "Next" : <Spinner />}
                                 </button>
                             </div>
                         </div>

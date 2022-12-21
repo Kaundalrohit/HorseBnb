@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import horseImg from '../Images/horse_image.png'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 type props = {
     steps: any,
     setSteps: any
@@ -141,7 +142,9 @@ export default function Stalls8(props: props) {
                                             alt="" className="pr-1" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={() => postStep8Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => postStep8Data('Next')} style={{ background: "rgb(0, 164, 180)" }}
+                                    disabled={loader}
+                                > {!loader ? "Next" : <Spinner />}
                                 </button>
                             </div>
                         </div>

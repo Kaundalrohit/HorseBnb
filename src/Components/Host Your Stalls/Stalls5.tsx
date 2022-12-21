@@ -4,6 +4,7 @@ import HenceForthApi from "../Utils/HenceForthApi"
 import horseImg from '../Images/horse_image.png'
 import backArrow from '../Images/chevron-left-primary.svg'
 import locationIcon from '../Images/near_me.svg'
+import Spinner from "../Spinner/Spinner"
 type props = {
     steps: any,
     setSteps: any
@@ -96,10 +97,10 @@ export default function Stalls5(props: props) {
                                             <img src={backArrow} className="pr-1" alt="" /> Back
                                         </button>
                                     </Link>
-                                    {/* <Link to={`/create-stall/step6/${match?.params.id}`}> */}
-                                    <button className="btn my-3 px-3 text-white" onClick={() => uploadStep5Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                    <button className="btn my-3 px-3 text-white" onClick={() => uploadStep5Data('Next')} style={{ background: "rgb(0, 164, 180)" }}
+                                        disabled={loader}
+                                    > {!loader ? "Next" : <Spinner />}
                                     </button>
-                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>

@@ -60,6 +60,7 @@ function App() {
   const [steps, setSteps] = useState<any>([])
   const [value, setValue] = useState<number>(0)
 
+
   const saveExit = (value: number) => {
     setValue(value)
   }

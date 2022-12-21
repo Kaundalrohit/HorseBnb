@@ -5,6 +5,7 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Stall1Img from '../Images/stalls1.png'
+import Spinner from "../Spinner/Spinner";
 
 
 type props = {
@@ -125,7 +126,8 @@ export default function Stall1(props: props) {
                                     }} />
                                     <button type="button" className="btn text-white px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" style={{ background: "rgb(0, 164, 180)" }}
                                         onClick={postStep1Data}
-                                    >  {!loader ? "continue" : "Loading....."} </button>
+                                        disabled={loader}
+                                    >  {!loader ? "continue" : < Spinner />} </button>
                                     <h1>
 
                                     </h1>
