@@ -100,7 +100,7 @@ function App() {
             <Route path="create-guest/step1" element={<GuestStep1 setSteps={setSteps} steps={steps} />} >
               <Route path=":id" element={<GuestStep1 setSteps={setSteps} steps={steps} />} />
             </Route>
-            <Route path="create-guest/step3/:id" element={<GuestStep3 steps={steps} setSteps={setSteps} />} />
+            <Route path="create-guest/step3/:id" element={<GuestStep3 steps={steps} setSteps={setSteps} value={value} />} />
             <Route path="create-guest/step5/:id" element={<GuestStep5 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step6/:id" element={<GuestStep6 steps={steps} setSteps={setSteps} />} />
             <Route path="create-guest/step7/:id" element={<GuestStep7 steps={steps} setSteps={setSteps} />} />

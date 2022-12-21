@@ -3,6 +3,7 @@ import { Link, useMatch, useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import guestMainImg from '../Images/guest_main.png'
+import Spinner from "../Spinner/Spinner"
 
 type props = {
     steps: any,
@@ -103,8 +104,9 @@ const GuestStep1 = (props: props) => {
                             </div>
                             <p >Catch guest's attention with a listing title that highlights what makes your place special. This can not be your business name.</p>
                             <input type="text" placeholder="Enter title" className="form-control mt-4 firstLetterCapital ng-dirty ng-valid ng-touched" value={title} onChange={(e: any) => setTitle(e.target.value)} />
-                            <button type="button" onClick={step1} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center">
-                                {!loader ? "Continue" : "Loading.."}
+                            <button type="button" onClick={() => step1()} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"
+                                disabled={loader}>
+                                {!loader ? "Continue" : <Spinner />}
                             </button>
                         </div>
                     </div>

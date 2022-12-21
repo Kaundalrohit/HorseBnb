@@ -7,15 +7,17 @@ import backArrow from '../Images/chevron-left-primary.svg'
 import guestSteps from '../Images/guest_steps.png'
 import removeImg from '../Images/remove_circle_outline.svg'
 import addImg from '../Images/add_circle_outline.svg'
+import Spinner from "../Spinner/Spinner";
 
 
 type props = {
     steps: any,
-    setSteps: any
+    setSteps: any,
+    value: number
 }
 const GuestStep3 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'))
     const navigate = useNavigate();
@@ -25,7 +27,7 @@ const GuestStep3 = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const setRoomCount = async () => {
+    const setRoomCount = async (navigation: string) => {
         const list = {
             id: match?.params.id,
             publicData: {
@@ -38,7 +40,12 @@ const GuestStep3 = (props: props) => {
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/step5/${match?.params.id}`)
+                navigation === 'Next' ?
+                    navigate(`/create-guest/step5/${match?.params?.id
+                        }`)
+                    :
+                    navigate(`/create-guest/last-step/${match?.params?.id
+                        }`)
             } catch (error) {
                 console.log(error);
             }
@@ -71,7 +78,9 @@ const GuestStep3 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
-
+    useEffect(() => {
+        (value && setRoomCount('Last'))
+    }, [value])
 
     return (
 
@@ -106,7 +115,8 @@ const GuestStep3 = (props: props) => {
                                 Back
                             </button>
 
-                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setRoomCount}> {!loader ? "Next" : "Loading.."}
+                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => setRoomCount('Next')}
+                                disabled={loader}> {!loader ? "Next" : <Spinner />}
                             </button>
                         </div>
                     </div>
