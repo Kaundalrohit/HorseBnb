@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
@@ -10,14 +10,16 @@ import defaultUserImg from '../Images/defaultUserImg.jpg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stalls9(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
     const [userImg, setUserImg] = useState<string>('')
     const [loader, setLoader] = useState<boolean>(false)
 
     HenceForthApi.setToken(localStorage.getItem("token"))
+    const navigate = useNavigate()
     const match = useMatch('/create-stall/step9/:id')
     // const navigate = useNavigate()
 
@@ -30,10 +32,6 @@ export default function Stalls9(props: props) {
             console.log(error);
         }
     }
-    useEffect(() => {
-        list()
-        // eslint-disable-next-line 
-    }, [])
 
     const handleSubmit = async (e: any) => {
         let file = e.target.files[0]
@@ -54,7 +52,7 @@ export default function Stalls9(props: props) {
         const list = {
             publicData: {
                 image: url,
-                stepsCompleted: [...steps, 9,]
+                // stepsCompleted: [...steps, 9,]
             }
         }
         try {
@@ -66,6 +64,30 @@ export default function Stalls9(props: props) {
 
         }
     }
+
+    const nextPage = async (navigation: string) => {
+        const list = {
+            publicData: {
+                host_image: userImg,
+                stepsCompleted: [...steps, 9,]
+            }
+        }
+        let res = await HenceForthApi.Auth.Updatedlisting(list)
+        console.log(res);
+
+        navigation === 'Next' ? navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`) :
+            navigate(`/create-stall/last-step/${match?.params.id}`)
+
+    }
+
+    useEffect(() => {
+        list()
+        // eslint-disable-next-line 
+    }, [])
+
+    useEffect(() => {
+        (value && nextPage('Last'))
+    }, [value])
 
     return (
         <>
@@ -101,9 +123,7 @@ export default function Stalls9(props: props) {
                                 <div className="d-flex justify-content-between border-top mt-5">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
                                         <img src={backArrow} alt='' className="pr-1" /> Back </button>
-                                    <Link to={`/create-stall/checkin-and-checkout/${match?.params.id}`}>
-                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading....."} </button>
-                                    </Link>
+                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => nextPage('Next')}> {!loader ? "Next" : "Loading....."} </button>
                                 </div>
 
                             </div>

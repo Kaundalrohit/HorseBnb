@@ -8,11 +8,12 @@ import HenceForthApi from "../Utils/HenceForthApi";
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stalls6(props: props) {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'));
     const match = useMatch(`/create-stall/step6/:id`)
@@ -67,7 +68,7 @@ export default function Stalls6(props: props) {
         setCheck([...prev]);
     };
 
-    const postStep6Data = async () => {
+    const postStep6Data = async (navigation: string) => {
         if (check.length === 0) return toast('🦄 Please Select at-least one option', {
             position: "top-right",
             autoClose: 2000,
@@ -93,7 +94,12 @@ export default function Stalls6(props: props) {
             setLoader(true)
             await HenceForthApi.Auth.Updatedlisting(list)
             setLoader(false)
-            navigate(`/create-stall/step7/${match?.params.id}`)
+            {
+                (navigation === 'Next') ?
+                    navigate(`/create-stall/step7/${match?.params.id}`)
+                    :
+                    navigate(`/create-stall/last-step/${match?.params.id}`)
+            }
         } catch (error: any) {
             console.log(error);
         }
@@ -112,6 +118,13 @@ export default function Stalls6(props: props) {
         list()
         // eslint-disable-next-line 
     }, [])
+
+    useEffect(() => {
+        {
+            value && postStep6Data('Last')
+        }
+
+    }, [value])
 
     return (
         <>
@@ -147,7 +160,7 @@ export default function Stalls6(props: props) {
                             </button>
                         </Link>
 
-                        <button className="btn my-3 px-3 text-white" onClick={postStep6Data} style={{ background: "rgb(0, 164, 180)" }}>{!loader ? "Next" : "Loading....."}
+                        <button className="btn my-3 px-3 text-white" onClick={() => postStep6Data('Next')} style={{ background: "rgb(0, 164, 180)" }}>{!loader ? "Next" : "Loading....."}
                         </button>
 
                     </div>

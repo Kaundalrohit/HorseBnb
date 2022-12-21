@@ -7,9 +7,10 @@ import locationIcon from '../Images/near_me.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 export default function Stalls5(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
     const match = useMatch(`/create-stall/step5/:id`)
     const navigate = useNavigate()
 
@@ -29,7 +30,7 @@ export default function Stalls5(props: props) {
         // eslint-disable-next-line 
     }, [])
 
-    const uploadStep5Data = async () => {
+    const uploadStep5Data = async (navigation: string) => {
         try {
             setLoader(true)
             await HenceForthApi.Auth.Updatedlisting({
@@ -42,7 +43,13 @@ export default function Stalls5(props: props) {
                 }
             })
             setLoader(false)
-            navigate(`/create-stall/step6/${match?.params.id}`)
+            {
+                (navigation === 'Next') ?
+                    navigate(`/create-stall/step6/${match?.params.id}`)
+                    :
+                    navigate(`/create-stall/last-step/${match?.params.id}`)
+            }
+
         } catch (error) {
             console.log(error);
 
@@ -57,6 +64,11 @@ export default function Stalls5(props: props) {
             });
         }
     }
+    useEffect(() => {
+        if (value) {
+            uploadStep5Data('Last')
+        }
+    }, [value])
 
     return (
         <>
@@ -85,7 +97,7 @@ export default function Stalls5(props: props) {
                                         </button>
                                     </Link>
                                     {/* <Link to={`/create-stall/step6/${match?.params.id}`}> */}
-                                    <button className="btn my-3 px-3 text-white" onClick={uploadStep5Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                    <button className="btn my-3 px-3 text-white" onClick={() => uploadStep5Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                     </button>
                                     {/* </Link> */}
                                 </div>

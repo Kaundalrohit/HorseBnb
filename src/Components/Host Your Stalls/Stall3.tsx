@@ -11,10 +11,11 @@ import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stall3(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch(`/create-stall/step3/:id`)
@@ -56,7 +57,7 @@ export default function Stall3(props: props) {
 
     ]
 
-    const postStep3Data = async () => {
+    const postStep3Data = async (navigation: string) => {
 
         const list = {
             availabilityPlan: {
@@ -79,7 +80,13 @@ export default function Stall3(props: props) {
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-stall/step5/${match?.params.id}`)
+                {
+                    (navigation === 'Next') ?
+                        navigate(`/create-stall/step5/${match?.params.id}`)
+                        :
+                        navigate(`/create-stall/last-step/${match?.params.id}`)
+                }
+
             }
             catch (error: any) {
                 console.log(error);
@@ -111,6 +118,13 @@ export default function Stall3(props: props) {
         list()
         // eslint-disable-next-line 
     }, [])
+    useEffect(() => {
+
+        (value &&
+            postStep3Data('Last'))
+
+
+    }, [value])
     return (
         <>
             <section className="stall_step3">
@@ -154,7 +168,7 @@ export default function Stall3(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/step5"> */}
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={postStep3Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "continue" : "Loading....."}</button>
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={() => postStep3Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "continue" : "Loading....."}</button>
                                 {/* </Link> */}
                             </div>
                         </div>

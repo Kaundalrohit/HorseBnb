@@ -9,10 +9,11 @@ import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function CheckInCheckOut(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-stall/checkin-and-checkout/:id')
@@ -32,7 +33,7 @@ export default function CheckInCheckOut(props: props) {
         })
     }
 
-    const postStep9Data = async () => {
+    const postStep10Data = async (navigation: string) => {
         if (state.arrive && state.leave) {
             setLoader(true)
             try {
@@ -48,7 +49,13 @@ export default function CheckInCheckOut(props: props) {
 
                 }))
                 setLoader(false)
-                navigate(`/create-stall/sucessfull-hosting/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-stall/sucessfull-hosting/${match?.params.id}`)
+
+                        :
+                        navigate(`/create-stall/last-step/${match?.params.id}`)
+                }
             }
             catch (error) {
                 console.log(error);
@@ -84,6 +91,9 @@ export default function CheckInCheckOut(props: props) {
         list()
         // eslint-disable-next-line 
     }, [])
+    useEffect(() => {
+        { value && postStep10Data('Last') }
+    }, [value])
     return (
         <>
             <div >
@@ -110,7 +120,7 @@ export default function CheckInCheckOut(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/sucessfull-hosting"> */}
-                                <button className="btn my-3 px-3 text-white" onClick={postStep9Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => postStep10Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                                 {/* </Link> */}
                             </div>

@@ -3,8 +3,11 @@ import { useState } from "react";
 import UserNav from "./UserNav";
 import Logo from "../../Images/Logo.png"
 
+type props = {
+  saveExit: (value: number) => void
+}
 
-export default function Navbar() {
+export default function Navbar({ saveExit }: props) {
 
   const [modal, setModal] = useState<boolean>(true);
 
@@ -31,7 +34,7 @@ export default function Navbar() {
 
           {/* <.....................TOGGLE NAVBAR .........................> */}
 
-          {showNav !== null ? <UserNav setShowNav={updateToken} />
+          {showNav !== null ? <UserNav setShowNav={updateToken} saveExit={saveExit} />
             : <div className="d-flex">
               <button className="btn  border-0" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={loginModal}>Log In</button>
               <button

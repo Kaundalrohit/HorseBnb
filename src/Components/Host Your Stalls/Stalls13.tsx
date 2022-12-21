@@ -1,13 +1,18 @@
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backArrow from '../Images/chevron-left-primary.svg'
 import stripeImg from '../Images/stripe_payments.svg'
 import stripeBtn from '../Images/connect_stripe_buttin.png'
+import { useEffect } from "react";
 
+type props = {
+    value: number
+}
 
-export default function Stalls13() {
+export default function Stalls13({ value }: props) {
     const match = useMatch('/create-stall/step13/:id')
+    const navigate = useNavigate()
 
     const handlePayment = () => {
         toast('🦄 Please connect your stripe account to step forward', {
@@ -21,6 +26,19 @@ export default function Stalls13() {
             theme: "light",
         });
     }
+    const skipBtn = (navigation: string) => {
+        {
+            navigation === 'Next' ?
+                navigate(`/create-stall/last-step/${match?.params.id}`)
+                :
+                navigate(`/create-stall/last-step/${match?.params.id}`)
+        }
+    }
+
+    useEffect(() => {
+        { value && skipBtn('Last') }
+    })
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -38,7 +56,7 @@ export default function Stalls13() {
                             </div>
                             <Link to={`/create-stall/last-step/${match?.params.id}`}>
                                 <button type="button" className="btn  text-white skip-btn font-regular my-3 px-3 mr-3"
-                                    style={{ background: "rgb(0, 164, 180)" }} > Skip for now </button>
+                                    style={{ background: "rgb(0, 164, 180)" }} onClick={() => skipBtn('Next')}> Skip for now </button>
                             </Link>
                         </div>
                         <div className="d-flex justify-content-between mt-5 border-top">

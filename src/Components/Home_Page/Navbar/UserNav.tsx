@@ -3,8 +3,9 @@ import { useLocation, Link } from 'react-router-dom'
 import HenceForthApi from '../../Utils/HenceForthApi';
 type props = {
     setShowNav: any;
+    saveExit: (value: number) => void
 }
-export default function UserNav({ setShowNav }: props) {
+export default function UserNav({ setShowNav, saveExit }: props) {
     HenceForthApi.setToken(localStorage.getItem('token'))
     const location = useLocation()
 
@@ -93,7 +94,9 @@ export default function UserNav({ setShowNav }: props) {
                                 (
                                     location.pathname.startsWith('/c') || location.pathname.startsWith('/add-experience') ?
                                         <div>
-                                            <button className='btn border-0 fw-bold' style={{ color: "#00a4b4" }}>Save & Exit</button>
+                                            <button className='btn border-0 fw-bold' onClick={() => {
+                                                saveExit(Math.random())
+                                            }} style={{ color: "#00a4b4" }}>Save & Exit</button>
                                         </div> :
                                         <Link to="create-stall/step1">
                                             <button className='btn text-white fw-bold' style={{ background: "#00a4b4" }}>Get Started</button>

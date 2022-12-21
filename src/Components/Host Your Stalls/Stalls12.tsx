@@ -9,10 +9,11 @@ import bulbImg from '../Images/lightbulb.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stalls12(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-stall/step12/:id')
@@ -23,7 +24,7 @@ export default function Stalls12(props: props) {
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const poststep12Data = async () => {
+    const poststep12Data = async (navigation: string) => {
         if (price) {
             setLoader(true)
             try {
@@ -42,7 +43,13 @@ export default function Stalls12(props: props) {
                     }
                 }))
                 setLoader(false)
-                navigate(`/create-stall/step13/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-stall/step13/${match?.params.id}`)
+                        :
+                        navigate(`/create-stall/last-step/${match?.params.id}`)
+
+                }
             }
             catch (error) {
                 console.log(error);
@@ -75,6 +82,9 @@ export default function Stalls12(props: props) {
         list()
         // eslint-disable-next-line 
     }, []);
+    useEffect(() => {
+        { value && poststep12Data('Last') }
+    })
 
     return (
         <>
@@ -124,7 +134,7 @@ export default function Stalls12(props: props) {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={poststep12Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => poststep12Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </div>
                         </div>

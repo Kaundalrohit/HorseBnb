@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
@@ -8,16 +8,18 @@ import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stalls11(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
     const match = useMatch('/create-stall/step11/:id')
+    const navigate = useNavigate()
     const [date, setDate] = useState<string | number>()
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const uploadStep11Data = async () => {
+    const uploadStep11Data = async (navigation: string) => {
         try {
             setLoader(true)
             await HenceForthApi.Auth.Updatedlisting({
@@ -29,6 +31,10 @@ export default function Stalls11(props: props) {
                 }
             })
             setLoader(false)
+            {
+                navigation === 'Next' ? navigate(`/create-stall/step12/${match?.params.id}`)
+                    : navigate(`/create-stall/last-step/${match?.params.id}`)
+            }
         } catch (error) {
             console.log(error);
 
@@ -48,6 +54,9 @@ export default function Stalls11(props: props) {
         list()
         // eslint-disable-next-line 
     }, [])
+    useEffect(() => {
+        { value && uploadStep11Data('Last') }
+    })
 
     return (
         <>
@@ -71,12 +80,12 @@ export default function Stalls11(props: props) {
                                     <img src={backArrow} className="pr-1" alt="" /> Back
                                 </button>
                             </Link>
-                            <Link to={`/create-stall/step12/${match?.params.id}`}>
-                                <button className="btn my-3 px-3 text-white"
-                                    onClick={uploadStep11Data}
-                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
-                                </button>
-                            </Link>
+                            {/* <Link to={`/create-stall/step12/${match?.params.id}`}> */}
+                            <button className="btn my-3 px-3 text-white"
+                                onClick={() => uploadStep11Data('Next')}
+                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                     <div className="col-md-6 px-md-0 d-none d-md-block">

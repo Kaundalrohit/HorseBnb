@@ -5,27 +5,33 @@ import CompletedSteps from "./CompletedSteps";
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/chevron-left-primary.svg'
 
-
-export default function LastStep() {
+type props = {
+    setValue: (value: number) => void
+}
+export default function LastStep({ setValue }: props) {
     const [step, setStep] = useState<any>([])
 
     const match = useMatch('/create-stall/last-step/:id')
     HenceForthApi.setToken(localStorage.getItem('token'));
 
     const [coverImg, setCoverImg] = useState<any>()
+    const [proImg, setProImg] = useState<string>('')
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setCoverImg(res.data.attributes.publicData.cover_photo);
-                setStep(res.data.attributes.publicData.stepsCompleted)
-            } catch (error) {
-                console.log(error);
-            }
+    const getData = async () => {
+        try {
+            let res = await HenceForthApi.Auth.Listid(match?.params.id)
+            setCoverImg(res.data.attributes.publicData.cover_photo);
+            setStep(res.data.attributes.publicData.stepsCompleted)
+            setProImg(res?.data?.attributes?.publicData?.host_image)
+        } catch (error) {
+            console.log(error);
         }
+    }
+    useEffect(() => {
         getData();
+        setValue(0)
     }, [])
+
 
     const allSteps = [
         {
@@ -73,28 +79,29 @@ export default function LastStep() {
             id: 7,
             step: "Photo",
             url: `create-stall/step9/${match?.params.id}`,
-            stepNumber: 9
+            stepNumber: 9,
+            proImg: proImg
 
         },
         {
             id: 8,
             step: "Check in and Check out",
             url: `create-stall/checkin-and-checkout/${match?.params.id}`,
-            stepNumber: 10
+            stepNumber: 10,
 
         },
         {
             id: 9,
             step: "Agreement",
             url: `create-stall/sucessfull-hosting/${match?.params.id}`,
-            stepNumber: 14
+            stepNumber: 15
 
         },
         {
             id: 10,
             step: "Calendar Availability",
             url: `create-stall/step11/${match?.params.id}`,
-            stepNumber: 15
+            stepNumber: 14
 
         },
         {
@@ -120,7 +127,7 @@ export default function LastStep() {
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
                         <h6 className="text-lite mb-3">You can always edit your listing after you publish it.</h6>
                         {allSteps.map((e: any, index: any) =>
-                            <CompletedSteps stepsArray={step} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
+                            <CompletedSteps stepsArray={step} proImg={e.proImg} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
                         )}
                     </div>
                     <div className="col-md-7 text-center d-flex flex-column">

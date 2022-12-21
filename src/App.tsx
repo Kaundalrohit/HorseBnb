@@ -58,12 +58,19 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 function App() {
 
   const [steps, setSteps] = useState<any>([])
+  const [value, setValue] = useState<number>(0)
+
+  const saveExit = (value: number) => {
+    setValue(value)
+  }
+
+  console.log(value);
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="*" element={<Components />}>
+          <Route path="*" element={<Components saveExit={saveExit} />}>
             <Route index element={<Listing />} />
 
             {/* <.....................................> */}
@@ -72,18 +79,18 @@ function App() {
             <Route path="create-stall/step1" element={<Stall1 setSteps={setSteps} steps={steps} />} >
               <Route path=":id" element={<Stall1 setSteps={setSteps} steps={steps} />} />
             </Route>
-            <Route path="create-stall/step3/:id" element={<Stall3 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step5/:id" element={<Stalls5 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step6/:id" element={<Stalls6 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step7/:id" element={<Stall7 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step8/:id" element={<Stalls8 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step9/:id" element={<Stalls9 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/checkin-and-checkout/:id" element={<CheckInCheckOut setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/sucessfull-hosting/:id" element={<SuccessfullHosting setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step11/:id" element={<Stalls11 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step12/:id" element={<Stalls12 setSteps={setSteps} steps={steps} />} />
-            <Route path="create-stall/step13/:id" element={<Stalls13 />} />
-            <Route path="create-stall/last-step/:id" element={<LastStep />} />
+            <Route path="create-stall/step3/:id" element={<Stall3 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step5/:id" element={<Stalls5 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step6/:id" element={<Stalls6 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step7/:id" element={<Stall7 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step8/:id" element={<Stalls8 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step9/:id" element={<Stalls9 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/checkin-and-checkout/:id" element={<CheckInCheckOut setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/sucessfull-hosting/:id" element={<SuccessfullHosting setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step11/:id" element={<Stalls11 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step12/:id" element={<Stalls12 setSteps={setSteps} steps={steps} value={value} />} />
+            <Route path="create-stall/step13/:id" element={<Stalls13 value={value} />} />
+            <Route path="create-stall/last-step/:id" element={<LastStep setValue={setValue} />} />
 
             {/* <.....................................> */}
 

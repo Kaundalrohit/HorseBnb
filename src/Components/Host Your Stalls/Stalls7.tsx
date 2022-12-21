@@ -14,10 +14,11 @@ import publisgImg from '../Images/publish.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stall7(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'));
     const match = useMatch(`/create-stall/step7/:id`)
@@ -122,7 +123,7 @@ export default function Stall7(props: props) {
         }
     }
 
-    const nextPage = async (ar: any) => {
+    const nextPage = async (navigation: string) => {
         let list = {
             id: match?.params?.id,
             publicData: {
@@ -135,7 +136,12 @@ export default function Stall7(props: props) {
                 setLoader(true)
                 await HenceForthApi?.Auth?.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-stall/step8/${match?.params?.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-stall/step8/${match?.params?.id}`)
+                        :
+                        navigate(`/create-stall/last-step/${match?.params?.id}`)
+                }
             } else {
                 toast('🦄 Please Upload Images', {
                     position: "top-right",
@@ -154,6 +160,9 @@ export default function Stall7(props: props) {
 
     }
 
+    useEffect(() => {
+        (value && nextPage('Last'))
+    }, [value])
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -223,7 +232,7 @@ export default function Stall7(props: props) {
                                         className="pr-1" /> Back
                                 </button>
                             </Link>
-                            <button className="btn my-3 px-3 text-white" onClick={nextPage} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                            <button className="btn my-3 px-3 text-white" onClick={() => nextPage('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                             </button>
                         </div>
                     </div>

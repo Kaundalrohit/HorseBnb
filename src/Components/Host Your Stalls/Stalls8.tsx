@@ -8,10 +8,11 @@ import backArrow from '../Images/chevron-left-primary.svg'
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function Stalls8(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
     HenceForthApi.setToken(localStorage.getItem('token'));
     const match = useMatch(`/create-stall/step8/:id`)
     const navigate = useNavigate()
@@ -31,7 +32,7 @@ export default function Stalls8(props: props) {
         })
     }
 
-    const postStep8Data = async () => {
+    const postStep8Data = async (navigation: string) => {
         let step = !userImg ? [
             ...steps, 8,
         ] : [
@@ -50,9 +51,13 @@ export default function Stalls8(props: props) {
                     }
                 }))
                 setLoader(false)
-                {
-                    !userImg ? navigate(`/create-stall/step9/${match?.params.id}`) :
-                        navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+                if (navigation === "Next" && !userImg) {
+                    navigate(`/create-stall/step9/${match?.params.id}`)
+                }
+                else if (navigation === "Next" && userImg) {
+                    navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+                } else {
+                    navigate(`/create-stall/last-step/${match?.params.id}`)
                 }
             }
             catch (error) {
@@ -94,6 +99,9 @@ export default function Stalls8(props: props) {
         // eslint-disable-next-line 
     }, [])
 
+    useEffect(() => {
+        value && postStep8Data('Last')
+    }, [value])
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -133,7 +141,7 @@ export default function Stalls8(props: props) {
                                             alt="" className="pr-1" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={postStep8Data} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => postStep8Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
                                 </button>
                             </div>
                         </div>
