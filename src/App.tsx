@@ -57,7 +57,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 
 function App() {
 
-  const [steps, setSteps] = useState<number[]>([])
+  const [steps, setSteps] = useState<any>([])
   const [value, setValue] = useState<number>(0)
 
 
@@ -99,17 +99,17 @@ function App() {
               <Route path=":id" element={<GuestStep1 setSteps={setSteps} steps={steps} />} />
             </Route>
             <Route path="create-guest/step3/:id" element={<GuestStep3 steps={steps} setSteps={setSteps} value={value} />} />
-            <Route path="create-guest/step5/:id" element={<GuestStep5 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step6/:id" element={<GuestStep6 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step7/:id" element={<GuestStep7 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step8/:id" element={<GuestStep8 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step9/:id" element={<GuestStep9 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/checkin-and-checkout/:id" element={<GuestCheckIn steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/sucessfull-hosting/:id" element={<GuestStep10 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step11/:id" element={<GuestStep11 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step12/:id" element={<GuestStep12 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/step13/:id" element={<GuestStep13 steps={steps} setSteps={setSteps} />} />
-            <Route path="create-guest/last-step/:id" element={<GuestsLastStep steps={steps} setSteps={setSteps} />} />
+            <Route path="create-guest/step5/:id" element={<GuestStep5 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step6/:id" element={<GuestStep6 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step7/:id" element={<GuestStep7 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step8/:id" element={<GuestStep8 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step9/:id" element={<GuestStep9 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/checkin-and-checkout/:id" element={<GuestCheckIn steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/sucessfull-hosting/:id" element={<GuestStep10 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step11/:id" element={<GuestStep11 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step12/:id" element={<GuestStep12 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/step13/:id" element={<GuestStep13 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="create-guest/last-step/:id" element={<GuestsLastStep steps={steps} setSteps={setSteps} setValue={setValue} />} />
 
 
             {/* <.....................................> */}

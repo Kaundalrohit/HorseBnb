@@ -4,15 +4,17 @@ import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import stripeImg from '../Images/stripe_payments.svg'
 import stripeBtn from '../Images/connect_stripe_buttin.png'
+import { toast, ToastContainer } from "react-toastify"
 
 
 type props = {
     steps: Array<number>,
     setSteps: any,
+    value: number
 }
 
 const GuestStep13 = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step13/:id`)
@@ -20,9 +22,14 @@ const GuestStep13 = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const skipStripe = () => {
+    const skipStripe = (navigation: string) => {
         setLoader(true)
-        navigate(`/create-guest/last-step/${match?.params.id}`)
+        {
+            navigation === 'Next' ?
+                navigate(`/create-guest/last-step/${match?.params.id}`)
+                :
+                navigate(`/create-guest/last-step/${match?.params.id}`)
+        }
         setLoader(false)
     }
 
@@ -41,9 +48,18 @@ const GuestStep13 = (props: props) => {
         // eslint-disable-next-line 
     }, [])
 
+    const handlestripeBtn = () => {
+        toast.warn('Please Complete Your Stripe Account ')
+    }
+
+    useEffect(() => {
+        { value && skipStripe('Last') }
+    }, [value])
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
+                <ToastContainer />
                 <div className="progress-bar bg-info" role="progressbar" style={{ width: "77%" }}>
                 </div>
             </div>
@@ -56,7 +72,7 @@ const GuestStep13 = (props: props) => {
                                 <img alt="" src={stripeBtn} />
                             </div>
 
-                            <button type="button" className="btn btn-primary skip-btn font-regular my-3 px-3 mr-3" onClick={skipStripe} > Skip for now </button>
+                            <button type="button" className="btn btn-primary skip-btn font-regular my-3 px-3 mr-3" onClick={() => skipStripe('Next')} > Skip for now </button>
 
                         </div>
                         <div className="d-flex justify-content-between mt-5 border-top">
@@ -65,10 +81,10 @@ const GuestStep13 = (props: props) => {
                                     <img alt="" src={backArrow} className="pr-1" /> Back
                                 </button>
                             </Link>
-                            <Link to="">
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
-                                </button>
-                            </Link>
+                            {/* <Link to=""> */}
+                            <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }} onClick={handlestripeBtn} > {!loader ? "Next" : "Loading.."}
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

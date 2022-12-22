@@ -4,17 +4,19 @@ import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import guestSteps from '../Images/guest_steps.png'
+import Spinner from "../Spinner/Spinner"
 
 
 
 type props = {
     setSteps: any,
     steps: Array<number>
+    value: number
 }
 
 const GuestStep8 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step8/:id`)
@@ -35,7 +37,7 @@ const GuestStep8 = (props: props) => {
 
     }
 
-    const handleStep8 = async () => {
+    const handleStep8 = async (navigation: string) => {
         let step = !state.userImg ? [
             ...steps, 8,
         ] : [
@@ -55,7 +57,15 @@ const GuestStep8 = (props: props) => {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
                 {
-                    !state.userImg ? navigate(`/create-guest/step9/${match?.params.id}`) : navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
+                    if (!state.userImg && navigation === 'Next') {
+                        navigate(`/create-guest/step9/${match?.params.id}`)
+                    }
+                    else if (state.userImg && navigation === 'Next') {
+                        navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
+                    } else {
+                        navigate(`/create-guest/last-step/${match?.params.id}`)
+                    }
+
                 }
             } catch (error) {
                 console.log(error);
@@ -94,6 +104,10 @@ const GuestStep8 = (props: props) => {
         // eslint-disable-next-line 
     }, [])
 
+    useEffect(() => {
+        { value && handleStep8('Last') }
+    }, [value])
+
     return (
         <>
             <div className="row mx-0">
@@ -122,7 +136,9 @@ const GuestStep8 = (props: props) => {
                                         Back
                                     </button>
 
-                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep8} > {!loader ? "Next" : "Loading.."} </button>
+                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => handleStep8("Next")}
+                                        disabled={loader}
+                                    > {!loader ? "Next" : <Spinner />} </button>
 
                                 </div>
                             </form>

@@ -113,3 +113,11 @@
     color: #00a4b4;
     font-weight: 700;
 }
+.btn-sky-outline-lg {
+    border: 2px solid #008489;
+    border-radius: 6px;
+    min-height: 42px;
+    background-color: #fff;
+    color: #008489;
+    font-weight: 700;
+}

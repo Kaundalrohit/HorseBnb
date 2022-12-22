@@ -4,14 +4,17 @@ import CompletedSteps from "../Host Your Stalls/CompletedSteps"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/finish_your_listing.svg'
+import Spinner from "../Spinner/Spinner"
+import { toast, ToastContainer } from "react-toastify"
 
 type props = {
     setSteps: any
     steps: any
+    setValue: (value: number) => void
 }
 
 const GuestsLastStep = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, setValue } = props
 
     const navigate = useNavigate()
     const match = useMatch(`create-guest/last-step/:id`)
@@ -68,6 +71,7 @@ const GuestsLastStep = (props: props) => {
             url: `create-guest/step9/${match?.params.id}`,
             stepNumber: 9
 
+
         },
         {
             id: 8,
@@ -79,7 +83,7 @@ const GuestsLastStep = (props: props) => {
         {
             id: 9,
             step: "Agreement",
-            url: `create-guest/step10/${match?.params.id}`,
+            url: `create-guest/sucessfull-hosting/${match?.params.id}`,
             stepNumber: 15
 
         },
@@ -105,11 +109,16 @@ const GuestsLastStep = (props: props) => {
         },
     ]
 
-    const lastStep = () => {
-        setLoader(true)
-        navigate(`/manage-listing/publish-listing/${match?.params.id}`)
-        setLoader(false)
+    let checkSteps = [...new Set(steps) as any]
+    console.log(checkSteps);
 
+
+    const lastStep = () => {
+        if (checkSteps.length >= 11) {
+            navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+        } else {
+            toast.error('Please Complete All Steps')
+        }
     }
 
     const listId = async () => {
@@ -124,6 +133,7 @@ const GuestsLastStep = (props: props) => {
     }
     useEffect(() => {
         listId()
+        setValue(0)
         // eslint-disable-next-line 
     }, [])
 
@@ -131,6 +141,7 @@ const GuestsLastStep = (props: props) => {
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
+                <ToastContainer />
                 <div className="progress-bar bg-info" role="progressbar" style={{ width: "84%" }}>
                 </div>
             </div>
@@ -173,10 +184,9 @@ const GuestsLastStep = (props: props) => {
                                 </div>
                                 <div className="">
 
-                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}> {!loader ? "Next" : "Loading.."}
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}
+                                        disabled={loader}> {!loader ? "Next" : <Spinner />}
                                     </button>
-
-
                                 </div>
                             </div>
                         </div>

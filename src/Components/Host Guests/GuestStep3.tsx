@@ -32,7 +32,7 @@ const GuestStep3 = (props: props) => {
             id: match?.params.id,
             publicData: {
                 rooms: count,
-                stepsCompleted: [...steps, 3, 5]
+                stepsCompleted: [...steps, 3]
             }
         }
         if (count && count !== 0) {
@@ -78,6 +78,8 @@ const GuestStep3 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
+
+
     useEffect(() => {
         (value && setRoomCount('Last'))
     }, [value])

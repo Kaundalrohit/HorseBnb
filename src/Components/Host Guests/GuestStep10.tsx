@@ -4,18 +4,20 @@ import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import horseImg from '../Images/horse_image.png'
+import Spinner from "../Spinner/Spinner"
 
 
 
 
 type props = {
     setSteps: any,
-    steps: Array<number>
+    steps: Array<number>,
+    value: number
 }
 
 
 const GuestStep10 = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/sucessfull-hosting/:id`)
 
@@ -23,7 +25,7 @@ const GuestStep10 = (props: props) => {
     const [check, setCheck] = useState()
     const [loader, setLoader] = useState<boolean>(false)
 
-    const setAvailability = async () => {
+    const setAvailability = async (navigation: string) => {
 
         const list = {
             id: match?.params.id,
@@ -37,7 +39,12 @@ const GuestStep10 = (props: props) => {
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/Step11/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-guest/Step11/${match?.params.id}`)
+                        :
+                        navigate(`/create-guest/last-step/${match?.params.id}`)
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -71,6 +78,10 @@ const GuestStep10 = (props: props) => {
         // eslint-disable-next-line 
     }, [])
 
+    useEffect(() => {
+        { value && setAvailability('Last') }
+    }, [value])
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -84,7 +95,7 @@ const GuestStep10 = (props: props) => {
                         <h3 className="heading-big mb-4">Successful hosting starts with an accurate calendar</h3>
                         <p className="font-small-bold my-3">Guests will be able to book your listing instantly. By keeping your calendar up to date you will only get bookings when you are able to host. If you make multiple cancellations it could affect your listings ranking and create negative reviews as it causes problems for travellers.</p>
                         <form className="ng-valid ng-dirty ng-touched">
-                            <input type="checkbox" id="calendar_up_to_date" value={check} onChange={(e: any) => setCheck(e.target.checked)} name="got_it" className="ng-valid ng-dirty ng-touched" required />
+                            <input type="checkbox" id="calendar_up_to_date" value={check} onChange={(e: any) => setCheck(e.target.checked)} checked={check} name="got_it" className="ng-valid ng-dirty ng-touched" required />
                             <label htmlFor="calendar_up_to_date" className="tickbox tickbox-sm mt-0 mb-4 text-default"> Got it! I'll keep my calendar up to date.
 
                                 <span className="checkmark skyblue"></span>
@@ -95,7 +106,8 @@ const GuestStep10 = (props: props) => {
                                 <img src={backArrow} className="pr-1" alt="" /> Back </button></Link>
 
 
-                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={setAvailability} > {!loader ? "Next" : "Loading.."} </button>
+                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => setAvailability('Next')}
+                                disabled={loader}> {!loader ? "Next" : <Spinner />} </button>
 
                         </div>
                     </div>

@@ -4,16 +4,18 @@ import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import horseImg from '../Images/horse_image.png'
+import Spinner from "../Spinner/Spinner"
 
 
 
 type props = {
     steps: Array<number>,
     setSteps: any,
+    value: number
 }
 const GuestCheckIn = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/checkin-and-checkout/:id`)
@@ -22,7 +24,7 @@ const GuestCheckIn = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
     const [leave, setLeave] = useState<string>("")
 
-    const uploadTimings = async () => {
+    const uploadTimings = async (navigation: string) => {
         const list = {
             id: match?.params.id,
             publicData: {
@@ -36,7 +38,12 @@ const GuestCheckIn = (props: props) => {
                 setLoader(true)
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/sucessfull-hosting/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-guest/sucessfull-hosting/${match?.params.id}`)
+                        :
+                        navigate(`/create-guest/last-step/${match?.params.id}`)
+                }
             } else {
                 toast('Select Timmings', {
                     position: "top-right",
@@ -66,6 +73,10 @@ const GuestCheckIn = (props: props) => {
     useEffect(() => {
         listId()
     }, [])
+
+    useEffect(() => {
+        { value && uploadTimings('Last') }
+    }, [value])
 
     return (
         <>
@@ -97,8 +108,9 @@ const GuestCheckIn = (props: props) => {
                             </button>
                             </Link>
 
-                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={uploadTimings} >
-                                {!loader ? "Next" : "Loading.."}
+                            <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => uploadTimings('Next')}
+                                disabled={loader}>
+                                {!loader ? "Next" : <Spinner />}
                             </button>
 
                         </div>

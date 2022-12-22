@@ -5,14 +5,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import selfieImg from '../Images/taking_selfie.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
     setSteps: any
+    value: number
 }
 
 export default function GuestStep9(props: props) {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/create-guest/step9/:id')
@@ -39,11 +41,9 @@ export default function GuestStep9(props: props) {
     const handleSubmit = async (e: any) => {
         let file = e.target.files[0]
         try {
-            setLoader(true)
             let res = (await HenceForthApi.Auth.Uploadimage("file", file))
             await uploadImg(res.filename)
             await list()
-            setLoader(false)
         } catch (error) {
             console.log(error);
 
@@ -55,7 +55,6 @@ export default function GuestStep9(props: props) {
         const list = {
             publicData: {
                 image: url,
-                stepsCompleted: [...steps, 9]
             }
         }
         try {
@@ -67,7 +66,32 @@ export default function GuestStep9(props: props) {
     }
 
 
+    const nextPage = async (navigation: string) => {
+        const list = {
+            id: match?.params?.id,
+            publicData: {
+                host_image: userImg,
+                stepsCompleted: [...steps, 9]
+            }
+        }
+        if (userImg) {
+            setLoader(true)
+            let res = await HenceForthApi.Auth.Updatedlisting(list)
+            setLoader(false)
+            {
+                navigation === 'Next' ?
+                    navigate(`/create-guest/checkin-and-checkout/${match?.params.id}`)
+                    :
+                    navigate(`/create-guest/last-step/${match?.params.id}`)
+            }
+        } else {
+            toast.warn('upload Profile Image')
+        }
+    }
 
+    useEffect(() => {
+        { value && nextPage('Last') }
+    }, [value])
 
 
 
@@ -108,11 +132,10 @@ export default function GuestStep9(props: props) {
                                 <div className="d-flex justify-content-between border-top mt-5">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
                                         <img src={backArrow} className="pr-1" /> Back </button>
-                                    <Link to={`/create-guest/checkin-and-checkout/${match?.params.id}`} className="text-decoration-none">
-                                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading.."} </button>
-                                    </Link>
+                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"
+                                        onClick={() => nextPage('Next')}
+                                        disabled={loader}> {!loader ? "Next" : <Spinner />} </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>

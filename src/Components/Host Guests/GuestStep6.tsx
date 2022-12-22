@@ -5,17 +5,20 @@ import { toast, ToastContainer } from "react-toastify";
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
 import guestSteps from '../Images/guest_steps.png'
+import Spinner from "../Spinner/Spinner";
 
 
 
 type props = {
     setSteps: any,
     steps: Array<number>
+    value: number
+
 }
 
 const GuestStep6 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'))
     const navigate = useNavigate();
@@ -23,10 +26,6 @@ const GuestStep6 = (props: props) => {
 
     const [check, setCheck] = useState<Array<string>>([])
     const [loader, setLoader] = useState<boolean>(false)
-
-
-
-
 
     const handleOffers = (e: any) => {
         const prev = check
@@ -40,7 +39,7 @@ const GuestStep6 = (props: props) => {
         setCheck([...prev])
     }
 
-    const handleStep6 = async () => {
+    const handleStep6 = async (navigation: string) => {
         let list = {
             id: match?.params.id,
             publicData: {
@@ -54,7 +53,12 @@ const GuestStep6 = (props: props) => {
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/Step7/${match?.params.id}`)
+                navigation === 'Next' ?
+                    navigate(`/create-guest/step7/${match?.params?.id
+                        }`)
+                    :
+                    navigate(`/create-guest/last-step/${match?.params?.id
+                        }`)
             } catch (error) {
                 console.log(error);
 
@@ -89,7 +93,6 @@ const GuestStep6 = (props: props) => {
         { "id": 11, amenities: "RV Parking/Trailer" },
     ]
 
-
     const listId = async () => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
@@ -104,6 +107,10 @@ const GuestStep6 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
+
+    useEffect(() => {
+        { value && handleStep6('Last') }
+    }, [value])
 
     return (
         <>
@@ -136,10 +143,10 @@ const GuestStep6 = (props: props) => {
                                     <img src={backArrow} className="pr-1" alt="" /> Back
                                 </button>
 
-                                <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep6}>
-                                    {!loader ? "Next" : "Loading.."}
+                                <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => handleStep6('Next')}
+                                    disabled={loader}>
+                                    {!loader ? "Next" : <Spinner />}
                                 </button>
-
                             </div>
                         </div>
                     </div>

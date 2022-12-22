@@ -7,16 +7,18 @@ import deleteImg from '../Images/delete-24px.svg'
 import editImg from '../Images/edit.png'
 import publisgImg from '../Images/publish.svg'
 import bulbImg from '../Images/lightbulb.svg'
+import Spinner from "../Spinner/Spinner"
 
 
 type props = {
     setSteps: any,
     steps: Array<number>
+    value: number
 }
 
 const GuestStep7 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step7/:id`)
@@ -29,7 +31,7 @@ const GuestStep7 = (props: props) => {
         url: ""
     })
 
-    const [imgfile, setImgFile] = useState<Array<object>>([])
+    const [imgfile, setImgFile] = useState<Array<any>>([])
 
     const listId = async () => {
         try {
@@ -41,10 +43,6 @@ const GuestStep7 = (props: props) => {
             console.log(error);
         }
     }
-    useEffect(() => {
-        listId()
-        // eslint-disable-next-line 
-    }, [])
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -57,9 +55,6 @@ const GuestStep7 = (props: props) => {
             console.log(error);
         }
     };
-
-
-
 
     const uploadImg = async (ar: any) => {
         let length = ar?.length - 1
@@ -101,7 +96,7 @@ const GuestStep7 = (props: props) => {
         }
     }
 
-    const nextPage = async (ar: any) => {
+    const nextPage = async (navigation: string) => {
         let list = {
             id: match?.params?.id,
             publicData: {
@@ -115,7 +110,12 @@ const GuestStep7 = (props: props) => {
             try {
                 await HenceForthApi?.Auth?.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/Step8/${match?.params.id}`)
+                navigation === 'Next' ?
+                    navigate(`/create-guest/step8/${match?.params?.id
+                        }`)
+                    :
+                    navigate(`/create-guest/last-step/${match?.params?.id
+                        }`)
             } catch (error) {
                 console.log(error);
             }
@@ -132,6 +132,15 @@ const GuestStep7 = (props: props) => {
             })
         }
     }
+
+    useEffect(() => {
+        listId()
+        // eslint-disable-next-line 
+    }, [])
+
+    useEffect(() => {
+        { value && nextPage('Last') }
+    }, [value])
 
     return (
 
@@ -201,7 +210,9 @@ const GuestStep7 = (props: props) => {
                                 </button>
                             </Link>
 
-                            <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={nextPage}> {!loader ? "Next" : "Loading.."}
+                            <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={() => nextPage('Next')}
+                                disabled={loader}
+                            > {!loader ? "Next" : <Spinner />}
                             </button>
 
                         </div>

@@ -92,7 +92,7 @@ export default function UserNav({ setShowNav, saveExit }: props) {
                             </div>
                         </ul> : (
                             (
-                                location.pathname.startsWith('/add-experience/step1') || location.pathname.endsWith('/step1') || location.pathname.match('/step1/') || location.pathname.startsWith('/create-stall/last-step') || location.pathname.startsWith('/add-experience/last-step') ? "" :
+                                location.pathname.startsWith('/add-experience/step1') || location.pathname.endsWith('/step1') || location.pathname.match('/step1/') || location.pathname.startsWith('/create-stall/last-step') || location.pathname.startsWith('/add-experience/last-step') || location.pathname.startsWith('/create-guest/last-step') ? "" :
                                     location.pathname.startsWith('/c') || location.pathname.startsWith('/add-experience') || location.pathname.startsWith('/create-stall/step11/') ?
                                         <div>
                                             <button className='btn border-0 fw-bold' onClick={() => {
