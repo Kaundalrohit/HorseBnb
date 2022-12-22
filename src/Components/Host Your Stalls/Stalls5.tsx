@@ -19,7 +19,6 @@ export default function Stalls5(props: props) {
         lat: 0 as number,
         lng: 0 as number
     })
-    // const { lat, lng } = geoLoc
 
     const [loader, setLoader] = useState<boolean>(false)
 

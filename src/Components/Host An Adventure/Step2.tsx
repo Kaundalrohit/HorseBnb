@@ -20,12 +20,20 @@ const Step2 = (props: props) => {
     const navigate = useNavigate()
 
     const [loader, setLoader] = useState<boolean>(false)
+    const [geoLoc, setGeoLoc] = useState<any>({
+        lat: 0 as number,
+        lng: 0 as number
+    })
 
     const postStep2Data = async () => {
 
         try {
             setLoader(true)
             let res = await HenceForthApi.Auth.Updatedlisting({
+                geolocation: {
+                    lat: geoLoc.lat,
+                    lng: geoLoc.lng,
+                },
                 id: match?.params.id,
                 publicData: {
                     stepsCompleted: [
@@ -52,6 +60,21 @@ const Step2 = (props: props) => {
         }
     }
 
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(function (position) {
+                console.log("Latitude is :", position.coords.latitude);
+
+                console.log("Longitude is :", position.coords.longitude);
+                setGeoLoc({
+                    ...geoLoc,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+            });
+        }
+    }
+
     useState(() => {
         list()
     })
@@ -69,7 +92,7 @@ const Step2 = (props: props) => {
                                 <h3 className="fw-600 heading-big">Where is your place located?</h3>
                                 <div className="">
                                     <p className="font-small-bold my-3">Please input your exact address. Guests will not be able to see your exact address until they have made a booking.</p>
-                                    <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
+                                    <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }} onClick={getLocation}>
                                         <img src={locationIcon} alt="" className="img-fluid" />Use current location </button>
 
                                 </div>
