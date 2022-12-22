@@ -15,6 +15,12 @@ export default function Stalls5(props: props) {
     const match = useMatch(`/create-stall/step5/:id`)
     const navigate = useNavigate()
 
+    const [geoLoc, setGeoLoc] = useState<any>({
+        lat: 0 as number,
+        lng: 0 as number
+    })
+    // const { lat, lng } = geoLoc
+
     const [loader, setLoader] = useState<boolean>(false)
 
 
@@ -35,9 +41,12 @@ export default function Stalls5(props: props) {
         try {
             setLoader(true)
             await HenceForthApi.Auth.Updatedlisting({
+                geolocation: {
+                    lat: geoLoc.lat,
+                    lng: geoLoc.lng,
+                },
                 id: match?.params.id,
                 publicData: {
-
                     stepsCompleted: [
                         ...steps, 5
                     ]
@@ -61,7 +70,13 @@ export default function Stalls5(props: props) {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
                 console.log("Latitude is :", position.coords.latitude);
+
                 console.log("Longitude is :", position.coords.longitude);
+                setGeoLoc({
+                    ...geoLoc,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
             });
         }
     }

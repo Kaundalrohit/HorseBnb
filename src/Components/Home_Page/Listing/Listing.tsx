@@ -13,6 +13,12 @@ import monthlyBanner from '../../Images/no_monthly_banner.png'
 import emptyImg from '../../Images/empty.png'
 import GoogleMaps from "../../GoogleMap/GoogleMaps";
 import StepDate from "../../Date/StepDate";
+
+// interface user {
+
+// }
+
+
 export default function Listing() {
 
     HenceForthApi.setToken(localStorage.getItem('token'));
@@ -25,6 +31,7 @@ export default function Listing() {
         horseAdv: [],
     })
 
+    const { shortTerm, guestAcc, monthly, horseAdv } = list
 
 
     // <................ Rendering All Stalls Data ....................>
@@ -136,7 +143,7 @@ export default function Listing() {
                 <div className="container">
                     <div className="row">
 
-                        {Array.isArray(list.shortTerm) && list.shortTerm.length ? list.shortTerm.map((res1: any, index: any) =>
+                        {Array.isArray(shortTerm) && shortTerm.length ? shortTerm.map((res1: any, index: any) =>
                             <ListingViewer
                                 description={res1?.attributes?.description}
                                 title={res1?.attributes?.title}
@@ -176,7 +183,7 @@ export default function Listing() {
 
                 <div className="container">
                     <div className="row">
-                        {Array.isArray(list.guestAcc) && list.guestAcc.length ? list.guestAcc.map((res1: any, index: any) => <ListingViewer
+                        {Array.isArray(guestAcc) && guestAcc.length ? guestAcc.map((res1: any, index: any) => <ListingViewer
                             description={res1?.attributes?.description}
                             title={res1?.attributes?.title}
                             listing_price={res1?.attributes?.publicData?.listing_price}
@@ -225,7 +232,7 @@ export default function Listing() {
 
                 <div className="container">
                     <div className="row">
-                        {Array.isArray(list.monthly) && list.monthly.length ? list.monthly.map((res1: any, index: any) => <ListingViewer
+                        {Array.isArray(monthly) && monthly.length ? monthly.map((res1: any, index: any) => <ListingViewer
                             description={res1?.attributes?.description}
                             title={res1?.attributes?.title}
                             listing_price={res1?.attributes?.publicData?.listing_price}
@@ -261,7 +268,7 @@ export default function Listing() {
 
                 <div className="container mb-4">
                     <div className="row">
-                        {Array.isArray(list.horseAdv) && list.horseAdv.length ? list.horseAdv.map((res1: any, index: any) => <ListingViewer
+                        {Array.isArray(horseAdv) && horseAdv.length ? horseAdv.map((res1: any, index: any) => <ListingViewer
                             description={res1?.attributes?.description}
                             title={res1?.attributes?.title}
                             listing_price={res1?.attributes?.publicData?.listing_price}

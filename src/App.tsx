@@ -57,15 +57,13 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 
 function App() {
 
-  const [steps, setSteps] = useState<any>([])
+  const [steps, setSteps] = useState<number[]>([])
   const [value, setValue] = useState<number>(0)
 
 
   const saveExit = (value: number) => {
     setValue(value)
   }
-
-  console.log(value);
 
   return (
     <div className="App">

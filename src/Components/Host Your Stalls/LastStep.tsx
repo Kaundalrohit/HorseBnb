@@ -5,6 +5,7 @@ import CompletedSteps from "./CompletedSteps";
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/chevron-left-primary.svg'
 import preDefaultImg from '../Images/default_image.png'
+import { toast, ToastContainer } from "react-toastify";
 
 type props = {
     setValue: (value: number) => void
@@ -123,18 +124,35 @@ export default function LastStep({ setValue }: props) {
         },
     ]
 
-    // const completeLastStep = () => {
-    //     if (step.includes(1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 15)) {
-    //         navigate(`/manage-listing/publish-listing/${match?.params.id}`)
-    //     }
-    //     else {
-    //         alert("Please Complete Steps")
-    //     }
-    // }
+    const completeLastStep = () => {
+        let steps = [...new Set(step) as any];
+
+        // if (steps.length >=10 ) {
+        //     alert('no')
+        // }
+        // else {
+        //     alert('yes')
+        // }
+
+        // const array = [1, 3, 5, 6, 7, 8, 9, 10, 15, 11, 12]
+        // if (steps.sort().join(',') === array.sort().join(',')) {
+        //     alert('Yes')
+        // } else {
+        //     alert('No')
+        // }
+
+        if (steps.length === 11) {
+            navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+        } else {
+            toast.error('Please Complete All Steps')
+        }
+
+    }
 
     return (
         <>
             <div className="container">
+                <ToastContainer autoClose={1000} />
                 <div className="row mt-3 border-bottom pb-4">
                     <div className="col-md-5">
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
@@ -174,12 +192,10 @@ export default function LastStep({ setValue }: props) {
                                     </Link>
                                 </div>
                                 <div className="">
-                                    <Link to={`/manage-listing/publish-listing/${match?.params.id}`}>
-                                        <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}
-                                        //  onClick={completeLastStep} 
-                                        > Next
-                                        </button>
-                                    </Link>
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}
+                                        onClick={completeLastStep}
+                                    > Next
+                                    </button>
                                 </div>
                             </div>
                         </div>
