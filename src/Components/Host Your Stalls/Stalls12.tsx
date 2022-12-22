@@ -32,14 +32,14 @@ export default function Stalls12(props: props) {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
                     price: {
-                        amount: "",
+                        amount: price,
                         currency: "USD"
                     },
                     publicData: {
                         bookingAcceptType: check,
                         listing_price: price,
                         stepsCompleted: [
-                            ...steps, 14
+                            ...steps, 12
                         ]
                     }
                 }))

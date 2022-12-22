@@ -77,7 +77,7 @@ function App() {
             {/* <.....................................> */}
 
             <Route path="host-stalls" element={<Hoststalls />} />
-            <Route path="create-stall/step1" element={<Stall1 setSteps={setSteps} steps={steps} />} >
+            <Route path="create-stall/step1/" element={<Stall1 setSteps={setSteps} steps={steps} />} >
               <Route path=":id" element={<Stall1 setSteps={setSteps} steps={steps} />} />
             </Route>
             <Route path="create-stall/step3/:id" element={<Stall3 setSteps={setSteps} steps={steps} value={value} />} />

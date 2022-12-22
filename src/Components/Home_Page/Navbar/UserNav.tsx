@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom'
 import HenceForthApi from '../../Utils/HenceForthApi';
+import GetStarted from './GetStartedbtn';
 type props = {
     setShowNav: any;
     saveExit: (value: number) => void
@@ -90,19 +91,17 @@ export default function UserNav({ setShowNav, saveExit }: props) {
                                 </div>
                             </div>
                         </ul> : (
-                            location.pathname.startsWith('/create-stall/step1') ? "" :
-                                (
-                                    location.pathname.startsWith('/c') || location.pathname.startsWith('/add-experience') ?
+                            (
+                                location.pathname.startsWith('/add-experience/step1') || location.pathname.endsWith('/step1') || location.pathname.match('/step1/') || location.pathname.startsWith('/create-stall/last-step') || location.pathname.startsWith('/add-experience/last-step') ? "" :
+                                    location.pathname.startsWith('/c') || location.pathname.startsWith('/add-experience') || location.pathname.startsWith('/create-stall/step11/') ?
                                         <div>
                                             <button className='btn border-0 fw-bold' onClick={() => {
                                                 saveExit(Math.random())
                                             }} style={{ color: "#00a4b4" }}>Save & Exit</button>
                                         </div> :
-                                        <Link to="create-stall/step1">
-                                            <button className='btn text-white fw-bold' style={{ background: "#00a4b4" }}>Get Started</button>
-                                        </Link>
+                                        <GetStarted />
 
-                                )
+                            )
                         )
                     }
                 </div>
