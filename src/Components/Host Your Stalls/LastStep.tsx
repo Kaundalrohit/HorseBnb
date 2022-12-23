@@ -19,7 +19,7 @@ export default function LastStep({ setValue }: props) {
 
     const [coverImg, setCoverImg] = useState<any>()
     const [proImg, setProImg] = useState<string>('')
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState<string>('')
 
     const getData = async () => {
         try {
@@ -28,6 +28,7 @@ export default function LastStep({ setValue }: props) {
             setStep(res.data.attributes.publicData.stepsCompleted)
             setProImg(res?.data?.attributes?.publicData?.host_image)
             setTitle(res?.data?.attributes?.title)
+
         } catch (error) {
             console.log(error);
         }
@@ -172,7 +173,7 @@ export default function LastStep({ setValue }: props) {
                                             <Link className="pointer text-decoration-none" style={{ color: "#00a4b4" }} to={""}>Preview</Link>
                                         </div>
                                         <div className="prev-img">
-                                            <img className="obj-cover  ng-star-inserted ng-lazyloaded" alt="" src={coverImg?.url ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}` : preDefaultImg} />
+                                            <img className="obj-cover" alt="" src={coverImg?.url ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}` : preDefaultImg} />
                                         </div>
                                     </div>
                                 </div>

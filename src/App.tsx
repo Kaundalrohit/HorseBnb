@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useState } from "react";
 import Components from "./Components/Components";
 import Listing from "./Components/Home_Page/Listing/Listing";
 import Hoststalls from "./Components/Host Your Stalls/HostStalls";
@@ -43,14 +44,12 @@ import ShowALlDetails from "./Components/ShowAllDetails/ShowAllDetails";
 import BookingDetails from "./Components/BookingDetails/BookingDetails";
 import AboutUs from "./Components/ImformationPages/AboutUs";
 import PublishedData from "./Components/PublistedData/PublishedData";
-import { useState } from "react";
 import Account from "./Components/UserAccount/Account";
 import PersonalInfo from "./Components/UserAccount/PersonalInfo";
 import UpdatePassword from "./Components/UserAccount/UpdatePassword";
 import Payments from "./Components/UserAccount/Payments";
 import Stalls9 from "./Components/Host Your Stalls/Stalls9";
 import HostProfile from "./Components/BookingDetails/HostProfile";
-import Navbar from "./Components/Home_Page/Navbar/Navbar";
 import UserAccount from "./Components/UserAccount/UserAccount";
 import Dashboard from "./Components/Dashboard/Dashboard";
 
@@ -118,13 +117,13 @@ function App() {
             <Route path="add-experience/step1/" element={<Step1 steps={steps} />} >
               <Route path=":id" element={<Step1 steps={steps} />} />
             </Route>
-            <Route path="add-experience/step2/:id" element={<Step2 steps={steps} setSteps={setSteps} />} />
-            <Route path="add-experience/step4/:id" element={<Step4 steps={steps} setSteps={setSteps} />} />
-            <Route path="add-experience/step5/:id" element={<Step5 steps={steps} setsteps={setSteps} />} />
-            <Route path="add-experience/step6/:id" element={<Step6 steps={steps} setsteps={setSteps} />} />
-            <Route path="add-experience/step8/:id" element={<Step8 steps={steps} setsteps={setSteps} />} />
-            <Route path="add-experience/step9/:id" element={<Step9 steps={steps} setsteps={setSteps} />} />
-            <Route path="add-experience/last-step/:id" element={<AdLastStep />} />
+            <Route path="add-experience/step2/:id" element={<Step2 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="add-experience/step4/:id" element={<Step4 steps={steps} setSteps={setSteps} value={value} />} />
+            <Route path="add-experience/step5/:id" element={<Step5 steps={steps} setsteps={setSteps} value={value} />} />
+            <Route path="add-experience/step6/:id" element={<Step6 steps={steps} setsteps={setSteps} value={value} />} />
+            <Route path="add-experience/step8/:id" element={<Step8 steps={steps} setsteps={setSteps} value={value} />} />
+            <Route path="add-experience/step9/:id" element={<Step9 steps={steps} setsteps={setSteps} value={value} />} />
+            <Route path="add-experience/last-step/:id" element={<AdLastStep setValue={setValue} />} />
 
             {/* <...........................> */}
             <Route path="manage-listing/publish-listing/:id" element={<Publish />} />

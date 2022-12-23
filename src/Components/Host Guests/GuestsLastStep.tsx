@@ -4,6 +4,7 @@ import CompletedSteps from "../Host Your Stalls/CompletedSteps"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/finish_your_listing.svg'
+import preDefaultImg from '../Images/default_image.png'
 import Spinner from "../Spinner/Spinner"
 import { toast, ToastContainer } from "react-toastify"
 
@@ -21,6 +22,7 @@ const GuestsLastStep = (props: props) => {
 
     let [coverPhoto, setCoverPhoto] = useState<string>("")
     const [loader, setLoader] = useState<boolean>(false)
+    const [userImg, serUserImg] = useState<string>('')
 
 
     const allSteps = [
@@ -69,9 +71,8 @@ const GuestsLastStep = (props: props) => {
             id: 7,
             step: "Photos",
             url: `create-guest/step9/${match?.params.id}`,
-            stepNumber: 9
-
-
+            stepNumber: 9,
+            checkImg: userImg
         },
         {
             id: 8,
@@ -109,11 +110,8 @@ const GuestsLastStep = (props: props) => {
         },
     ]
 
-    let checkSteps = [...new Set(steps) as any]
-    console.log(checkSteps);
-
-
     const lastStep = () => {
+        let checkSteps = [...new Set(steps) as any]
         if (checkSteps.length >= 11) {
             navigate(`/manage-listing/publish-listing/${match?.params.id}`)
         } else {
@@ -126,22 +124,26 @@ const GuestsLastStep = (props: props) => {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
             setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo?.url);
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            serUserImg(res?.data?.attributes?.publicData?.host_image);
 
         } catch (error) {
             console.log(error);
         }
     }
+
     useEffect(() => {
         listId()
         setValue(0)
         // eslint-disable-next-line 
     }, [])
 
+    console.log(userImg);
+
 
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
-                <ToastContainer />
+                <ToastContainer autoClose={1000} />
                 <div className="progress-bar bg-info" role="progressbar" style={{ width: "84%" }}>
                 </div>
             </div>
@@ -151,7 +153,7 @@ const GuestsLastStep = (props: props) => {
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
                         <h6 className="text-lite mb-3">You can always edit your listing after you publish it.</h6>
                         {allSteps.map((e: any, index: any) =>
-                            <CompletedSteps stepsArray={steps} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
+                            <CompletedSteps stepsArray={steps} proImg={e.checkImg} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
                         )}
                     </div>
                     <div className="col-md-7 text-center d-flex flex-column">
@@ -164,8 +166,8 @@ const GuestsLastStep = (props: props) => {
                                             <h6 className="font-medium single-line-ellipsis">oo</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00A4B4" }} to={""}>Preview</Link>
                                         </div>
-                                        <div className="">
-                                            <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}`} alt="Not Found" className="obj-cover" />
+                                        <div className="prev-img">
+                                            <img src={coverPhoto ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}` : preDefaultImg} alt="Not Found" className="obj-cover" />
                                         </div>
                                     </div>
                                 </div>

@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 type props = {
     steps: any
     setSteps: any;
+    value: number
 }
 
 const Step4 = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'));
     const match = useMatch(`/add-experience/step4/:id`)
@@ -30,7 +32,7 @@ const Step4 = (props: props) => {
         })
     }
 
-    const postStep4Data = async () => {
+    const postStep4Data = async (navigation: string) => {
         if (state.description && state.extra_detail) {
             setLoader(true)
             try {
@@ -46,7 +48,12 @@ const Step4 = (props: props) => {
                     }
                 }))
                 setLoader(false)
-                navigate(`/add-experience/step5/${match?.params.id}`)
+                {
+                    navigation === "Next" ?
+                        navigate(`/add-experience/step5/${match?.params.id}`)
+                        :
+                        navigate(`/add-experience/last-step/${match?.params.id}`)
+                }
             }
             catch (error) {
                 console.log(error);
@@ -82,9 +89,13 @@ const Step4 = (props: props) => {
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         list()
-    })
+    }, [])
+
+    useEffect(() => {
+        { value && postStep4Data('Last') }
+    }, [value])
 
 
     return (
@@ -112,18 +123,16 @@ const Step4 = (props: props) => {
                             </div>
 
                             <div className="d-flex justify-content-between border-top mt-5">
-                                <Link to="">
-                                    <button type="button" className="btn btn-transparent font-regular my-3 px-0">
-                                        <img src={backArrow}
-                                            alt="" className="pr-1" /> Back
-                                    </button>
-                                </Link>
-                                {/* <Link to="/add-experience/step5"> */}
-                                <button className="btn my-3 px-3 text-white"
-                                    onClick={postStep4Data}
-                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                                <button type="button" className="btn btn-transparent font-regular my-3 px-0">
+                                    <img src={backArrow}
+                                        alt="" className="pr-1" /> Back
                                 </button>
-                                {/* </Link> */}
+                                <button className="btn my-3 px-3 text-white"
+                                    onClick={() => postStep4Data('Next')}
+                                    style={{ background: "rgb(0, 164, 180)" }}
+                                    disabled={loader}
+                                > {!loader ? "Next" : <Spinner />}
+                                </button>
                             </div>
                         </div>
                     </div>

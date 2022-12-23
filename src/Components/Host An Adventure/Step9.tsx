@@ -1,23 +1,26 @@
 
-import { useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
 import stripeImg from '../Images/stripe_payments.svg'
 import stripeBtn from '../Images/connect_stripe_buttin.png'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any
-    setsteps: any;
+    setsteps: any
+    value: number
 }
 const Step9 = (props: props) => {
-    const { steps, setsteps } = props
+    const { steps, setsteps, value } = props
 
     const match = useMatch('/add-experience/step9/:id')
+    const navigate = useNavigate()
 
-    const [loader, setLoader] = useState<boolean>(false)
+    const [loader] = useState<boolean>(false)
 
     const list = async () => {
         try {
@@ -29,9 +32,6 @@ const Step9 = (props: props) => {
         }
     }
 
-    useState(() => {
-        list()
-    })
 
     const handlePayment = () => {
         toast('🦄 Please connect your stripe account to step forward', {
@@ -45,6 +45,25 @@ const Step9 = (props: props) => {
             theme: "light",
         });
     }
+
+    const skipStripe = (navigation: string) => {
+        {
+            navigation === 'Next' ?
+                navigate(`/add-experience/last-step/${match?.params.id}`)
+                :
+                navigate(`/add-experience/last-step/${match?.params.id}`)
+        }
+    }
+
+
+    useEffect(() => {
+        list()
+    }, [])
+
+    useEffect(() => {
+        { value && skipStripe('Last') }
+    }, [value])
+
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
@@ -60,10 +79,8 @@ const Step9 = (props: props) => {
                             <div className="my-3 px-3 position-relative d-flex align-items-center justify-content-center">
                                 <img src={stripeBtn} alt="" />
                             </div>
-                            <Link to={`/add-experience/last-step/${match?.params.id}`}>
-                                <button type="button" className="btn  text-white skip-btn font-regular my-3 px-3 mr-3"
-                                    style={{ background: "rgb(0, 164, 180)" }} > Skip for now </button>
-                            </Link>
+                            <button type="button" className="btn  text-white skip-btn font-regular my-3 px-3 mr-3"
+                                style={{ background: "rgb(0, 164, 180)" }} onClick={() => skipStripe('Next')} > Skip for now </button>
                         </div>
                         <div className="d-flex justify-content-between mt-5 border-top">
 
@@ -71,7 +88,9 @@ const Step9 = (props: props) => {
                                 <img src={backArrow} className="pr-1" alt="" /> Back
                             </button>
 
-                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                            <button className="btn my-3 px-3 text-white" onClick={handlePayment} style={{ background: "rgb(0, 164, 180)" }}
+                                disabled={loader}
+                            > {!loader ? "Next" : <Spinner />}
                             </button>
 
                         </div>

@@ -17,6 +17,7 @@ function GoogleMaps() {
         lng: loc.lng,
         lat: loc.lat
     };
+
     useEffect(() => {
         const getLocation = () => {
             if (navigator.geolocation) {
@@ -33,7 +34,6 @@ function GoogleMaps() {
         }
         getLocation()
     }, [])
-
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -60,7 +60,6 @@ function GoogleMaps() {
             onLoad={onLoad}
             onUnmount={onUnmount}
         >
-            { /* Child components, such as markers, info windows, etc. */}
             <></>
         </GoogleMap>
     ) : <></>

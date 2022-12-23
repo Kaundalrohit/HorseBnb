@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import CompletedSteps from "../Host Your Stalls/CompletedSteps";
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/finish_your_listing.svg'
+import preDefaultImg from '../Images/default_image.png'
+import Spinner from "../Spinner/Spinner";
+import { toast, ToastContainer } from "react-toastify";
 
-
-const AdLastStep = () => {
+type props = {
+    setValue: (value: number) => void
+}
+const AdLastStep = ({ setValue }: props) => {
 
     HenceForthApi.setToken(localStorage.getItem('token'));
     const match = useMatch('/add-experience/last-step/:id')
+    const navigate = useNavigate()
 
     const [step, setStep] = useState<any>([])
     const [coverImg, setCoverImg] = useState<any>()
     const [loader, setLoader] = useState<boolean>(false)
-
+    const [title, setTitle] = useState<string>('')
 
 
     const allSteps = [
@@ -69,22 +75,35 @@ const AdLastStep = () => {
 
     ]
 
+
+
+    const checkSteps = () => {
+        let stepsCount = [...new Set(step) as any]
+        stepsCount.length >= 6 ?
+            navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+            :
+            toast.error('Please Complete All Steps')
+    }
+
     useEffect(() => {
         const getData = async () => {
             try {
                 let res = await HenceForthApi.Auth.Listid(match?.params.id)
-                setCoverImg(res.data.attributes.publicData.cover_photo);
+                setCoverImg(res?.data?.attributes?.publicData?.cover_photo);
                 setStep(res.data.attributes.publicData.stepsCompleted)
+                setTitle(res?.data?.attributes?.title)
             } catch (error) {
                 console.log(error);
             }
         }
         getData();
+        setValue(0)
     }, [])
 
     return (
         <>
             <div className="container">
+                <ToastContainer />
                 <div className="row mt-3 border-bottom pb-4">
                     <div className="col-md-5">
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
@@ -100,11 +119,11 @@ const AdLastStep = () => {
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
-                                            <h6 className="font-medium single-line-ellipsis">oo</h6>
+                                            <h6 className="font-medium single-line-ellipsis">{title}</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00a4b4" }} to={""}>Preview</Link>
                                         </div>
                                         <div className="prev-img">
-                                            <img className="obj-cover  ng-star-inserted ng-lazyloaded" alt="" src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url} `} />
+                                            <img className="obj-cover" alt="" src={coverImg?.url ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}` : preDefaultImg} />
                                         </div>
                                     </div>
                                 </div>
@@ -115,19 +134,16 @@ const AdLastStep = () => {
                         <div className="col-12 ">
                             <div className="d-flex justify-content-between mt-5 border-top">
                                 <div className="">
-                                    <Link to="">
-                                        <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
-                                            <img src={backArrow}
-                                                alt=""
-                                                className="pr-1" /> Back
-                                        </button>
-                                    </Link>
+                                    <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
+                                        <img src={backArrow}
+                                            alt=""
+                                            className="pr-1" /> Back
+                                    </button>
                                 </div>
                                 <div className="">
-                                    <Link to={`/manage-listing/publish-listing/${match?.params.id}`}>
-                                        <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
-                                        </button>
-                                    </Link>
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={checkSteps}
+                                        disabled={loader}  > {!loader ? "Next" : <Spinner />}
+                                    </button>
                                 </div>
                             </div>
                         </div>

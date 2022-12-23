@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import HenceForthApi from '../Utils/HenceForthApi'
 import './ShowAllDetails.css'
 import mapImg from '../Images/map.svg'
+import { GoogleMap } from '@react-google-maps/api'
 const ShowAllDetails = () => {
 
     const { type } = useParams() as any
@@ -15,6 +16,7 @@ const ShowAllDetails = () => {
     const [state, setstate] = useState({
         shortTerm: []
     })
+
     HenceForthApi.setToken(localStorage.getItem('token'))
 
     const getCardData = async () => {
@@ -26,7 +28,6 @@ const ShowAllDetails = () => {
         })
 
     }
-
 
     const handleRow = (e: any) => {
         setCheck(e.target.checked)
@@ -112,7 +113,9 @@ const ShowAllDetails = () => {
                             </div>
                         )}
                     </div>
-                    <div className={!check ? 'col-lg-6' : "d-none"}>Map</div>
+                    <div className={!check ? 'col-lg-6' : "d-none"}>
+                        <GoogleMap />
+                    </div>
                 </div>
             </div>
         </>

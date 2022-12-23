@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 type props = {
     steps: any
     setsteps: any;
+    value: number
 }
 
 
 const Step8 = (props: props) => {
-    const { steps, setsteps } = props
+    const { steps, setsteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem("token"))
     const match = useMatch('/add-experience/step8/:id')
@@ -23,14 +25,14 @@ const Step8 = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const poststep8Data = async () => {
+    const poststep8Data = async (navigation: string) => {
         if (price) {
             setLoader(true)
             try {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
                     price: {
-                        amount: "",
+                        amount: price,
                         currency: "USD"
                     },
                     publicData: {
@@ -44,7 +46,12 @@ const Step8 = (props: props) => {
                     }
                 }))
                 setLoader(false)
-                navigate(`/add-experience/step9/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/add-experience/step9/${match?.params.id}`)
+                        :
+                        navigate(`/add-experience/last-step/${match?.params.id}`)
+                }
             }
             catch (error) {
                 console.log(error);
@@ -75,9 +82,13 @@ const Step8 = (props: props) => {
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         list()
-    })
+    }, [])
+
+    useEffect(() => {
+        { value && poststep8Data('Last') }
+    }, [value])
     return (
         <>
             <div >
@@ -127,8 +138,10 @@ const Step8 = (props: props) => {
                                     </button>
                                 </Link>
                                 <button className="btn my-3 px-3 text-white"
-                                    onClick={poststep8Data}
-                                    style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                                    onClick={() => poststep8Data('Next')}
+                                    style={{ background: "rgb(0, 164, 180)" }}
+                                    disabled={loader}
+                                > {!loader ? "Next" : <Spinner />}
                                 </button>
                             </div>
                         </div>

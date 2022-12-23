@@ -121,3 +121,16 @@
     color: #008489;
     font-weight: 700;
 }
+.steps-preview .prev-img {
+    height: 60px;
+    width: 80px;
+    min-width: 80px;
+}
+.btn-primary {
+    background-color: #00a4b4;
+    font-size: 14px;
+    color: #fff;
+    border: 1px solid #00a4b4;
+    font-weight: 700;
+    min-height: 39px;
+}

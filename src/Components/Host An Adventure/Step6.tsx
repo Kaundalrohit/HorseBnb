@@ -1,17 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 type props = {
     steps: any
-    setsteps: any;
+    setsteps: any
+    value: number
 }
 
 const Step6 = (props: props) => {
-    const { steps, setsteps } = props
+    const { steps, setsteps, value } = props
 
     const match = useMatch('add-experience/step6/:id')
     HenceForthApi.setToken(localStorage.getItem('token'))
@@ -21,7 +23,7 @@ const Step6 = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
     const [grpSize, setGrpSize] = useState<any>()
 
-    const postStep6Data = async () => {
+    const postStep6Data = async (navigation: string) => {
         if (grpSize) {
             setLoader(true)
             try {
@@ -36,7 +38,12 @@ const Step6 = (props: props) => {
                     }
                 })
                 setLoader(false)
-                navigate(`/add-experience/step8/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/add-experience/step8/${match?.params.id}`)
+                        :
+                        navigate(`/add-experience/last-step/${match?.params.id}`)
+                }
 
             }
             catch (error) {
@@ -69,9 +76,13 @@ const Step6 = (props: props) => {
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         list()
-    })
+    }, [])
+
+    useEffect(() => {
+        { value && postStep6Data('Last') }
+    }, [value])
     return (
         <>
             <div className="row mx-0">
@@ -90,8 +101,10 @@ const Step6 = (props: props) => {
                                     <img src={backArrow} alt="" className="pr-1" /> Back </button>
                             </Link>
                             <button type="button"
-                                onClick={postStep6Data}
-                                className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"> {!loader ? "Next" : "Loading.."} </button>
+                                onClick={() => postStep6Data('Next')}
+                                className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center"
+                                disabled={loader}
+                            > {!loader ? "Next" : <Spinner />} </button>
                         </div>
                     </div>
                 </div>

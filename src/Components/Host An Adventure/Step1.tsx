@@ -4,6 +4,7 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import adventureExp from '../Images/experience.png'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any
@@ -102,8 +103,12 @@ const Step1 = ({ steps }: props) => {
                                     <div className="invalid-feedback d-block">
                                     </div>
                                 </div>
-                                <button type="button"
-                                    onClick={postStep1Data} className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"> {!loader ? "continue" : "Loading....."} </button>
+                                <div className="">
+                                    <button type="button"
+                                        onClick={postStep1Data} className="btn btn-primary btn-sm mt-2"
+                                        disabled={loader}
+                                    > {!loader ? "continue" : <Spinner />} </button>
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-6 text-center px-md-0 d-none d-md-block">

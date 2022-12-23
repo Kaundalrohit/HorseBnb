@@ -38,7 +38,6 @@ export default function Publish() {
                     title: res?.data?.attributes?.title,
                     address: res?.data?.attributes?.publicData?.address?.location,
                     price: res?.data?.attributes?.price?.amount
-
                 })
             } catch (error) {
                 console.log(error);
@@ -134,7 +133,7 @@ export default function Publish() {
                                 <p className="text-lite mb-1 font-small">{address}</p>
                                 <p className="mb-1 font-small w-100 single-line-ellipsis">{title}</p>
                                 <p className="text-black font-regular-sm mb-1 w-100 single-line-ellipsis">{description}</p>
-                                <p className="text-black mb-0 ng-star-inserted"><span className="fw-600">${ }</span> /Night    </p>
+                                <p className="text-black mb-0 ng-star-inserted"><span className="fw-600">${price}</span> /Night    </p>
                             </div>
                         </div>
                     </div>
