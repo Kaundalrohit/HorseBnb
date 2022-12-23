@@ -11,7 +11,6 @@ import publisgImg from '../Images/publish.svg'
 import Spinner from "../Spinner/Spinner";
 
 
-
 type props = {
     steps: any,
     setSteps: any

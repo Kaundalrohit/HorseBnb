@@ -11,13 +11,11 @@ import introImg from "../../Images/no_introducing_horsebnb.png"
 import rightArrow from "../../Images/rightArrow.png"
 import monthlyBanner from '../../Images/no_monthly_banner.png'
 import emptyImg from '../../Images/empty.png'
-import GoogleMaps from "../../GoogleMap/GoogleMaps";
-import StepDate from "../../Date/StepDate";
+// import StepDate from "../../Date/StepDate";
 
 // interface user {
 
 // }
-
 
 export default function Listing() {
 
