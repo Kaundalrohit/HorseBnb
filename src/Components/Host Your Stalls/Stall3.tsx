@@ -76,23 +76,7 @@ export default function Stall3(props: props) {
                 ]
             }
         }
-        if (count) {
-            setLoader(true)
-            try {
-                await HenceForthApi.Auth.Updatedlisting(list)
-                setLoader(false)
-                {
-                    (navigation === 'Next') ?
-                        navigate(`/create-stall/step5/${match?.params.id}`)
-                        :
-                        navigate(`/create-stall/last-step/${match?.params.id}`)
-                }
-
-            }
-            catch (error: any) {
-                console.log(error);
-            }
-        } else {
+        if (!count) {
             toast('🦄 Please fill Numbers of Stalls', {
                 position: "top-right",
                 autoClose: 1000,
@@ -103,6 +87,22 @@ export default function Stall3(props: props) {
                 progress: undefined,
                 theme: "light",
             });
+            return;
+        }
+        setLoader(true)
+        try {
+            await HenceForthApi.Auth.Updatedlisting(list)
+            setLoader(false)
+            {
+                (navigation === 'Next') ?
+                    navigate(`/create-stall/step5/${match?.params.id}`)
+                    :
+                    navigate(`/create-stall/last-step/${match?.params.id}`)
+            }
+
+        }
+        catch (error: any) {
+            console.log(error);
         }
     }
 

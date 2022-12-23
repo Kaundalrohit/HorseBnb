@@ -66,9 +66,8 @@ export default function Stalls5(props: props) {
                 console.log(error);
 
             }
-        } else {
-            toast.warn('Please Select Your Current Location')
         }
+        toast.warn('Please Select Your Current Location')
     }
 
     const getLocation = () => {
