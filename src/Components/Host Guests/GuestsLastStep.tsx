@@ -23,6 +23,8 @@ const GuestsLastStep = (props: props) => {
     let [coverPhoto, setCoverPhoto] = useState<string>("")
     const [loader, setLoader] = useState<boolean>(false)
     const [userImg, serUserImg] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+
 
 
     const allSteps = [
@@ -125,6 +127,8 @@ const GuestsLastStep = (props: props) => {
             setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo?.url);
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
             serUserImg(res?.data?.attributes?.publicData?.host_image);
+            setTitle(res?.data?.attributes?.title)
+
 
         } catch (error) {
             console.log(error);
@@ -163,7 +167,7 @@ const GuestsLastStep = (props: props) => {
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
-                                            <h6 className="font-medium single-line-ellipsis">oo</h6>
+                                            <h6 className="font-medium single-line-ellipsis">{title}</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00A4B4" }} to={""}>Preview</Link>
                                         </div>
                                         <div className="prev-img">

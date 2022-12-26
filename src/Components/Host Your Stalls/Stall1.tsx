@@ -94,6 +94,9 @@ export default function Stall1(props: props) {
         }
     }
 
+
+    console.log(type);
+
     useEffect(() => {
         list()
         // eslint-disable-next-line 

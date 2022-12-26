@@ -69,33 +69,56 @@
 
 
 
-// Initialize and add the map
-function initMap(): void {
-    // The location of Uluru
-    const uluru = { lat: -25.344, lng: 131.031 };
-    // The map, centered at Uluru
-    const map = new google.maps.Map(
-        document.getElementById("map") as HTMLElement,
-        {
-            zoom: 4,
-            center: uluru,
-        }
-    );
+// // Initialize and add the map
+// function initMap(): void {
+//     // The location of Uluru
+//     const uluru = { lat: -25.344, lng: 131.031 };
+//     // The map, centered at Uluru
+//     const map = new google.maps.Map(
+//         document.getElementById("map") as HTMLElement,
+//         {
+//             zoom: 4,
+//             center: uluru,
+//         }
+//     );
 
 
-    // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
-    });
+//     // The marker, positioned at Uluru
+//     const marker = new google.maps.Marker({
+//         position: uluru,
+//         map: map,
+//     });
+// }
+
+// declare global {
+//     interface Window {
+//         initMap: () => void;
+//     }
+// }
+// window.initMap = initMap;
+// export { };
+
+const GoogleMap = () => {
+    return (
+        <>
+
+        </>
+    )
 }
+export default GoogleMap
 
-declare global {
-    interface Window {
-        initMap: () => void;
-    }
-}
-window.initMap = initMap;
-export { };
+// function initMap(): void {
+//     let map: google.maps.Map;
+//     map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+//         center: { lat: -34.397, lng: 150.644 },
+//         zoom: 8,
+//     });
+// }
 
+// declare global {
+//     interface Window {
+//         initMap: () => void;
+//     }
+// }
+// window.initMap = initMap;
 

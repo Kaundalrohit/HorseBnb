@@ -27,6 +27,10 @@ const GuestStep12 = (props: props) => {
     const setPricing = async (navigation: string) => {
         let list = {
             id: match?.params.id,
+            price: {
+                amount: price,
+                currency: "USD"
+            },
             publicData:
             {
                 listing_price: price,

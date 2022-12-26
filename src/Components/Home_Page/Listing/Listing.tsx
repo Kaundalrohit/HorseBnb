@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import ListingViewer from "./ListingViewer";
 import HenceForthApi from "../../Utils/HenceForthApi"
 import Search from "../Search/Search";
@@ -33,7 +33,8 @@ export default function Listing() {
 
 
     // <................ Rendering All Stalls Data ....................>
-    useEffect(() => {
+    useLayoutEffect(() => {
+        debugger
         const get = async () => {
             let post_page = 8;
             let page_no = 1;
@@ -47,8 +48,8 @@ export default function Listing() {
                     ...list,
                     shortTerm: res1,
                     monthly: res2,
-                    guestAcc: res3,
-                    horseAdv: res4,
+                    horseAdv: res3,
+                    guestAcc: res4,
                 });
 
             } catch (error) {

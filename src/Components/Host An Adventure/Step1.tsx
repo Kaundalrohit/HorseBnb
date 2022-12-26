@@ -44,7 +44,7 @@ const Step1 = ({ steps }: props) => {
                 let res = await HenceForthApi.Auth.createdraftlisting({
                     title: title,
                     publicData: {
-                        type: 4,
+                        type: 3,
                         stepsCompleted: [
                             ...steps, 1
                         ]
