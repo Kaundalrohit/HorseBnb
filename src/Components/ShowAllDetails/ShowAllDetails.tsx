@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import HenceForthApi from '../Utils/HenceForthApi'
 import './ShowAllDetails.css'
 import mapImg from '../Images/map.svg'
-import { GoogleMap } from '@react-google-maps/api'
+import GoogleMaps from '../GoogleMap/GoogleMaps'
 const ShowAllDetails = () => {
 
     const { type } = useParams() as any
@@ -113,8 +113,8 @@ const ShowAllDetails = () => {
                             </div>
                         )}
                     </div>
-                    <div className={!check ? 'col-lg-6' : "d-none"}>
-                        <GoogleMap />
+                    <div className={check ? 'col-lg-6' : "d-none"}>
+                        <GoogleMaps state={state.shortTerm} />
                     </div>
                 </div>
             </div>
