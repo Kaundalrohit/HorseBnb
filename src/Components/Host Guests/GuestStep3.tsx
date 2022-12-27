@@ -31,7 +31,7 @@ const GuestStep3 = (props: props) => {
         const list = {
             id: match?.params.id,
             publicData: {
-                rooms: count,
+                guests: count,
                 stepsCompleted: [...steps, 3]
             }
         }

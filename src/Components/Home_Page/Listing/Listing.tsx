@@ -34,7 +34,7 @@ export default function Listing() {
 
     // <................ Rendering All Stalls Data ....................>
     useLayoutEffect(() => {
-        debugger
+        // debugger
         const get = async () => {
             let post_page = 8;
             let page_no = 1;

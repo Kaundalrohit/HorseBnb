@@ -136,7 +136,7 @@ export default function Stall3(props: props) {
                 </div>
                 <div className="row mx-0 h-100">
                     <div className="col-md-6 text-start pt-5 px-0 outer_location overflow-scroll">
-                        <div className="col-md-11 col-lg-8 mx-auto px-0 d-flex flex-column ">
+                        <div className="col-md-11 col-lg-8 mx-auto px-0 d-flex flex-column">
                             <h3 className="fw-600 heading-big">How many horses can your barn accommodate?</h3>
                             <p className="font-small-bold mb-4">Check that you have enough stalls.</p>
                             <div className="d-flex mb-0 pt-1">

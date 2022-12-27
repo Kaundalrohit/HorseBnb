@@ -43,6 +43,18 @@ const ShowAllDetails = () => {
         // eslint-disable-next-line
     }, [types])
 
+
+    // const Map = () => {
+    //     var geocoder = new google.maps.Geocoder();             // create a geocoder object
+    //     var location = new google.maps.LatLng({ lat: position.coords.latitude, lng: position.coords.longitude });    // turn coordinates into an object          
+    //     geocoder.geocode({ 'latLng': location }, function (results, status) {
+    //         if (status == google.maps.GeocoderStatus.OK) {           // if geocode success
+    //             var add = results[0].formatted_address;         // if address found, pass to processing function
+    //             document.write(add);
+    //         }
+    //     }
+    // }
+
     return (
         <>
             <div className="container-fluid">
@@ -72,7 +84,7 @@ const ShowAllDetails = () => {
                                     <label htmlFor="checkincheckout" className="mybadge pointer text-center mr-2 my-2 px-3 py-2 ng-star-inserted"> Check-in/Check-out <input type="text" id="checkincheckout" placeholder="Add dates" className="form-control date-input pl-0 ng-star-inserted d-none" />
                                     </label>
                                     <div className="mybadge pointer text-center mr-2 my-2 px-3 py-2">
-                                        <span > Stalls   </span>
+                                        <span>Stalls</span>
                                     </div>
                                     <div className="mybadge pointer text-center mr-2 my-2 px-3 py-2">
                                         <span > Prices   </span>
@@ -117,6 +129,10 @@ const ShowAllDetails = () => {
                         <GoogleMaps state={state.shortTerm} />
                     </div>
                 </div>
+            </div>
+
+            <div className="map">
+                {/* <button onClick={Map}>map </button> */}
             </div>
         </>
     )
