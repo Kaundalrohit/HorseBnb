@@ -4,6 +4,8 @@ import HenceForthApi from "../Utils/HenceForthApi"
 import horseImg from '../Images/horse_image.png'
 import backArrow from '../Images/chevron-left-primary.svg'
 import locationIcon from '../Images/near_me.svg'
+import Spinner from "../Spinner/Spinner"
+import { toast, ToastContainer } from "react-toastify"
 type props = {
     steps: any,
     setSteps: any
@@ -13,6 +15,11 @@ export default function Stalls5(props: props) {
     const { steps, setSteps, value } = props
     const match = useMatch(`/create-stall/step5/:id`)
     const navigate = useNavigate()
+
+    const [geoLoc, setGeoLoc] = useState<any>({
+        lat: 0 as number,
+        lng: 0 as number
+    })
 
     const [loader, setLoader] = useState<boolean>(false)
 
@@ -31,39 +38,54 @@ export default function Stalls5(props: props) {
     }, [])
 
     const uploadStep5Data = async (navigation: string) => {
-        try {
-            setLoader(true)
-            await HenceForthApi.Auth.Updatedlisting({
-                id: match?.params.id,
-                publicData: {
 
-                    stepsCompleted: [
-                        ...steps, 5
-                    ]
+        if (geoLoc.lng > 0) {
+            try {
+                setLoader(true)
+                await HenceForthApi.Auth.Updatedlisting({
+                    geolocation: {
+                        lat: geoLoc.lat,
+                        lng: geoLoc.lng,
+                    },
+                    id: match?.params.id,
+                    publicData: {
+                        stepsCompleted: [
+                            ...steps, 5
+                        ]
+                    }
+                })
+                setLoader(false)
+                {
+                    (navigation === 'Next') ?
+                        navigate(`/create-stall/step6/${match?.params.id}`)
+                        :
+                        navigate(`/create-stall/last-step/${match?.params.id}`)
                 }
-            })
-            setLoader(false)
-            {
-                (navigation === 'Next') ?
-                    navigate(`/create-stall/step6/${match?.params.id}`)
-                    :
-                    navigate(`/create-stall/last-step/${match?.params.id}`)
+
+            } catch (error) {
+                console.log(error);
+
             }
-
-        } catch (error) {
-            console.log(error);
-
         }
+        toast.warn('Please Select Your Current Location')
     }
 
     const getLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
                 console.log("Latitude is :", position.coords.latitude);
+
                 console.log("Longitude is :", position.coords.longitude);
+                setGeoLoc({
+                    ...geoLoc,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
             });
         }
+        toast.success('Location Saved')
     }
+
     useEffect(() => {
         if (value) {
             uploadStep5Data('Last')
@@ -73,6 +95,7 @@ export default function Stalls5(props: props) {
     return (
         <>
             <section className="add_Location">
+                <ToastContainer autoClose={1000} />
                 <div className="progress" style={{ height: "8px" }}>
                     <div className="progress-bar bg-info" role="progressbar" style={{ width: "20%" }}>
                     </div>
@@ -96,10 +119,10 @@ export default function Stalls5(props: props) {
                                             <img src={backArrow} className="pr-1" alt="" /> Back
                                         </button>
                                     </Link>
-                                    {/* <Link to={`/create-stall/step6/${match?.params.id}`}> */}
-                                    <button className="btn my-3 px-3 text-white" onClick={() => uploadStep5Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                    <button className="btn my-3 px-3 text-white" onClick={() => uploadStep5Data('Next')} style={{ background: "rgb(0, 164, 180)" }}
+                                        disabled={loader}
+                                    > {!loader ? "Next" : <Spinner />}
                                     </button>
-                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>

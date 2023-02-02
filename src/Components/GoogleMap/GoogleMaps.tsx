@@ -1,43 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React from 'react'
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
+const containerStyle = {
+    width: '780px',
+    height: '590px'
+};
 
+const center = {
+    lng: 76.717873,
+    lat: 30.704649
+};
 
-function GoogleMaps() {
-    const [loc, setLoc] = useState({
-        lng: 0 as number,
-        lat: 0 as number
-    })
-    const containerStyle = {
-        width: '780px',
-        height: '750px'
-    };
+type props = {
+    state: any
+}
 
-    const center = {
-        lng: loc.lng,
-        lat: loc.lat
-    };
-    useEffect(() => {
-        const getLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(function (position) {
-                    console.log("Latitude is :", position.coords.latitude);
-                    console.log("Longitude is :", position.coords.longitude);
-                    setLoc({
-                        ...loc,
-                        lng: position.coords.longitude,
-                        lat: position.coords.latitude,
-                    })
-                });
-            }
-        }
-        getLocation()
-    }, [])
-
+function GoogleMaps({ state }: props) {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyC5tw9VHYCoB2RoZUhSN9ZdhPLojnhMsiY"
+        googleMapsApiKey: "AIzaSyC54754SNl-NJU4WV6c7t4LNc_pQXKxYto"
     })
 
     const [map, setMap] = React.useState(null)
@@ -52,6 +34,8 @@ function GoogleMaps() {
         setMap(null)
     }, [])
 
+
+
     return isLoaded ? (
         <GoogleMap
             mapContainerStyle={containerStyle}
@@ -59,16 +43,27 @@ function GoogleMaps() {
             zoom={3}
             onLoad={onLoad}
             onUnmount={onUnmount}
+
         >
-            { /* Child components, such as markers, info windows, etc. */}
-            <></>
+            {state?.map((e: any, index: any) => {
+                return (
+                    <>
+                        {<Marker key={index} position={{
+                            lng: parseFloat(e?.attributes?.geolocation.lng),
+                            lat: parseFloat(e?.attributes?.geolocation.lat)
+                        }}
+                            title={e.attributes.title}
+                        />}
+                    </>
+                )
+            }
+            )}
+
         </GoogleMap>
     ) : <></>
 }
 
 export default React.memo(GoogleMaps)
-
-
 
 
 

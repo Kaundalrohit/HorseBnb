@@ -5,11 +5,12 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Stall1Img from '../Images/stalls1.png'
+import Spinner from "../Spinner/Spinner";
 
 
 type props = {
-    steps: any,
-    setSteps: any
+    steps: number[],
+    setSteps: (value: number[]) => void
 }
 
 export default function Stall1(props: props) {
@@ -21,11 +22,11 @@ export default function Stall1(props: props) {
     const navigate = useNavigate()
 
     const [loader, setLoader] = useState<boolean>(false)
-    const [type, setType] = useState<any>(0)
+    const [type, setType] = useState<number>(0)
     const [title, setTitle] = useState<string>("")
 
     const handleSelectChange = (event: any) => {
-        setType(event.target.value);
+        setType(parseInt(event.target.value));
     }
 
     const postStep1Data = async () => {
@@ -37,7 +38,7 @@ export default function Stall1(props: props) {
                     title: title,
                     id: id,
                     publicData: {
-                        type: parseInt(type),
+                        type: type,
                         stepsCompleted: [
                             ...steps, 1
                         ]
@@ -52,7 +53,7 @@ export default function Stall1(props: props) {
                 let res = await HenceForthApi.Auth.createdraftlisting({
                     title: title,
                     publicData: {
-                        type: parseInt(type),
+                        type: type,
                         stepsCompleted: [
                             ...steps, 1
                         ]
@@ -93,6 +94,9 @@ export default function Stall1(props: props) {
         }
     }
 
+
+    console.log(type);
+
     useEffect(() => {
         list()
         // eslint-disable-next-line 
@@ -114,9 +118,9 @@ export default function Stall1(props: props) {
                             <div>
                                 <form className="form-group">
                                     <select className="form-control mt-4 decorated" disabled={id} name="stallType" onChange={handleSelectChange} value={type}>
-                                        <option value={0} >Choose stall type</option>
-                                        <option value={1} >Short term stall</option>
-                                        <option value={2} >Monthly board</option>
+                                        <option value='0' >Choose stall type</option>
+                                        <option value='1' >Short term stall</option>
+                                        <option value='2' >Monthly board</option>
                                     </select>
                                     <h2 className="heading-big mt-4">Create a title for your listing?</h2>
                                     <p>Catch guest's attention with a listing title that highlights what makes your place special. This can not be your business name.</p>
@@ -125,7 +129,8 @@ export default function Stall1(props: props) {
                                     }} />
                                     <button type="button" className="btn text-white px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" style={{ background: "rgb(0, 164, 180)" }}
                                         onClick={postStep1Data}
-                                    >  {!loader ? "continue" : "Loading....."} </button>
+                                        disabled={loader}
+                                    >  {!loader ? "continue" : < Spinner />} </button>
                                     <h1>
 
                                     </h1>

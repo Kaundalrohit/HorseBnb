@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import stripeBtn from '../Images/connect_stripe_buttin.png'
 import checkCircleImg from '../Images/check-circle-primary.svg'
+import preDefaultImg from '../Images/default_image.png'
+
 
 
 export default function Publish() {
@@ -15,11 +17,28 @@ export default function Publish() {
     const [coverImg, setCoverImg] = useState<any>()
     const [check, setCheck] = useState()
 
+    const [preview, setPreview] = useState({
+        description: "",
+        title: "",
+        address: "",
+        price: 0
+    })
+    const { description, title, address, price } = preview
+
+
+
     useEffect(() => {
         const getData = async () => {
             try {
                 let res = await HenceForthApi.Auth.Listid(match?.params.id)
                 setCoverImg(res.data.attributes.publicData.cover_photo);
+                setPreview({
+                    ...preview,
+                    description: res?.data?.attributes?.description,
+                    title: res?.data?.attributes?.title,
+                    address: res?.data?.attributes?.publicData?.address?.location,
+                    price: res?.data?.attributes?.price?.amount
+                })
             } catch (error) {
                 console.log(error);
             }
@@ -74,12 +93,14 @@ export default function Publish() {
                             <h3 className="heading-big mb-3">Get ready to start hosting</h3>
                             <p >You are almost finished! If you are happy with your listing you can publish it now. If you want to edit any information you can also do that now.</p>
                             <div >
-                                <div className="d-flex border-bottom py-3">
-                                    <img src={checkCircleImg} className="pr-3 align-self-start" alt="" />
-                                    <div >
-                                        <span className="font-medium-bold text-black d-block">Edit your listing?</span>
+                                <div className="d-flex border-bottom py-3 justify-content-between">
+                                    <div className="d-flex">
+                                        <img src={checkCircleImg} className="pe-3 align-self-start" alt="" />
+                                        <span className="font-medium-bold text-black d-block fw-bold">Edit your listing?</span>
                                     </div>
-                                    <Link to="" className="text-skyblue fw-600  text-decoration-none" style={{ color: "#00a4b4" }}>Edit</Link>
+                                    <div className="">
+                                        <Link to={`/create-stall/step1/${match?.params.id}`} className="text-skyblue fw-600  text-decoration-none" style={{ color: "#00a4b4" }}>Edit</Link>
+                                    </div>
                                 </div>
                                 <div className="border-bottom py-3">
                                     <div className="ng-star-inserted">
@@ -107,12 +128,12 @@ export default function Publish() {
                             <div className="border col-md-12 col-lg-7 px-4 py-4 mb-4 bg-white">
                                 <div className="host-img mb-1">
                                     <img className="obj-cover  ng-star-inserted ng-lazyloaded" alt=""
-                                        src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}`} />
+                                        src={coverImg?.url ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}` : preDefaultImg} />
                                 </div>
-                                <p className="text-lite mb-1 font-small">PMCX+F64, Industrial Area, Sector 73, Sahibzada Ajit Singh Nagar, Punjab 140308, India</p>
-                                <p className="mb-1 font-small w-100 single-line-ellipsis">oo</p>
-                                <p className="text-black font-regular-sm mb-1 w-100 single-line-ellipsis">Oo</p>
-                                <p className="text-black mb-0 ng-star-inserted"><span className="fw-600">$898</span> /Night    </p>
+                                <p className="text-lite mb-1 font-small">{address}</p>
+                                <p className="mb-1 font-small w-100 single-line-ellipsis">{title}</p>
+                                <p className="text-black font-regular-sm mb-1 w-100 single-line-ellipsis">{description}</p>
+                                <p className="text-black mb-0 ng-star-inserted"><span className="fw-600">${price}</span> /Night    </p>
                             </div>
                         </div>
                     </div>

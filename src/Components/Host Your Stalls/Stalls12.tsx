@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
 import bulbImg from '../Images/lightbulb.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
@@ -31,14 +32,14 @@ export default function Stalls12(props: props) {
                 (await HenceForthApi.Auth.Updatedlisting({
                     id: match?.params.id,
                     price: {
-                        amount: "",
+                        amount: price,
                         currency: "USD"
                     },
                     publicData: {
                         bookingAcceptType: check,
                         listing_price: price,
                         stepsCompleted: [
-                            ...steps, 14
+                            ...steps, 12
                         ]
                     }
                 }))
@@ -134,7 +135,8 @@ export default function Stalls12(props: props) {
                                         <img src={backArrow} className="pr-1" alt="" /> Back
                                     </button>
                                 </Link>
-                                <button className="btn my-3 px-3 text-white" onClick={() => poststep12Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                <button className="btn my-3 px-3 text-white" onClick={() => poststep12Data('Next')} style={{ background: "rgb(0, 164, 180)" }}
+                                    disabled={loader}> {!loader ? "Next" : <Spinner />}
                                 </button>
                             </div>
                         </div>

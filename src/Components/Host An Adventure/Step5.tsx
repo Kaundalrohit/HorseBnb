@@ -9,14 +9,16 @@ import deleteImg from '../Images/delete-24px.svg'
 import editImg from '../Images/edit.png'
 import publisgImg from '../Images/publish.svg'
 import bulbImg from '../Images/lightbulb.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any
     setsteps: any;
+    value: number
 }
 
 const Step5 = (props: props) => {
-    const { steps: steps, setsteps } = props
+    const { steps: steps, setsteps, value } = props
 
     const navigate = useNavigate()
 
@@ -100,7 +102,7 @@ const Step5 = (props: props) => {
     }
 
 
-    const nextPage = async (ar: any) => {
+    const nextPage = async (navigation: string) => {
         let list = {
             id: match?.params?.id,
             publicData: {
@@ -113,7 +115,12 @@ const Step5 = (props: props) => {
                 setLoader(true)
                 await HenceForthApi?.Auth?.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/add-experience/step6/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/add-experience/step6/${match?.params.id}`)
+                        :
+                        navigate(`/add-experience/last-step/${match?.params.id}`)
+                }
             } else {
                 toast('🦄 Please Upload Images', {
                     position: "top-right",
@@ -148,6 +155,10 @@ const Step5 = (props: props) => {
     useEffect(() => {
         list()
     }, [])
+
+    useEffect(() => {
+        { value && nextPage('Last') }
+    }, [value])
 
 
     return (
@@ -221,8 +232,10 @@ const Step5 = (props: props) => {
                             </Link>
                             {/* <Link to={`/add-experience/step6/${match?.params.id}`}> */}
                             <button className="btn my-3 px-3 text-white"
-                                onClick={nextPage}
-                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                                onClick={() => nextPage('Next')}
+                                style={{ background: "rgb(0, 164, 180)" }}
+                                disabled={loader}
+                            > {!loader ? "Next" : <Spinner />}
                             </button>
                             {/* </Link> */}
                         </div>

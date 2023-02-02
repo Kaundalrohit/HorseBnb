@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import HenceForthApi from "../Utils/HenceForthApi";
 import CompletedSteps from "./CompletedSteps";
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/chevron-left-primary.svg'
+import preDefaultImg from '../Images/default_image.png'
+import { toast, ToastContainer } from "react-toastify";
 
 type props = {
     setValue: (value: number) => void
@@ -13,9 +15,11 @@ export default function LastStep({ setValue }: props) {
 
     const match = useMatch('/create-stall/last-step/:id')
     HenceForthApi.setToken(localStorage.getItem('token'));
+    const navigate = useNavigate()
 
     const [coverImg, setCoverImg] = useState<any>()
     const [proImg, setProImg] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
 
     const getData = async () => {
         try {
@@ -23,6 +27,8 @@ export default function LastStep({ setValue }: props) {
             setCoverImg(res.data.attributes.publicData.cover_photo);
             setStep(res.data.attributes.publicData.stepsCompleted)
             setProImg(res?.data?.attributes?.publicData?.host_image)
+            setTitle(res?.data?.attributes?.title)
+
         } catch (error) {
             console.log(error);
         }
@@ -101,27 +107,53 @@ export default function LastStep({ setValue }: props) {
             id: 10,
             step: "Calendar Availability",
             url: `create-stall/step11/${match?.params.id}`,
-            stepNumber: 14
+            stepNumber: 11
 
         },
         {
             id: 11,
             step: "Pricing",
             url: `create-stall/step12/${match?.params.id}`,
-            stepNumber: 11
+            stepNumber: 12
 
         },
         {
             id: 12,
             step: "Stripe Connect",
             url: `create-stall/step13/${match?.params.id}`,
-            stepNumber: 12
+            stepNumber: 13
         },
     ]
+
+    const completeLastStep = () => {
+        let steps = [...new Set(step) as any];
+
+        // if (steps.length >=10 ) {
+        //     alert('no')
+        // }
+        // else {
+        //     alert('yes')
+        // }
+
+        // const array = [1, 3, 5, 6, 7, 8, 9, 10, 15, 11, 12]
+        // if (steps.sort().join(',') === array.sort().join(',')) {
+        //     alert('Yes')
+        // } else {
+        //     alert('No')
+        // }
+
+        if (steps.length === 11) {
+            navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+        } else {
+            toast.error('Please Complete All Steps')
+        }
+
+    }
 
     return (
         <>
             <div className="container">
+                <ToastContainer autoClose={1000} />
                 <div className="row mt-3 border-bottom pb-4">
                     <div className="col-md-5">
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
@@ -137,11 +169,11 @@ export default function LastStep({ setValue }: props) {
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
-                                            <h6 className="font-medium single-line-ellipsis">oo</h6>
+                                            <h6 className="font-medium single-line-ellipsis">{title}</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00a4b4" }} to={""}>Preview</Link>
                                         </div>
                                         <div className="prev-img">
-                                            <img className="obj-cover  ng-star-inserted ng-lazyloaded" alt="" src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url} `} />
+                                            <img className="obj-cover" alt="" src={coverImg?.url ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverImg?.url}` : preDefaultImg} />
                                         </div>
                                     </div>
                                 </div>
@@ -161,10 +193,10 @@ export default function LastStep({ setValue }: props) {
                                     </Link>
                                 </div>
                                 <div className="">
-                                    <Link to={`/manage-listing/publish-listing/${match?.params.id}`}>
-                                        <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}> Next
-                                        </button>
-                                    </Link>
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }}
+                                        onClick={completeLastStep}
+                                    > Next
+                                    </button>
                                 </div>
                             </div>
                         </div>

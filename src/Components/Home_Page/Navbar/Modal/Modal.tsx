@@ -15,15 +15,24 @@ type props = {
 export default function Modal({ modal, signModal, loginModal, handleToken }: props) {
 
     // <................STATES DECLARATION.................>
+
+    const [userNum, setUserNum] = useState<string>('')
+    const [countryCode, setCountrycode] = useState<string>('')
+
     const [user, setUser] = useState<any>({
         userEmail: "",
         userPass: "",
         firstName: "",
-        phoneNumber: '',
+        phoneValue: "",
         lastName: "",
+        vikram: {
+            lastname: ''
+        },
         email: "",
         password: "",
     })
+
+    const { userEmail, userPass, firstName, phoneValue, lastName, email, password } = user
 
     const handleChange = (e: any) => {
         setUser({
@@ -37,20 +46,18 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
         e.preventDefault()
         try {
             let res = (await HenceForthApi.Auth.signup({
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                password: user.password,
-
-                country_code: "+1",
                 deviceId: "string",
                 deviceType: 3,
+                email: email,
                 fcmId: "string",
+                firstName: firstName,
+                lastName: lastName,
+                password: password,
                 protectedData: {
-                    phoneNumber: 9867746464
+                    phoneNumber: userNum
                 },
                 publicData: {
-                    country_code: "string"
+                    country_code: '+' + countryCode
                 }
             }))
             localStorage.setItem("token", res.data.token)
@@ -68,8 +75,8 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
         e.preventDefault()
         try {
             let res = (await HenceForthApi.Auth.login({
-                username: user.userEmail,
-                password: user.userPass,
+                username: userEmail,
+                password: userPass,
                 deviceId: "string",
                 deviceType: 3,
                 fcmId: "string"
@@ -81,6 +88,19 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
             console.log(error);
 
         }
+    }
+
+
+    const handleOnChange = (phone: any, data: any) => {
+
+        let num = phone.slice(data.dialCode.length, phone.length)
+        setUserNum(num)
+        let code = data.dialCode
+        setCountrycode(code)
+        // setUser({
+        //     ...user,
+        //     phoneValue: `${data.dialCode}${phone.slice(data.dialCode.length, phone.length)}`
+        // })
     }
 
     return (
@@ -104,10 +124,10 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
                             {modal ?
                                 <form onSubmit={userLogIn} className="ng-untouched ng-pristine ng-invalid">
                                     <div className="form-group mb-2">
-                                        <input type="email" value={user.userEmail} name="userEmail" onChange={handleChange} placeholder="Email Address" className="form-control" />
+                                        <input type="email" value={userEmail} name="userEmail" onChange={handleChange} placeholder="Email Address" className="form-control" />
                                     </div>
                                     <div className="form-group mb-2">
-                                        <input type="password" value={user.userPass} name="userPass" onChange={handleChange} placeholder="Password" className="form-control" />
+                                        <input type="password" value={userPass} name="userPass" onChange={handleChange} placeholder="Password" className="form-control" />
                                     </div>
                                     <div className="mb-4 d-flex justify-content-between">
                                         <div className="form-check d-flex align-items-center p-0">
@@ -121,32 +141,29 @@ export default function Modal({ modal, signModal, loginModal, handleToken }: pro
                                         </div>
                                         <button className="pointer border-0 bg-white font-small" style={{ color: "#00a4b4" }}>Forgot Password?</button>
                                     </div>
-                                    <button type="submit" className="btn btn-block  text-light fw-bold w-100 position-relative d-flex align-items-center justify-content-center" style={{ backgroundColor: "#00a4b4" }}> Log In</button>
+                                    <button type="submit" className="btn close btn-block  text-light fw-bold w-100 position-relative d-flex align-items-center justify-content-center" data-bs-dismiss="modal" style={{ backgroundColor: "#00a4b4" }}> Log In</button>
                                 </form>
                                 : <form onSubmit={createUser} className="ng-untouched ng-pristine ng-invalid">
                                     <div className="form-group mb-3">
-                                        <input type="text" value={user.firstName} name="firstName" onChange={handleChange} placeholder="First Name" className="form-control" />
+                                        <input type="text" value={firstName} name="firstName" onChange={handleChange} placeholder="First Name" className="form-control" />
                                     </div>
                                     <div className="form-group mb-2 mb-3">
-                                        <input type="text" value={user.lastName} name="lastName" onChange={handleChange} placeholder="Last Name" className="form-control" />
+                                        <input type="text" value={lastName} name="lastName" onChange={handleChange} placeholder="Last Name" className="form-control" />
                                     </div>
                                     <PhoneInput
                                         country={'in'}
-                                        value={user.phoneNumber}
-                                        onChange={(phone: any, data: any) => {
-                                            // console.log(phone.slice(data.dialCode.length, phone.length));
-                                            // console.log(data);
-                                        }}
+                                        value={phoneValue}
+                                        onChange={handleOnChange}
                                     />
                                     < div className="form-group mb-2 my-3">
                                         <input type="email"
-                                            value={user.email} name="email" onChange={handleChange} placeholder="Enter Email" className="form-control" />
+                                            value={email} name="email" onChange={handleChange} placeholder="Enter Email" className="form-control" />
                                     </div>
                                     <div className="form-group mb-2 mb-3">
                                         <input type="password" placeholder="Password" className="form-control" />
                                     </div>
                                     <div className="form-group mb-2 mb-3">
-                                        <input type="password" value={user.password} name='password' onChange={handleChange} placeholder="Confirm Password" className="form-control" />
+                                        <input type="password" value={password} name='password' onChange={handleChange} placeholder="Confirm Password" className="form-control" />
                                     </div>
                                     <div className="d-flex col-12 p-0 mb-2">
                                         <label className="tickbox my-0 text-default d-flex align-items-center position-relative">

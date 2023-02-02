@@ -4,17 +4,17 @@ import { toast, ToastContainer } from "react-toastify"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import bulbImg from '../Images/lightbulb.svg'
+import Spinner from "../Spinner/Spinner"
 
 
 type props = {
-    steps: Array<number>,
+    steps: Array<number>
     setSteps: any
+    value: number
 }
-
-
 const GuestStep12 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step12/:id`)
@@ -24,9 +24,13 @@ const GuestStep12 = (props: props) => {
     const [check, setCheck] = useState<any>()
     const [loader, setLoader] = useState<boolean>(false)
 
-    const setPricing = async () => {
+    const setPricing = async (navigation: string) => {
         let list = {
             id: match?.params.id,
+            price: {
+                amount: price,
+                currency: "USD"
+            },
             publicData:
             {
                 listing_price: price,
@@ -39,7 +43,12 @@ const GuestStep12 = (props: props) => {
             try {
                 await HenceForthApi.Auth.Updatedlisting(list)
                 setLoader(false)
-                navigate(`/create-guest/Step13/${match?.params.id}`)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/create-guest/Step13/${match?.params.id}`)
+                        :
+                        navigate(`/create-guest/last-step/${match?.params.id}`)
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -73,6 +82,10 @@ const GuestStep12 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
+
+    useEffect(() => {
+        { value && setPricing('Last') }
+    }, [value])
 
 
 
@@ -127,7 +140,7 @@ const GuestStep12 = (props: props) => {
                                     </button>
                                 </Link>
 
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }} onClick={setPricing} > {!loader ? "Next" : "Loading.."}
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center " style={{ background: "rgb(0, 164, 180)" }} onClick={() => setPricing('Next')} disabled={loader} > {!loader ? "Next" : <Spinner />}
                                 </button>
 
                             </div>

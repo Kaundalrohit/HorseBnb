@@ -3,17 +3,19 @@ import { Link, useMatch, useNavigate } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import bulbImg from '../Images/lightbulb.svg'
+import Spinner from "../Spinner/Spinner"
 
 
 
 type props = {
     steps: Array<number>,
-    setSteps: any
+    setSteps: any,
+    value: number
 }
 
 const GuestStep11 = (props: props) => {
 
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     const navigate = useNavigate()
     const match = useMatch(`/create-guest/Step11/:id`)
@@ -21,10 +23,21 @@ const GuestStep11 = (props: props) => {
     const [loader, setLoader] = useState<boolean>(false)
 
 
-    const handleStep11 = async () => {
+    const handleStep11 = async (navigation: string) => {
+        await HenceForthApi.Auth.Updatedlisting({
+            id: match?.params?.id,
+            publicData: {
+                stepsCompleted: [...steps, 11]
+            }
+        })
         try {
             setLoader(true)
-            navigate(`/create-guest/Step12/${match?.params.id}`)
+            {
+                navigation === 'Next' ?
+                    navigate(`/create-guest/Step12/${match?.params.id}`)
+                    :
+                    navigate(`/create-guest/last-step/${match?.params.id}`)
+            }
             setLoader(false)
         } catch (error) {
 
@@ -44,6 +57,9 @@ const GuestStep11 = (props: props) => {
         listId()
         // eslint-disable-next-line 
     }, [])
+    useEffect(() => {
+        { value && handleStep11('Last') }
+    }, [value])
 
     return (
 
@@ -60,7 +76,8 @@ const GuestStep11 = (props: props) => {
                         <Link to={""}>   <button type="button" className="btn btn-transparent font-regular my-3 px-0">
                             <img src={backArrow} className="pr-1" alt="" /> Back </button></Link>
 
-                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={handleStep11} > {!loader ? "Next" : "Loading.."} </button>
+                        <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => handleStep11('Next')} disabled={loader}
+                        > {!loader ? "Next" : <Spinner />} </button>
 
                     </div>
 

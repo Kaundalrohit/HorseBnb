@@ -8,7 +8,7 @@ import bulbImg from '../Images/lightbulb.svg'
 import deleteImg from '../Images/delete-24px.svg'
 import editImg from '../Images/edit.png'
 import publisgImg from '../Images/publish.svg'
-
+import Spinner from "../Spinner/Spinner";
 
 
 type props = {
@@ -232,7 +232,9 @@ export default function Stall7(props: props) {
                                         className="pr-1" /> Back
                                 </button>
                             </Link>
-                            <button className="btn my-3 px-3 text-white" onClick={() => nextPage('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                            <button className="btn my-3 px-3 text-white" onClick={() => nextPage('Next')} style={{ background: "rgb(0, 164, 180)" }}
+                                disabled={loader}
+                            > {!loader ? "Next" : <Spinner />}
                             </button>
                         </div>
                     </div>

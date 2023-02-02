@@ -6,6 +6,7 @@ import HenceForthApi from "../Utils/HenceForthApi";
 import selfieImg from '../Images/taking_selfie.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
 import defaultUserImg from '../Images/defaultUserImg.jpg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
@@ -56,9 +57,9 @@ export default function Stalls9(props: props) {
             }
         }
         try {
-            setLoader(true)
+            // setLoader(true)
             let res = (await HenceForthApi.Auth.updateUserProfile(list))
-            setLoader(false)
+            // setLoader(false)
         } catch (error) {
             console.log(error);
 
@@ -67,6 +68,7 @@ export default function Stalls9(props: props) {
 
     const nextPage = async (navigation: string) => {
         const list = {
+            id: match?.params?.id,
             publicData: {
                 host_image: userImg,
                 stepsCompleted: [...steps, 9,]
@@ -75,8 +77,12 @@ export default function Stalls9(props: props) {
         let res = await HenceForthApi.Auth.Updatedlisting(list)
         console.log(res);
 
-        navigation === 'Next' ? navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`) :
-            navigate(`/create-stall/last-step/${match?.params.id}`)
+        {
+            navigation === 'Next' ?
+                navigate(`/create-stall/checkin-and-checkout/${match?.params.id}`)
+                :
+                navigate(`/create-stall/last-step/${match?.params.id}`)
+        }
 
     }
 
@@ -123,7 +129,9 @@ export default function Stalls9(props: props) {
                                 <div className="d-flex justify-content-between border-top mt-5">
                                     <button type="button" className="btn btn-transparent font-regular my-3 px-0" >
                                         <img src={backArrow} alt='' className="pr-1" /> Back </button>
-                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => nextPage('Next')}> {!loader ? "Next" : "Loading....."} </button>
+                                    <button type="button" className="btn btn-primary my-3 px-3 position-relative d-flex align-items-center justify-content-center" onClick={() => nextPage('Next')}
+                                        disabled={loader}
+                                    > {!loader ? "Next" : <Spinner />} </button>
                                 </div>
 
                             </div>

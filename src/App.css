@@ -72,3 +72,65 @@
     border-radius: 50%;
     overflow: hidden;
 }
+.host-exp .btn-black {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+}
+.host-hr {
+    width: 90px;
+    border-top: 3px solid #00a4b4;
+}
+.host-exp-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(https://horsebnb.com/banner.jpg
+);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.host-exp-bg h3 {
+    color: #fff;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 70px;
+}
+.btn-outline-light {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    min-height: 45px;
+    background-color: transparent;
+    color: #fff;
+    font-weight: 700;
+}
+.btn-primary-outline-lg {
+    border: 2px solid #00a4b4;
+    border-radius: 6px;
+    min-height: 45px;
+    background-color: #fff;
+    color: #00a4b4;
+    font-weight: 700;
+}
+.btn-sky-outline-lg {
+    border: 2px solid #008489;
+    border-radius: 6px;
+    min-height: 42px;
+    background-color: #fff;
+    color: #008489;
+    font-weight: 700;
+}
+.steps-preview .prev-img {
+    height: 60px;
+    width: 80px;
+    min-width: 80px;
+}
+.btn-primary {
+    background-color: #00a4b4;
+    font-size: 14px;
+    color: #fff;
+    border: 1px solid #00a4b4;
+    font-weight: 700;
+    min-height: 39px;
+}

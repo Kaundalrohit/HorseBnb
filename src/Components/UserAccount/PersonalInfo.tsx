@@ -29,6 +29,8 @@ const PersonalInfo = () => {
 
     })
 
+    const { userImg, userName, userFirstName, userLastName, gender, age, userEmail, phone, about, address, language } = state
+
     const handleState = (e: any) => {
         setState({
             ...state,
@@ -55,60 +57,59 @@ const PersonalInfo = () => {
 
 
     const updateName = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
-            firstName: state.userFirstName,
-            lastName: state.userLastName,
+        (await HenceForthApi.Auth.updateUserProfile({
+            firstName: userFirstName,
+            lastName: userLastName,
         }))
-
         getData()
     }
     const updateGender = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
+        (await HenceForthApi.Auth.updateUserProfile({
             publicData: {
-                gender: state.gender
+                gender: gender
             }
         }))
 
         getData()
     }
     const updateAge = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
+        (await HenceForthApi.Auth.updateUserProfile({
             publicData: {
-                age: state.age
+                age: age
             }
         }))
 
         getData()
     }
     const updatePhone = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
+        (await HenceForthApi.Auth.updateUserProfile({
             protectedData: {
-                phoneNumber: state.phone
+                phoneNumber: phone
             }
         }))
 
         getData()
     }
     const updateEmail = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
-            email: state.userEmail
+        (await HenceForthApi.Auth.updateUserProfile({
+            email: userEmail
         }))
 
         getData()
     }
     const updateAbout = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
+        (await HenceForthApi.Auth.updateUserProfile({
 
-            bio: state.about
+            bio: about
 
         }))
 
         getData()
     }
     const updateLang = async () => {
-        let res = (await HenceForthApi.Auth.updateUserProfile({
+        (await HenceForthApi.Auth.updateUserProfile({
             publicData: {
-                language: state.language
+                language: language
             }
         }))
         getData()
@@ -192,11 +193,11 @@ const PersonalInfo = () => {
                                 <div className="book-img mx-auto mb-3 border position-relative">
                                     <div className="centered-spinner">
                                     </div>
-                                    <img className="obj-cover  ng-lazyloaded" alt='' src={state.userImg ? isImage(state.userImg)
+                                    <img className="obj-cover  ng-lazyloaded" alt='' src={userImg ? isImage(userImg)
                                         ?
-                                        `${HenceForthApi.API_FILE_ROOT_SMALL}${state.userImg}`
+                                        `${HenceForthApi.API_FILE_ROOT_SMALL}${userImg}`
                                         :
-                                        state.userImg
+                                        userImg
                                         : "https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
                                     } />
                                 </div>
@@ -234,7 +235,7 @@ const PersonalInfo = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="firstname" className="fw-600">First Name</label>
-                                    <input placeholder="First Name" value={state.userFirstName}
+                                    <input placeholder="First Name" value={userFirstName}
                                         onChange={handleState}
                                         name="userFirstName"
                                         className="form-control ng-untouched ng-pristine ng-valid" />
@@ -242,7 +243,7 @@ const PersonalInfo = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="lastname" className="fw-600">Last Name</label>
-                                    <input placeholder="Last Name" value={state.userLastName}
+                                    <input placeholder="Last Name" value={userLastName}
                                         onChange={handleState}
                                         name="userLastName"
                                         className="form-control ng-untouched ng-pristine ng-valid" />
@@ -252,7 +253,7 @@ const PersonalInfo = () => {
                                         onClick={updateName}> Save </button>
                                 </div>
                             </div>}
-                            {nameToggle && <p>{state.userName}</p>}
+                            {nameToggle && <p>{userName}</p>}
                         </div>
 
                         {/* <.............Gender...................> */}
@@ -279,7 +280,7 @@ const PersonalInfo = () => {
                                     <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" onClick={updateGender}> Save </button>
                                 </div>
                             </div>}
-                            {genderToggle && <p>{state.gender}</p>}
+                            {genderToggle && <p>{gender}</p>}
                         </div>
 
                         {/* <.............Date of birth...................> */}
@@ -305,7 +306,7 @@ const PersonalInfo = () => {
                                         onClick={updateAge}> Save </button>
                                 </div>
                             </div>}
-                            {birthToggle && <p>{state.age}</p>}
+                            {birthToggle && <p>{age}</p>}
                         </div>
 
 
@@ -314,7 +315,7 @@ const PersonalInfo = () => {
                             <div className="d-flex justify-content-between mb-3">
                                 <div >
                                     <p className="fw-600 text-black mt-0">Email</p>
-                                    <p>{state.userEmail}</p>
+                                    <p>{userEmail}</p>
 
                                 </div>
                                 <div className="">
@@ -330,7 +331,7 @@ const PersonalInfo = () => {
 
                             {!emailToggle && <div className="">
                                 <div className="">
-                                    <input type="email" value={state.userEmail} name="userEmail" onChange={handleState} className='form-control' />
+                                    <input type="email" value={userEmail} name="userEmail" onChange={handleState} className='form-control' />
                                 </div>
                                 <div className="col-md-12">
                                     <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"
@@ -367,7 +368,7 @@ const PersonalInfo = () => {
                                         onClick={updatePhone}> Save </button>
                                 </div>
                             </div>}
-                            {phoneToggle && <p>{state.phone}</p>}
+                            {phoneToggle && <p>{phone}</p>}
                         </div>
                         {/* <.............About.............> */}
                         <div className="border px-4 py-3 mb-4">
@@ -390,13 +391,13 @@ const PersonalInfo = () => {
                             {!aboutToggle && <div className="">
                                 <div className="">
 
-                                    <textarea className='form-control' value={state.about} name="about" onChange={handleState}></textarea>
+                                    <textarea className='form-control' value={about} name="about" onChange={handleState}></textarea>
                                 </div>
                                 <div className="col-md-12">
                                     <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" onClick={updateAbout}> Save </button>
                                 </div>
                             </div>}
-                            {aboutToggle && <p>{state.about}</p>}
+                            {aboutToggle && <p>{about}</p>}
                         </div>
                         {/* <.............Location.............> */}
                         <div className="border px-4 py-3 mb-4">
@@ -422,7 +423,7 @@ const PersonalInfo = () => {
                                     <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center"> Save </button>
                                 </div>
                             </div>}
-                            {/* {locToggle && <p>{state.address}</p>} */}
+                            {/* {locToggle && <p>{address}</p>} */}
                         </div>
                         {/* <.............Language.............> */}
                         <div className="border px-4 py-3 mb-4">
@@ -441,7 +442,7 @@ const PersonalInfo = () => {
                             </div>
                             {!langToggle && <div className="">
                                 <div className="">
-                                    <select className="form-select" value={state.language} name="language" onChange={handleState} aria-label="Default select example">
+                                    <select className="form-select" value={language} name="language" onChange={handleState} aria-label="Default select example">
                                         <option selected>Open this select menu</option>
                                         {Languages.map((e: any) =>
                                             <option value={e.language}>{e.language}</option>
@@ -452,7 +453,7 @@ const PersonalInfo = () => {
                                     <button type="button" className="btn btn-primary px-3 py-2 mt-4 position-relative d-flex align-items-center justify-content-center" onClick={updateLang}> Save </button>
                                 </div>
                             </div>}
-                            {langToggle && <p>{state.language}</p>}
+                            {langToggle && <p>{language}</p>}
                         </div>
                     </div>
                 </div>

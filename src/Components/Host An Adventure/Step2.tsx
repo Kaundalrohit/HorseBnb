@@ -1,44 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate, useSearchParams } from "react-router-dom"
 import HenceForthApi from "../Utils/HenceForthApi";
 import adventureExp from '../Images/experience.png'
 import backArrow from '../Images/chevron-left-primary.svg'
 import locationIcon from '../Images/near_me.svg'
-
-
+import { toast, ToastContainer } from "react-toastify";
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any
     setSteps: any;
+    value: number
 }
 
 const Step2 = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, value } = props
 
     HenceForthApi.setToken(localStorage.getItem('token'))
     const match = useMatch('/add-experience/step2/:id');
     const navigate = useNavigate()
 
     const [loader, setLoader] = useState<boolean>(false)
+    const [geoLoc, setGeoLoc] = useState<any>({
+        lat: 0 as number,
+        lng: 0 as number
+    })
 
-    const postStep2Data = async () => {
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(function (position) {
+                console.log("Latitude is :", position.coords.latitude);
 
-        try {
-            setLoader(true)
-            let res = await HenceForthApi.Auth.Updatedlisting({
-                id: match?.params.id,
-                publicData: {
-                    stepsCompleted: [
-                        ...steps, 2
-                    ]
-                }
-            })
-            setLoader(false)
-            navigate(`/add-experience/step4/${match?.params.id}`)
-
-        } catch (error) {
-            console.log(error);
-
+                console.log("Longitude is :", position.coords.longitude);
+                setGeoLoc({
+                    ...geoLoc,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+            });
         }
     }
 
@@ -46,18 +45,64 @@ const Step2 = (props: props) => {
         try {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted)
+            setGeoLoc({
+                ...geoLoc,
+                lat: res?.data?.attributes?.geolocation?.lat,
+                lng: res?.data?.attributes?.geolocation?.lng
+            })
         }
         catch (error) {
 
         }
     }
 
-    useState(() => {
+    const postStep2Data = async (navigation: string) => {
+        if (geoLoc.lng > 0) {
+            try {
+                setLoader(true)
+                let res = await HenceForthApi.Auth.Updatedlisting({
+                    geolocation: {
+                        lat: geoLoc.lat,
+                        lng: geoLoc.lng,
+                    },
+                    id: match?.params.id,
+                    publicData: {
+                        stepsCompleted: [
+                            ...steps, 2
+                        ]
+                    }
+                })
+                setLoader(false)
+                {
+                    navigation === 'Next' ?
+                        navigate(`/add-experience/step4/${match?.params.id}`)
+                        :
+                        navigate(`/add-experience/last-step/${match?.params.id}`)
+                }
+
+            } catch (error) {
+                console.log(error);
+
+            }
+        } else {
+            toast.warn('Please Select Your Current Location')
+        }
+    }
+
+
+    useEffect(() => {
         list()
-    })
+    }, [])
+
+    useEffect(() => {
+        { value && postStep2Data('Last') }
+    }, [value])
+
+
     return (
         <>
             <section className="add_Location">
+                <ToastContainer autoClose={1000} />
                 <div className="progress" style={{ height: "8px" }}>
                     <div className="progress-bar bg-info" role="progressbar" style={{ width: "20%" }}>
                     </div>
@@ -69,7 +114,7 @@ const Step2 = (props: props) => {
                                 <h3 className="fw-600 heading-big">Where is your place located?</h3>
                                 <div className="">
                                     <p className="font-small-bold my-3">Please input your exact address. Guests will not be able to see your exact address until they have made a booking.</p>
-                                    <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }}>
+                                    <button className="btn btn-sky-outline-lg my-3 mb-4 position-relative d-flex align-items-center justify-content-center" style={{ border: "1px solid rgb(0, 164, 180)" }} onClick={getLocation}>
                                         <img src={locationIcon} alt="" className="img-fluid" />Use current location </button>
 
                                 </div>
@@ -81,8 +126,9 @@ const Step2 = (props: props) => {
                                     </Link>
 
                                     <button className="btn my-3 px-3 text-white"
-                                        onClick={postStep2Data}
-                                        style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading.."}
+                                        onClick={() => postStep2Data('Next')}
+                                        style={{ background: "rgb(0, 164, 180)" }}
+                                        disabled={loader}> {!loader ? "Next" : <Spinner />}
                                     </button>
 
                                 </div>

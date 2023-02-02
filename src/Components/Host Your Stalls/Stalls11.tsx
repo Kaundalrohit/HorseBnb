@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HenceForthApi from "../Utils/HenceForthApi";
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
@@ -83,7 +84,8 @@ export default function Stalls11(props: props) {
                             {/* <Link to={`/create-stall/step12/${match?.params.id}`}> */}
                             <button className="btn my-3 px-3 text-white"
                                 onClick={() => uploadStep11Data('Next')}
-                                style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "Next" : "Loading....."}
+                                style={{ background: "rgb(0, 164, 180)" }}
+                                disabled={loader}> {!loader ? "Next" : <Spinner />}
                             </button>
                             {/* </Link> */}
                         </div>

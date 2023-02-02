@@ -4,20 +4,27 @@ import CompletedSteps from "../Host Your Stalls/CompletedSteps"
 import HenceForthApi from "../Utils/HenceForthApi"
 import backArrow from '../Images/chevron-left-primary.svg'
 import finishListing from '../Images/finish_your_listing.svg'
+import preDefaultImg from '../Images/default_image.png'
+import Spinner from "../Spinner/Spinner"
+import { toast, ToastContainer } from "react-toastify"
 
 type props = {
     setSteps: any
     steps: any
+    setValue: (value: number) => void
 }
 
 const GuestsLastStep = (props: props) => {
-    const { steps, setSteps } = props
+    const { steps, setSteps, setValue } = props
 
     const navigate = useNavigate()
     const match = useMatch(`create-guest/last-step/:id`)
 
     let [coverPhoto, setCoverPhoto] = useState<string>("")
     const [loader, setLoader] = useState<boolean>(false)
+    const [userImg, serUserImg] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+
 
 
     const allSteps = [
@@ -66,8 +73,8 @@ const GuestsLastStep = (props: props) => {
             id: 7,
             step: "Photos",
             url: `create-guest/step9/${match?.params.id}`,
-            stepNumber: 9
-
+            stepNumber: 9,
+            checkImg: userImg
         },
         {
             id: 8,
@@ -79,7 +86,7 @@ const GuestsLastStep = (props: props) => {
         {
             id: 9,
             step: "Agreement",
-            url: `create-guest/step10/${match?.params.id}`,
+            url: `create-guest/sucessfull-hosting/${match?.params.id}`,
             stepNumber: 15
 
         },
@@ -106,10 +113,12 @@ const GuestsLastStep = (props: props) => {
     ]
 
     const lastStep = () => {
-        setLoader(true)
-        navigate(`/manage-listing/publish-listing/${match?.params.id}`)
-        setLoader(false)
-
+        let checkSteps = [...new Set(steps) as any]
+        if (checkSteps.length >= 11) {
+            navigate(`/manage-listing/publish-listing/${match?.params.id}`)
+        } else {
+            toast.error('Please Complete All Steps')
+        }
     }
 
     const listId = async () => {
@@ -117,20 +126,28 @@ const GuestsLastStep = (props: props) => {
             let res = await HenceForthApi.Auth.Listid(match?.params.id)
             setCoverPhoto(res?.data?.attributes?.publicData?.cover_photo?.url);
             setSteps(res?.data?.attributes?.publicData?.stepsCompleted);
+            serUserImg(res?.data?.attributes?.publicData?.host_image);
+            setTitle(res?.data?.attributes?.title)
+
 
         } catch (error) {
             console.log(error);
         }
     }
+
     useEffect(() => {
         listId()
+        setValue(0)
         // eslint-disable-next-line 
     }, [])
+
+    console.log(userImg);
 
 
     return (
         <>
             <div className="progress" style={{ height: "8px" }}>
+                <ToastContainer autoClose={1000} />
                 <div className="progress-bar bg-info" role="progressbar" style={{ width: "84%" }}>
                 </div>
             </div>
@@ -140,7 +157,7 @@ const GuestsLastStep = (props: props) => {
                         <h3 className="heading-large text-black line-height-space mb-3">Finish your listing to start earning..</h3>
                         <h6 className="text-lite mb-3">You can always edit your listing after you publish it.</h6>
                         {allSteps.map((e: any, index: any) =>
-                            <CompletedSteps stepsArray={steps} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
+                            <CompletedSteps stepsArray={steps} proImg={e.checkImg} stepName={e.step} key={index} url={e.url} stepNumber={e.stepNumber} />
                         )}
                     </div>
                     <div className="col-md-7 text-center d-flex flex-column">
@@ -150,11 +167,11 @@ const GuestsLastStep = (props: props) => {
                                 <div className="px-0 mt-4 flex-basis-auto">
                                     <div className="steps-preview d-flex align-items-center justify-content-between p-3 ml-md-5">
                                         <div className="text-left">
-                                            <h6 className="font-medium single-line-ellipsis">oo</h6>
+                                            <h6 className="font-medium single-line-ellipsis">{title}</h6>
                                             <Link className="pointer text-decoration-none" style={{ color: "#00A4B4" }} to={""}>Preview</Link>
                                         </div>
-                                        <div className="">
-                                            <img src={`${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}`} alt="Not Found" className="obj-cover" />
+                                        <div className="prev-img">
+                                            <img src={coverPhoto ? `${HenceForthApi.API_FILE_ROOT_MEDIUM}${coverPhoto}` : preDefaultImg} alt="Not Found" className="obj-cover" />
                                         </div>
                                     </div>
                                 </div>
@@ -173,10 +190,9 @@ const GuestsLastStep = (props: props) => {
                                 </div>
                                 <div className="">
 
-                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}> {!loader ? "Next" : "Loading.."}
+                                    <button className="btn my-3 px-3 text-white" style={{ background: "rgb(0, 164, 180)" }} onClick={lastStep}
+                                        disabled={loader}> {!loader ? "Next" : <Spinner />}
                                     </button>
-
-
                                 </div>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ import horseImg from '../Images/horse_image.png'
 import removeImg from '../Images/remove_circle_outline.svg'
 import addImg from '../Images/add_circle_outline.svg'
 import backArrow from '../Images/chevron-left-primary.svg'
+import Spinner from "../Spinner/Spinner";
 
 type props = {
     steps: any,
@@ -75,23 +76,7 @@ export default function Stall3(props: props) {
                 ]
             }
         }
-        if (count) {
-            setLoader(true)
-            try {
-                await HenceForthApi.Auth.Updatedlisting(list)
-                setLoader(false)
-                {
-                    (navigation === 'Next') ?
-                        navigate(`/create-stall/step5/${match?.params.id}`)
-                        :
-                        navigate(`/create-stall/last-step/${match?.params.id}`)
-                }
-
-            }
-            catch (error: any) {
-                console.log(error);
-            }
-        } else {
+        if (!count) {
             toast('🦄 Please fill Numbers of Stalls', {
                 position: "top-right",
                 autoClose: 1000,
@@ -102,6 +87,22 @@ export default function Stall3(props: props) {
                 progress: undefined,
                 theme: "light",
             });
+            return;
+        }
+        setLoader(true)
+        try {
+            await HenceForthApi.Auth.Updatedlisting(list)
+            setLoader(false)
+            {
+                (navigation === 'Next') ?
+                    navigate(`/create-stall/step5/${match?.params.id}`)
+                    :
+                    navigate(`/create-stall/last-step/${match?.params.id}`)
+            }
+
+        }
+        catch (error: any) {
+            console.log(error);
         }
     }
 
@@ -135,7 +136,7 @@ export default function Stall3(props: props) {
                 </div>
                 <div className="row mx-0 h-100">
                     <div className="col-md-6 text-start pt-5 px-0 outer_location overflow-scroll">
-                        <div className="col-md-11 col-lg-8 mx-auto px-0 d-flex flex-column ">
+                        <div className="col-md-11 col-lg-8 mx-auto px-0 d-flex flex-column">
                             <h3 className="fw-600 heading-big">How many horses can your barn accommodate?</h3>
                             <p className="font-small-bold mb-4">Check that you have enough stalls.</p>
                             <div className="d-flex mb-0 pt-1">
@@ -168,7 +169,9 @@ export default function Stall3(props: props) {
                                     </button>
                                 </Link>
                                 {/* <Link to="/create-stall/step5"> */}
-                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={() => postStep3Data('Next')} style={{ background: "rgb(0, 164, 180)" }}> {!loader ? "continue" : "Loading....."}</button>
+                                <button className="btn my-3 px-3 text-white d-flex align-items-center justify-content-center" onClick={() => postStep3Data('Next')} style={{ background: "rgb(0, 164, 180)" }} disabled={loader} >
+
+                                    {!loader ? "Next" : <Spinner />}</button>
                                 {/* </Link> */}
                             </div>
                         </div>
