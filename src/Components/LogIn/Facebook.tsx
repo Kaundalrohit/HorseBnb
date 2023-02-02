@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FB_appId } from "../../config";
 type props = {
   handleToken: (token: string) => void;
 }
@@ -28,7 +29,7 @@ export default function Facebook({ handleToken }: props) {
   };
   (window as any).fbAsyncInit = function () {
     (window as any).FB?.init({
-      appId: "803030264310110",
+      appId: FB_appId,
       cookie: true,
       xfbml: true,
       version: "v15.0",

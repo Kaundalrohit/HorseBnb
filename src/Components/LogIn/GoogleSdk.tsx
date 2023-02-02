@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Google_Client_Id } from "../../config";
 // import { Navigate, useNavigate } from "react-router-dom";
 type props = {
     handleToken: (token: string) => void;
@@ -31,7 +32,7 @@ export default function GoogleSdk(props: props) {
         loadGoogleMapScript(() => {
             const google = (window as any).google
             google?.accounts?.id?.initialize({
-                client_id: '56578242597-2bnalu2om5a7ghrbmogu81itc00m7t0c.apps.googleusercontent.com',
+                client_id: Google_Client_Id,
                 callback: loginWithGoogle,
                 cancel_on_tap_outside: false
             });
